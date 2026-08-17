@@ -18,6 +18,7 @@
 | 이 저장소를 Obsidian 볼트로 열어 문헌 노트·연구 일지 관리하기 | [4-OBSIDIAN_VAULT_SETUP.md](manual/4-OBSIDIAN_VAULT_SETUP.md) |
 | VS Code PowerShell에서 Claude Code(AI 코딩 에이전트) 설치·사용하기 | [5-CLAUDE_CODE_SETUP.md](manual/5-CLAUDE_CODE_SETUP.md) |
 | 이 볼트를 사람+AI가 함께 쓰는 위키(llmwiki)로 활용하기 | [6-LLMWIKI_GUIDE.md](manual/6-LLMWIKI_GUIDE.md) |
+| KNUE_thesis 템플릿 파일 구조·빌드·석사박사 전환 등 양식 사용법 | [7-KNUE_THESIS_TEMPLATE_USAGE.md](manual/7-KNUE_THESIS_TEMPLATE_USAGE.md) |
 | 한국교원대학교 학위논문 템플릿 파일별 작성법 보기 | [KNUE_thesis/Readme__KNUEthesis.md](KNUE_thesis/Readme__KNUEthesis.md) |
 
 처음 학위논문을 작성한다면 **1번 Overleaf 방식**으로 먼저 PDF를 만들어 보는 것을 권장합니다. 개인 PC에 LaTeX을 직접 설치해 장기적으로 관리하려면 2번 문서를 따라가면 됩니다. 논문 자료 분석이나 그래프 작성에 Python을 사용할 때는 3번 문서를 참고합니다.
@@ -66,7 +67,8 @@
 
 템플릿 내부 파일을 수정할 때:
 
-- 파일별 역할, 표지, 초록, 본문, 참고문헌, 부록 작성법: [KNUE_thesis/Readme__KNUEthesis.md](KNUE_thesis/Readme__KNUEthesis.md)
+- 장별로 무엇을 써야 하는지(과학교육 논문 작성법): [KNUE_thesis/Readme__KNUEthesis.md](KNUE_thesis/Readme__KNUEthesis.md)
+- 파일 구조, 빌드 방법, 석사/박사 전환, 인용·표·그림 LaTeX 명령(양식 사용법): [manual/7-KNUE_THESIS_TEMPLATE_USAGE.md](manual/7-KNUE_THESIS_TEMPLATE_USAGE.md)
 - 메인 파일: `KNUE_thesis/KNUE_thesis_main.tex`
 - 기본 정보 입력: `KNUE_thesis/sub/0-preamble.tex`
 - 참고문헌 파일: `KNUE_thesis/sub/references.bib`
@@ -111,7 +113,8 @@ ESE_Lab_template/
 │   ├─ 3-PYTHON_CONDA_VSCODE_SETUP.md
 │   ├─ 4-OBSIDIAN_VAULT_SETUP.md
 │   ├─ 5-CLAUDE_CODE_SETUP.md
-│   └─ 6-LLMWIKI_GUIDE.md
+│   ├─ 6-LLMWIKI_GUIDE.md
+│   └─ 7-KNUE_THESIS_TEMPLATE_USAGE.md
 ├─ .obsidian/            # Obsidian 볼트 설정 (이 저장소 = 하나의 볼트)
 ├─ worklog/              # 연구·작업 일지 · AI 작업 일지 (날짜별 .md)
 ├─ References/            # 공용 참고문헌 (저자_연도-제목.pdf + 같은 이름 요약 .md)

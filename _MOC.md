@@ -19,6 +19,7 @@ tags: [MOC, index, 볼트지도]
 - [[4-OBSIDIAN_VAULT_SETUP]] — 이 저장소를 Obsidian 볼트로 열기
 - [[5-CLAUDE_CODE_SETUP]] — VS Code PowerShell에서 Claude Code 사용
 - [[6-LLMWIKI_GUIDE]] — 이 볼트를 사람+AI가 함께 쓰는 위키(llmwiki)로 활용하기
+- [[7-KNUE_THESIS_TEMPLATE_USAGE]] — KNUE_thesis 템플릿 파일 구조·빌드·석사박사 전환 등 양식 사용법
 
 ## 📝 연구 단계별 템플릿
 
