@@ -115,7 +115,7 @@
 ## 빌드
 
 **pdfLaTeX**와 **BibTeX**가 PATH에 있어야 합니다(TeX Live 또는 MiKTeX 전체 설치 권장).
-설치는 [../2-VSCODE_TeXLive_SETUP.md](../manual/2-VSCODE_TeXLive_SETUP.md)를 참고하세요.
+설치는 [../manual/2-VSCODE_TeXLive_SETUP.md](../manual/2-VSCODE_TeXLive_SETUP.md)를 참고하세요.
 
 Windows:
 

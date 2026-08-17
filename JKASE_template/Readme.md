@@ -44,7 +44,7 @@ JKASE는 한국과학교육학회가 발행하는 과학교육 분야 학술지�
 - TeX Live(전체 설치 권장) 또는 MiKTeX 같은 LaTeX 배포판
 - `lualatex`, `biber`, `latexmk`가 PATH에 등록되어 있을 것 (빌드 스크립트가 이 셋을 먼저 확인하고 없으면 멈춥니다)
 
-설치 방법은 [2-VSCODE_TeXLive_SETUP.md](../2-VSCODE_TeXLive_SETUP.md)를 참고합니다. Windows에서는 `.\JKASE_main_build.cmd`를, macOS/Linux에서는 `./JKASE_main_build.sh`를 사용합니다.
+설치 방법은 [2-VSCODE_TeXLive_SETUP.md](../manual/2-VSCODE_TeXLive_SETUP.md)를 참고합니다. Windows에서는 `.\JKASE_main_build.cmd`를, macOS/Linux에서는 `./JKASE_main_build.sh`를 사용합니다.
 
 ## Build
 
@@ -83,7 +83,7 @@ JKASE는 한국과학교육학회가 발행하는 과학교육 분야 학술지�
 - `pypdf` — PyMuPDF 실패 시 보조 텍스트 추출
 - `requests` — 논문 다운로드 (download 스크립트 전용)
 
-Python 3.10 이상에서 아래처럼 설치합니다. 이 저장소의 [3-PYTHON_CONDA_VSCODE_SETUP.md](../3-PYTHON_CONDA_VSCODE_SETUP.md)를 따라 만든 `knue-python` conda 환경에서 실행하는 것을 권장합니다.
+Python 3.10 이상에서 아래처럼 설치합니다. 이 저장소의 [3-PYTHON_CONDA_VSCODE_SETUP.md](../manual/3-PYTHON_CONDA_VSCODE_SETUP.md)를 따라 만든 `knue-python` conda 환경에서 실행하는 것을 권장합니다.
 
 ```powershell
 conda activate knue-python

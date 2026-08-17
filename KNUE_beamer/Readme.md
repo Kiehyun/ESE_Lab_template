@@ -128,9 +128,9 @@ The `code/` folder has two Python scripts for reference PDFs. `code/rename_ref_p
 
 ### 필요한 모듈 설치 / Installing the required modules
 
-두 스크립트는 `pymupdf`, `pypdf`(PDF 텍스트 추출)와 `requests`(다운로드 전용)를 사용합니다. Python 3.10 이상에서 설치하며, 저장소의 [3-PYTHON_CONDA_VSCODE_SETUP.md](../3-PYTHON_CONDA_VSCODE_SETUP.md)로 만든 `knue-python` conda 환경 사용을 권장합니다.
+두 스크립트는 `pymupdf`, `pypdf`(PDF 텍스트 추출)와 `requests`(다운로드 전용)를 사용합니다. Python 3.10 이상에서 설치하며, 저장소의 [3-PYTHON_CONDA_VSCODE_SETUP.md](../manual/3-PYTHON_CONDA_VSCODE_SETUP.md)로 만든 `knue-python` conda 환경 사용을 권장합니다.
 
-The scripts use `pymupdf` and `pypdf` (PDF text extraction) plus `requests` (download only). Install on Python 3.10+, ideally inside the `knue-python` conda environment from [3-PYTHON_CONDA_VSCODE_SETUP.md](../3-PYTHON_CONDA_VSCODE_SETUP.md).
+The scripts use `pymupdf` and `pypdf` (PDF text extraction) plus `requests` (download only). Install on Python 3.10+, ideally inside the `knue-python` conda environment from [3-PYTHON_CONDA_VSCODE_SETUP.md](../manual/3-PYTHON_CONDA_VSCODE_SETUP.md).
 
 ```powershell
 conda activate knue-python
