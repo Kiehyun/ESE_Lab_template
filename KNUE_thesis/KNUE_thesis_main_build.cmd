@@ -1,4 +1,4 @@
-@echo off
+﻿@echo off
 REM 콘솔을 UTF-8로 전환해 한글 출력이 깨지지 않게 합니다(cmd/PowerShell 공통).
 REM Switch the console to UTF-8 so Korean output is not garbled.
 chcp 65001 >nul 2>&1
