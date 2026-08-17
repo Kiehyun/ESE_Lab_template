@@ -286,27 +286,37 @@ Windows는 `KNUE_thesis_main_build.cmd`, macOS·Linux·Git Bash는 `KNUE_thesis_
 | --- | --- |
 | `build` | 기본값. 참고문헌(biber) 포함 전체 빌드 |
 | `quick` | 변경분만 빠르게 재빌드(참고문헌 재처리 생략) |
-| `clean` | 보조 파일·잠금 폴더 삭제(`.tex`/`.pdf`는 보존) |
+| `clean` | 보조 파일·잠금 폴더·빌드 캐시 폴더 삭제(`.tex`/`.pdf`는 보존) |
 | `watch` | 파일 변경 시 자동 재빌드 |
 | `submit` | 최종 제출본. 수정 표시를 모두 끄고(검정) `..._submit.pdf`로 복사 |
 | `review` | 검토본. 심사위원별 색상 수정 표시, `..._review_colors.pdf`로 복사 |
 | `review-blue` | 검토본. 수정 표시를 전체 파란색으로 통일, `..._review_blue.pdf`로 복사 |
-| `color` | 그림 컬러본 사용, `..._컬러.pdf`로 복사 |
-| `bw` | 그림 흑백본 사용 + 문서 전체 회색조 변환, `..._흑백.pdf`로 복사 |
+| `color` | 그림 컬러본 사용, `..._color.pdf`로 복사 |
+| `bw` | 그림 흑백본 사용 + 문서 전체 회색조 변환, `..._bw.pdf`로 복사 |
+| `versions` | `color`와 `bw` 두 버전을 한 번에 빌드(Git Bash `.sh`는 병렬, Windows `.cmd`는 순차) |
 | `crops` | 그림 여백(trim/clip) 확인용 `crop_debug.pdf` 생성 |
 
 ```powershell
 .\KNUE_thesis_main_build.cmd            # 기본 빌드
 .\KNUE_thesis_main_build.cmd submit     # 최종 제출본
-.\KNUE_thesis_main_build.cmd review     # 심사위원별 색상 검토본
+.\KNUE_thesis_main_build.cmd versions   # 컬러본 + 흑백본을 한 번에
 ```
 
 ```bash
 ./KNUE_thesis_main_build.sh             # 기본 빌드
 ./KNUE_thesis_main_build.sh submit      # 최종 제출본
+./KNUE_thesis_main_build.sh versions    # 컬러본 + 흑백본을 병렬로
 ```
 
-`submit`/`review`/`review-blue`는 수정 표시 매크로를 환경변수(`THESIS_SHOW_REVISIONS`, `THESIS_REV_ALLBLUE`)로 자동 전환합니다.
+`submit`/`review`/`review-blue`는 수정 표시 매크로를 환경변수(`THESIS_SHOW_REVISIONS`, `THESIS_REV_ALLBLUE`)로, `color`/`bw`/`versions`는 그림 매크로를 `THESIS_FIGMODE`로 자동 전환합니다.
+
+### 빌드 폴더가 동기화 폴더 밖에 있는 이유
+
+`build`/`quick`/`submit`/`review`/`review-blue`/`color`/`bw`/`versions`는 실제 컴파일을 프로젝트 폴더가 아니라 사용자별 캐시 폴더(macOS·Linux·Git Bash는 `~/.cache/latexbuild/KNUE_thesis_main`, Windows는 `%LOCALAPPDATA%\latexbuild\KNUE_thesis_main`)에서 수행하고, 완성된 PDF만 프로젝트 폴더로 복사합니다. `BUILDDIR` 환경변수로 위치를 바꿀 수 있습니다.
+
+이렇게 하는 이유는 Synology Drive·Dropbox·OneDrive·iCloud처럼 동기화되는 폴더 "안"에서 직접 빌드하면, 동기화 클라이언트가 컴파일 중간의 임시 파일을 잠가 SyncTeX 이름 변경이 실패하고 PDF가 아예 안 만들어질 수 있기 때문입니다. (`watch` 모드는 편집기·PDF 뷰어 연동을 위해 예외적으로 프로젝트 폴더에 그대로 빌드합니다.)
+
+또한 빌드가 끝난 뒤에는 "PDF 파일이 있다"만으로 성공을 판단하지 않고, 로그에 실제 페이지 수가 찍혔는지·엔진이 도중에 죽지 않았는지(`Fatal error occurred`, `TeX capacity exceeded` 등)까지 확인합니다. LuaLaTeX이 중간에 죽으면 그때까지 찍어낸 페이지만 담긴 잘린 PDF가 남는데, 파일 존재 여부만 보면 이 잘린 PDF도 "성공"으로 잘못 판단할 수 있기 때문입니다.
 
 ---
 

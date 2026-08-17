@@ -120,10 +120,12 @@ REM   --type=CFONT           color markup, NOT ulem; avoids "paragraph ended" er
 REM   --exclude-textcmd      don't descend into cite args (avoids unbalanced \DIFdel).
 REM   --append-safecmd       keep graphics wrappers atomic (image paths with '_').
 REM   --graphics-markup=none don't wrap \includegraphics in \DIFadd variants.
-REM   PICTUREENV             treat figure/table/tabular envs as atomic blocks.
+REM   PICTUREENV             treat figure/table/tabular envs as atomic blocks
+REM                          (also ESDLWideFigure/ESDLWideTable, the wide
+REM                          table/figure environments from 0-preamble.tex).
 set "CITECMDS=cite,parencite,textcite,kparencite,ktextcite,autocite,citeauthor,citeyear,citetitle,footcite,parencites,textcites"
-set "SAFECMDS=includegraphics"
-set "PICENV=(?:picture|tikzpicture|pspicture|figure\*?|table\*?|tabularx?\*?|longtable\*?|threeparttable|DIFnomarkup)"
+set "SAFECMDS=figf,includegraphics"
+set "PICENV=(?:picture|tikzpicture|pspicture|figure\*?|table\*?|tabularx?\*?|longtable\*?|threeparttable|ESDLWideFigure|ESDLWideTable|DIFnomarkup)"
 echo [3/4] Running latexdiff...
 latexdiff --encoding=utf8 --type=CFONT --exclude-textcmd=%CITECMDS% --append-safecmd=%SAFECMDS% --graphics-markup=none --config="PICTUREENV=%PICENV%" "%LDTMP%\old_flat.tex" "%LDTMP%\new_flat.tex" > "%difftex%" 2> "%LDTMP%\latexdiff.log"
 if errorlevel 1 (

@@ -84,9 +84,11 @@ echo "[3/4] latexdiff 실행..."
 #   --graphics-markup=none \includegraphics 를 \DIFadd 변형으로 감싸지 않음.
 #   PICTUREENV             figure/table/tabular 환경을 통째로 취급 → 변경된 표·그림은
 #                          셀 단위가 아니라 블록 전체 추가/삭제로 표시(깨짐 방지).
+#                          ESDLWideFigure/ESDLWideTable(0-preamble.tex에 정의된
+#                          와이드 표/그림 환경)도 같은 이유로 포함한다.
 CITECMDS="cite,parencite,textcite,kparencite,ktextcite,autocite,citeauthor,citeyear,citetitle,footcite,parencites,textcites"
-SAFECMDS="includegraphics"
-PICENV='(?:picture|tikzpicture|pspicture|figure\*?|table\*?|tabularx?\*?|longtable\*?|threeparttable|DIFnomarkup)'
+SAFECMDS="figf,includegraphics"
+PICENV='(?:picture|tikzpicture|pspicture|figure\*?|table\*?|tabularx?\*?|longtable\*?|threeparttable|ESDLWideFigure|ESDLWideTable|DIFnomarkup)'
 latexdiff --encoding=utf8 --type=CFONT --exclude-textcmd="$CITECMDS" --append-safecmd="$SAFECMDS" --graphics-markup=none --config="PICTUREENV=$PICENV" "$LDTMP/old_flat.tex" "$LDTMP/new_flat.tex" > "$DIFFTEX" 2> "$LDTMP/latexdiff.log" || {
   echo "Error: latexdiff 실패. 로그: $LDTMP/latexdiff.log"; exit 1; }
 [[ -s "$DIFFTEX" ]] || { echo "Error: 생성된 $DIFFTEX 가 비어 있음. 로그: $LDTMP/latexdiff.log"; exit 1; }

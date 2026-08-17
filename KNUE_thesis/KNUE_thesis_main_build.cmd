@@ -5,16 +5,19 @@ chcp 65001 >nul 2>&1
 REM ===========================================================================
 REM KNUE thesis/dissertation LaTeX template build script for Windows
 REM
-REM
 REM Purpose:
 REM   - Builds KNUE_thesis_main.tex with latexmk using LuaLaTeX.
 REM   - Lets latexmk run biber automatically when bibliography processing is needed.
 REM   - Removes fragile generated files before builds and uses a lock folder to avoid
 REM     concurrent builds of the same thesis.
-REM   - Enables SyncTeX so Ctrl+Click in the VS Code PDF preview can open the source
-REM     TeX file.
+REM   - Compiles into a cache folder (BUILDDIR below) and copies only the finished
+REM     PDF back to the project folder. Building directly inside a folder synced by
+REM     Synology Drive/Dropbox/OneDrive/iCloud can make the sync client lock
+REM     intermediate files mid-compile, so the final SyncTeX rename fails and no
+REM     PDF is produced. watch mode is the exception: it builds in place so the
+REM     VS Code PDF viewer can follow along live.
 REM
-REM   KNUE_thesis_main_build.cmd [build^|quick^|clean^|watch^|submit^|review^|review-blue^|crops]
+REM   KNUE_thesis_main_build.cmd [build^|quick^|clean^|watch^|submit^|review^|review-blue^|color^|bw^|versions^|crops]
 REM
 REM   build       Full build. Processes the bibliography as needed.
 REM   quick       Quick incremental rebuild handled by latexmk.
@@ -26,11 +29,21 @@ REM   review      Review build with revision marks ON (per-examiner colors).
 REM               Copies the result to KNUE_thesis_main_review_colors.pdf.
 REM   review-blue Review build with all revision marks unified to blue.
 REM               Copies the result to KNUE_thesis_main_review_blue.pdf.
+REM   color       Color build (use *_color figures, keep colors). Copies to
+REM               KNUE_thesis_main_color.pdf.
+REM   bw          B&W build (use *_bw figures, grayscale everything). Copies to
+REM               KNUE_thesis_main_bw.pdf.
+REM   versions    Builds the color and bw variants one after another, each in its
+REM               own isolated build folder (sequential on Windows; the Git Bash
+REM               script ./KNUE_thesis_main_build.sh versions runs them in parallel).
 REM   crops       Builds crop_debug.pdf for checking image crop settings.
 REM
 REM   submit/review/review-blue drive the revision-mark macros in sub/0-preamble.tex
 REM   through the THESIS_SHOW_REVISIONS and THESIS_REV_ALLBLUE environment variables.
-REM   For a git-based track-changes PDF, use make-diff.cmd instead.
+REM   color/bw drive the figure-variant macro through THESIS_FIGMODE.
+REM   For a git-based track-changes PDF that shows what changed since a review-copy
+REM   submission (added=blue, deleted=red strikeout) without manual \revised
+REM   wrapping, use make-diff.cmd instead.
 REM ===========================================================================
 setlocal enabledelayedexpansion
 REM Move to this script's folder so relative paths work from any launch location.
@@ -42,9 +55,17 @@ set "maintex=%main%.tex"
 set "command=%~1"
 set "LOCKDIR=%main%.build_lock"
 
-REM SyncTeX enables source/PDF synchronization.
-set "SYNCTEX=1"
-set "LATEXMK_SYNCTEX=1"
+REM SyncTeX enables source/PDF synchronization. Only watch mode turns it on.
+set "SYNCTEX=0"
+set "LATEXMK_SYNCTEX=0"
+
+REM Temporary build folder for all compile artifacts; only the final PDF is
+REM copied back to the project root. Keep this OUTSIDE any cloud-synced folder.
+REM Defaults to a per-user local cache folder; override by setting BUILDDIR
+REM before running this script.
+if not defined BUILDDIR (
+  if defined LOCALAPPDATA (set "BUILDDIR=%LOCALAPPDATA%\latexbuild\%main%") else (set "BUILDDIR=%TEMP%\latexbuild\%main%")
+)
 
 REM Find TeX Live automatically. Some computers install it under C:\texlive,
 REM while others install it under D:\texlive. Prefer the newest year found.
@@ -86,13 +107,11 @@ if /i "%command%"=="--review" set "command=review"
 if /i "%command%"=="review-blue" set "command=reviewblue"
 if /i "%command%"=="--review-blue" set "command=reviewblue"
 if /i "%command%"=="reviewblue" set "command=reviewblue"
+if /i "%command%"=="--versions" set "command=versions"
+if /i "%command%"=="both" set "command=versions"
 
 REM Clean mode should work even when TeX tools are unavailable, so jump directly to cleanup.
 if /i "%command%"=="clean" goto clean_build
-
-REM SyncTeX enables PDF <-> TeX editor synchronization.
-REM Keep it enabled so Ctrl+Click in the VS Code PDF viewer can open the source .tex file.
-REM Stale or locked SyncTeX files are removed before each build below.
 
 REM If the main TeX file is missing, the script is probably running in the wrong folder.
 if not exist "%maintex%" (
@@ -184,6 +203,11 @@ if /i "%command%"=="bw" (
   set "exitcode=!errorlevel!"
   goto end
 )
+if /i "%command%"=="versions" (
+  call :versions_build
+  set "exitcode=!errorlevel!"
+  goto end
+)
 
 call :release_lock
 goto usage
@@ -209,42 +233,66 @@ REM Remove the lock folder after a normal or failed build.
 if exist "%LOCKDIR%" rmdir "%LOCKDIR%" >nul 2>&1
 exit /b 0
 
-REM Lightweight pre-clean: remove generated files that commonly become stale or corrupted.
+REM Reset the temporary build folder so each build starts from a clean state.
 :preclean_runtime
-for %%f in (aux bbl bcf bcf-SAVE-ERROR bbl-SAVE-ERROR blg fdb_latexmk fls lof lot nav out run.xml snm toc xdv) do (
-  if exist "%main%.%%f" del /f /q "%main%.%%f" 2>nul
-)
-REM SyncTeX can be left as "(busy)" if a viewer holds a lock.
+if exist "%BUILDDIR%" rmdir /s /q "%BUILDDIR%" 2>nul
+mkdir "%BUILDDIR%\sub" 2>nul
 if exist "%main%.synctex(busy)" del /f /q "%main%.synctex(busy)" 2>nul
 if exist "%main%.synctex.gz" del /f /q "%main%.synctex.gz" 2>nul
 if exist "%main%.synctex" del /f /q "%main%.synctex" 2>nul
-REM Also delete subfile auxiliary files.
-if exist "sub" (
-  del /f /q "sub\*.aux" 2>nul
-  del /f /q "sub\*.bbl" 2>nul
-  del /f /q "sub\*.bcf" 2>nul
-  del /f /q "sub\*.bcf-SAVE-ERROR" 2>nul
-  del /f /q "sub\*.bbl-SAVE-ERROR" 2>nul
-  del /f /q "sub\*.blg" 2>nul
-  del /f /q "sub\*.fdb_latexmk" 2>nul
-  del /f /q "sub\*.fls" 2>nul
-  del /f /q "sub\*.lof" 2>nul
-  del /f /q "sub\*.lot" 2>nul
-  del /f /q "sub\*.nav" 2>nul
-  del /f /q "sub\*.snm" 2>nul
-  del /f /q "sub\*.toc" 2>nul
-  del /f /q "sub\*.out" 2>nul
-  del /f /q "sub\*.run.xml" 2>nul
-  del /f /q "sub\*.xdv" 2>nul
-  del /f /q "sub\*.synctex(busy)" 2>nul
-  del /f /q "sub\*.synctex.gz" 2>nul
-  del /f /q "sub\*.synctex" 2>nul
+goto :eof
+
+REM ---------------------------------------------------------------------------
+REM Build verification. "A PDF file exists" is not "the build succeeded": when
+REM LuaLaTeX dies mid-run, it leaves behind the pages it had already shipped out
+REM as a truncated, unreadable PDF. Checks: (1) the log does not report a fatal
+REM error / capacity error, (2) the log reports a page count, (3) the PDF exists.
+REM %1 = folder to check. Sets VERIFY_OK (0/1), VERIFY_PAGES, VERIFY_REASON.
+REM ---------------------------------------------------------------------------
+:verify_build
+set "VERIFY_OK=0"
+set "VERIFY_PAGES=0"
+set "VERIFY_REASON="
+set "_vdir=%~1"
+if not exist "%_vdir%\%main%.pdf" (
+  set "VERIFY_REASON=PDF was not created"
+  goto :eof
 )
+if not exist "%_vdir%\%main%.log" (
+  set "VERIFY_REASON=%main%.log missing (compilation never started)"
+  goto :eof
+)
+findstr /c:"Fatal error occurred" "%_vdir%\%main%.log" >nul 2>&1
+if not errorlevel 1 (
+  set "VERIFY_REASON=fatal error (see log)"
+  goto :eof
+)
+findstr /c:"TeX capacity exceeded" "%_vdir%\%main%.log" >nul 2>&1
+if not errorlevel 1 (
+  set "VERIFY_REASON=TeX capacity exceeded"
+  goto :eof
+)
+set "_pages="
+for /f "tokens=2 delims=(" %%P in ('findstr /c:"Output written on" "%_vdir%\%main%.log" 2^>nul') do set "_pgtoken=%%P"
+if defined _pgtoken (
+  for /f "tokens=1" %%N in ("!_pgtoken!") do set "_pages=%%N"
+)
+if not defined _pages (
+  set "VERIFY_REASON=page count not found in log (output may be truncated)"
+  goto :eof
+)
+set "VERIFY_PAGES=%_pages%"
+set "VERIFY_OK=1"
 goto :eof
 
 :clean_build
 REM Full cleanup requested by the user. Source .tex files and the output PDF are preserved.
 echo Cleaning build artifacts (preserving %maintex% and %main%.pdf)...
+if defined BUILDDIR (
+  if exist "%BUILDDIR%" rmdir /s /q "%BUILDDIR%" 2>nul
+  if exist "%BUILDDIR%_color" rmdir /s /q "%BUILDDIR%_color" 2>nul
+  if exist "%BUILDDIR%_bw" rmdir /s /q "%BUILDDIR%_bw" 2>nul
+)
 for %%f in (aux bbl bbl-SAVE-ERROR bcf bcf-SAVE-ERROR blg log nav out run.xml snm toc xdv fls fdb_latexmk synctex synctex.gz) do (
   if exist "%main%.%%f" del /f /q "%main%.%%f" 2>nul
 )
@@ -315,42 +363,58 @@ echo Done: crop_debug.pdf
 exit /b 0
 
 :full_build
-REM Full build. latexmk decides the required LuaLaTeX and biber passes.
+REM Full build: compile in the cache folder (BUILDDIR), copy back only the
+REM finished PDF. latexmk decides the required LuaLaTeX and biber passes.
 echo ========================================
 echo Building %maintex%...
+echo   figures: %THESIS_FIGMODE%  (empty = template default)
+echo   revision marks: %THESIS_SHOW_REVISIONS%  (empty = off)
 echo ========================================
 call :preclean_runtime
-echo Running latexmk with LuaLaTeX and biber as needed...
-if exist "%main%.synctex(busy)" del /f /q "%main%.synctex(busy)" 2>nul
-if exist "%main%.synctex.gz" del /f /q "%main%.synctex.gz" 2>nul
-if exist "%main%.synctex" del /f /q "%main%.synctex" 2>nul
-latexmk -g -lualatex -pdf -interaction=nonstopmode "%maintex%"
-if errorlevel 1 (
-  echo Error: latexmk reported an error. Check %main%.log for details.
+
+echo [1/2] Running LuaLaTeX to create fresh aux/bcf files...
+lualatex -synctex=0 -interaction=nonstopmode -file-line-error -shell-escape -output-directory="%BUILDDIR%" "%maintex%" >nul 2>&1
+call :verify_build "%BUILDDIR%"
+if "%VERIFY_OK%"=="0" if not "%VERIFY_REASON%"=="PDF was not created" (
+  echo Error: LuaLaTeX first pass aborted - %VERIFY_REASON%
+  echo Check %BUILDDIR%\%main%.log for details.
   echo Tip: run "%~nx0 clean" then build again if generated files are corrupted.
   exit /b 1
 )
-if not exist "%main%.pdf" (
-  echo Error: PDF was not created. Check %main%.log for details.
+
+echo [2/2] Running latexmk with LuaLaTeX and biber as needed...
+set "LATEXMK_SYNCTEX=0"
+latexmk "-auxdir=%BUILDDIR%" "-outdir=%BUILDDIR%" -pdflua -interaction=nonstopmode "%maintex%"
+set "lrc=%errorlevel%"
+
+call :verify_build "%BUILDDIR%"
+if "%VERIFY_OK%"=="0" (
+  echo Error: build failed - %VERIFY_REASON% ^(latexmk rc=%lrc%^)
+  echo Check %BUILDDIR%\%main%.log for details.
+  echo Tip: run "%~nx0 clean" then build again if generated files are corrupted.
   exit /b 1
 )
-if exist "%main%.pdf" (
-  for %%A in ("%main%.pdf") do set "pdf_size=%%~zA"
-  echo ========================================
-  echo Build successful
-  echo   Output: %main%.pdf - !pdf_size! bytes
-  echo ========================================
-  exit /b 0
-) else (
-  echo Error: PDF was not created.
+if not "%lrc%"=="0" (
+  echo [WARNING] latexmk exited with %lrc%, but the PDF is complete ^(%VERIFY_PAGES% pages^). Continuing.
+)
+
+copy /y "%BUILDDIR%\%main%.pdf" "%main%.pdf" >nul
+if errorlevel 1 (
+  echo Error: failed to update %main%.pdf. Close PDF viewers and try again.
   exit /b 1
 )
-goto :eof
+
+for %%A in ("%main%.pdf") do set "pdf_size=%%~zA"
+echo ========================================
+echo Build successful
+echo   Output: %main%.pdf ^(%VERIFY_PAGES% pages, !pdf_size! bytes^)
+echo ========================================
+exit /b 0
 
 :profiled_build
-REM Profiled build (submit/review). Runs a full build with the revision-mark
-REM environment variables already set by the caller, then copies the finished PDF
-REM to a labeled name. %1 = suffix for the copied PDF.
+REM Profiled build (submit/review/color/bw). Runs a full build with the env
+REM variables already set by the caller, then copies the finished PDF to a
+REM labeled name. %1 = suffix for the copied PDF.
 call :full_build
 if errorlevel 1 exit /b 1
 if not "%~1"=="" if exist "%main%.pdf" (
@@ -360,30 +424,96 @@ if not "%~1"=="" if exist "%main%.pdf" (
 exit /b 0
 
 :quick_build
-REM Quick rebuild. Reuses existing auxiliary files for an incremental build.
+REM Quick rebuild. Reuses auxiliary files already in the build folder for an
+REM incremental latexmk build.
 echo Quick rebuild with latexmk...
-if exist "%main%.synctex(busy)" del /f /q "%main%.synctex(busy)" 2>nul
-if exist "%main%.synctex.gz" del /f /q "%main%.synctex.gz" 2>nul
-if exist "%main%.synctex" del /f /q "%main%.synctex" 2>nul
-latexmk -lualatex -pdf -interaction=nonstopmode "%maintex%"
-if errorlevel 1 (
-  echo Error: latexmk reported an error. Check %main%.log for details.
+if not exist "%BUILDDIR%" mkdir "%BUILDDIR%\sub" 2>nul
+set "LATEXMK_SYNCTEX=0"
+latexmk "-auxdir=%BUILDDIR%" "-outdir=%BUILDDIR%" -pdflua -interaction=nonstopmode "%maintex%"
+set "lrc=%errorlevel%"
+call :verify_build "%BUILDDIR%"
+if "%VERIFY_OK%"=="0" (
+  echo Error: quick build failed - %VERIFY_REASON% ^(latexmk rc=%lrc%^)
+  echo Check %BUILDDIR%\%main%.log for details.
   exit /b 1
 )
-echo Quick build complete: %main%.pdf
+copy /y "%BUILDDIR%\%main%.pdf" "%main%.pdf" >nul
+if errorlevel 1 (
+  echo Error: failed to update %main%.pdf. Close PDF viewers and try again.
+  exit /b 1
+)
+echo Quick build complete: %main%.pdf ^(%VERIFY_PAGES% pages^)
 goto :eof
+
+:versions_build
+REM Builds the color and bw variants one after another, each in its own
+REM isolated build folder. (Sequential on Windows; use the Git Bash script
+REM ./KNUE_thesis_main_build.sh versions for a parallel build.)
+echo ========================================
+echo Building 2 variants (sequential):
+echo   1) %main%_color.pdf
+echo   2) %main%_bw.pdf
+echo ========================================
+
+set "THESIS_SHOW_REVISIONS="
+set "THESIS_REV_ALLBLUE="
+
+set "THESIS_FIGMODE=color"
+call :build_one color
+set "rc_color=%errorlevel%"
+
+set "THESIS_FIGMODE=bw"
+call :build_one bw
+set "rc_bw=%errorlevel%"
+
+echo ========================================
+echo Versions build summary:
+if "%rc_color%"=="0" (echo   color  OK     -^> %main%_color.pdf) else (echo   color  FAILED. See %BUILDDIR%_color\%main%.log)
+if "%rc_bw%"=="0"    (echo   bw     OK     -^> %main%_bw.pdf)    else (echo   bw     FAILED. See %BUILDDIR%_bw\%main%.log)
+echo ========================================
+
+if not "%rc_color%"=="0" exit /b 1
+if not "%rc_bw%"=="0" exit /b 1
+exit /b 0
+
+:build_one
+REM Build a single labelled variant in an isolated build folder + output PDF.
+REM %1 = suffix (also used as the BUILDDIR_<suffix> folder name).
+set "_suffix=%~1"
+set "_vbuild=%BUILDDIR%_%_suffix%"
+if exist "%_vbuild%" rmdir /s /q "%_vbuild%" 2>nul
+mkdir "%_vbuild%\sub" 2>nul
+
+lualatex -interaction=nonstopmode -file-line-error -shell-escape -output-directory="%_vbuild%" "%maintex%" >nul 2>&1
+call :verify_build "%_vbuild%"
+if "%VERIFY_OK%"=="0" if not "%VERIFY_REASON%"=="PDF was not created" (
+  echo [%_suffix%] FAILED - first pass aborted - %VERIFY_REASON%
+  exit /b 1
+)
+
+latexmk "-auxdir=%_vbuild%" "-outdir=%_vbuild%" -pdflua -interaction=nonstopmode "%maintex%" >nul 2>&1
+call :verify_build "%_vbuild%"
+if "%VERIFY_OK%"=="0" (
+  echo [%_suffix%] FAILED - %VERIFY_REASON%
+  exit /b 1
+)
+
+copy /y "%_vbuild%\%main%.pdf" "%main%_%_suffix%.pdf" >nul
+if errorlevel 1 (
+  echo [%_suffix%] FAILED - could not write %main%_%_suffix%.pdf (close any open PDF viewer)
+  exit /b 1
+)
+echo [%_suffix%] OK -^> %main%_%_suffix%.pdf ^(%VERIFY_PAGES% pages^)
+exit /b 0
 
 :watch_mode
 REM First performs one full build, then continuously watches for file changes.
+REM Watch mode builds in place in the project folder (not the cache folder) so
+REM the VS Code PDF viewer can follow along live.
 echo ========================================
 echo Initial build before starting watch mode...
 echo ========================================
-call :preclean_runtime
-call :full_build
-if errorlevel 1 (
-  echo Initial build failed. Watch mode cancelled.
-  exit /b 1
-)
+if exist "%main%.synctex(busy)" del /f /q "%main%.synctex(busy)" 2>nul
 echo.
 echo ========================================
 echo Watch mode started (Ctrl+C to stop)...
@@ -406,7 +536,7 @@ goto :eof
 
 :usage
 REM Show supported commands.
-echo Usage: %~nx0 [build^|quick^|clean^|watch^|submit^|review^|review-blue^|crops]
+echo Usage: %~nx0 [build^|quick^|clean^|watch^|submit^|review^|review-blue^|color^|bw^|versions^|crops]
 echo.
 echo Commands:
 echo   build       - Full build with bibliography (default)
@@ -418,5 +548,6 @@ echo   review      - Review build (revision marks ON, per-examiner colors)
 echo   review-blue - Review build (all revision marks unified to blue)
 echo   color       - Color build (use *_color figures, keep colors)
 echo   bw          - B^&W build (use *_bw figures, grayscale everything)
+echo   versions    - Build color and bw variants (sequential)
 echo   crops       - Build crop_debug.pdf for image cropping
 exit /b 1
