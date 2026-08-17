@@ -18,7 +18,7 @@ tags: [source-file, latex, writing-guide]
 | --- | --- |
 | 각 장에 무엇을 써야 하는가 | 이 문서 |
 | 파일 구조, 빌드 방법, 석사/박사 전환, 워터마크, 인용·표·그림 LaTeX 명령 | [manual/7-KNUE_THESIS_TEMPLATE_USAGE.md](../manual/7-KNUE_THESIS_TEMPLATE_USAGE.md) |
-| LaTeX 설치, VS Code 설정 | [manual/2-VSCODE_LOCAL_THESIS_SETUP.md](../manual/2-VSCODE_LOCAL_THESIS_SETUP.md) |
+| LaTeX 설치, VS Code 설정 | [manual/2-VSCODE_TeXLive_SETUP.md](../manual/2-VSCODE_TeXLive_SETUP.md) |
 | Overleaf로 작성 시작하기 | [manual/1-OVERLEAF_THESIS_PROJECT.md](../manual/1-OVERLEAF_THESIS_PROJECT.md) |
 
 ---

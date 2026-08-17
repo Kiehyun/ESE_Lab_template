@@ -14,7 +14,7 @@ tags: [MOC, index, 볼트지도]
 
 - [[manual/README|매뉴얼 개요]]
 - [[1-OVERLEAF_THESIS_PROJECT]] — Overleaf로 학위논문 프로젝트 만들기
-- [[2-VSCODE_LOCAL_THESIS_SETUP]] — Windows 로컬 LaTeX 설치
+- [[2-VSCODE_TeXLive_SETUP]] — Windows 로컬 LaTeX 설치
 - [[3-PYTHON_CONDA_VSCODE_SETUP]] — Python · conda · VS Code 분석 환경
 - [[4-OBSIDIAN_VAULT_SETUP]] — 이 저장소를 Obsidian 볼트로 열기
 - [[5-CLAUDE_CODE_SETUP]] — VS Code PowerShell에서 Claude Code 사용

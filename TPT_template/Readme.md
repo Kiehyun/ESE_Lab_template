@@ -45,7 +45,7 @@ This template builds with **LuaLaTeX** and **biber**; it does not build with `pd
 - A LaTeX distribution such as TeX Live (full scheme recommended) or MiKTeX.
 - `lualatex` and `biber` available on your PATH. The build script checks for both and stops if either is missing.
 
-See [2-VSCODE_LOCAL_THESIS_SETUP.md](../2-VSCODE_LOCAL_THESIS_SETUP.md) for installation. Use `.\TPT_main_build.cmd` on Windows or `./TPT_main_build.sh` on macOS/Linux.
+See [2-VSCODE_TeXLive_SETUP.md](../2-VSCODE_TeXLive_SETUP.md) for installation. Use `.\TPT_main_build.cmd` on Windows or `./TPT_main_build.sh` on macOS/Linux.
 
 ## Build
 

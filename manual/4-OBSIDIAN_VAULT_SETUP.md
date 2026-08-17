@@ -200,7 +200,7 @@ Git으로 커밋해 두면 언제든 과거 상태로 되돌리고, 무엇이 �
 
 ### 준비
 
-- Git 설치(설치 안내는 [2-VSCODE_LOCAL_THESIS_SETUP.md](2-VSCODE_LOCAL_THESIS_SETUP.md) 참고).
+- Git 설치(설치 안내는 [2-VSCODE_TeXLive_SETUP.md](2-VSCODE_TeXLive_SETUP.md) 참고).
 - (선택) GitHub 계정 — 원격 백업·협업이 필요할 때.
 - 빌드 부산물(`.aux`, `.log`, `.pdf` 등)과 Obsidian 개인 설정은 이미 `.gitignore`로 제외되어,
   원고 소스와 노트만 깔끔하게 기록됩니다.

@@ -54,7 +54,7 @@ JKESS는 한국지구과학회가 발행하는 학술지이며, 지구과학 및
 - TeX Live(전체 설치 권장) 또는 MiKTeX 같은 LaTeX 배포판
 - `lualatex`, `biber`, `latexmk`가 PATH에 등록되어 있을 것 (빌드 스크립트가 이 셋을 먼저 확인하고 없으면 멈춥니다)
 
-설치 방법은 [2-VSCODE_LOCAL_THESIS_SETUP.md](../manual/2-VSCODE_LOCAL_THESIS_SETUP.md)를 참고합니다. Windows에서는 `.\JKESS_main_build.cmd`를, macOS/Linux에서는 `./JKESS_main_build.sh`를 사용합니다.
+설치 방법은 [2-VSCODE_TeXLive_SETUP.md](../manual/2-VSCODE_TeXLive_SETUP.md)를 참고합니다. Windows에서는 `.\JKESS_main_build.cmd`를, macOS/Linux에서는 `./JKESS_main_build.sh`를 사용합니다.
 
 ## Build
 

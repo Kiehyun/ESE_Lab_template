@@ -13,7 +13,7 @@
 | 목적 | 먼저 볼 문서 |
 | --- | --- |
 | Overleaf에서 학위논문 프로젝트 만들기 | [1-OVERLEAF_THESIS_PROJECT.md](manual/1-OVERLEAF_THESIS_PROJECT.md) |
-| Windows 개인 PC에 LaTeX을 설치해서 학위논문 작성하기 | [2-VSCODE_LOCAL_THESIS_SETUP.md](manual/2-VSCODE_LOCAL_THESIS_SETUP.md) |
+| Windows 개인 PC에 LaTeX을 설치해서 학위논문 작성하기 | [2-VSCODE_TeXLive_SETUP.md](manual/2-VSCODE_TeXLive_SETUP.md) |
 | Python, conda, VS Code로 데이터 분석 환경 만들기 | [3-PYTHON_CONDA_VSCODE_SETUP.md](manual/3-PYTHON_CONDA_VSCODE_SETUP.md) |
 | 이 저장소를 Obsidian 볼트로 열어 문헌 노트·연구 일지 관리하기 | [4-OBSIDIAN_VAULT_SETUP.md](manual/4-OBSIDIAN_VAULT_SETUP.md) |
 | VS Code PowerShell에서 Claude Code(AI 코딩 에이전트) 설치·사용하기 | [5-CLAUDE_CODE_SETUP.md](manual/5-CLAUDE_CODE_SETUP.md) |
@@ -63,7 +63,7 @@
 처음 프로젝트를 만들 때:
 
 - Overleaf 사용: [1-OVERLEAF_THESIS_PROJECT.md](manual/1-OVERLEAF_THESIS_PROJECT.md)
-- Windows 로컬 설치 사용: [2-VSCODE_LOCAL_THESIS_SETUP.md](manual/2-VSCODE_LOCAL_THESIS_SETUP.md)
+- Windows 로컬 설치 사용: [2-VSCODE_TeXLive_SETUP.md](manual/2-VSCODE_TeXLive_SETUP.md)
 
 템플릿 내부 파일을 수정할 때:
 
@@ -109,7 +109,7 @@ ESE_Lab_template/
 ├─ README.md             # 저장소 소개 · 길잡이 (지금 이 문서)
 ├─ manual/               # 사용 설명서 모음 (아래 안내 문서를 한곳에)
 │   ├─ 1-OVERLEAF_THESIS_PROJECT.md
-│   ├─ 2-VSCODE_LOCAL_THESIS_SETUP.md
+│   ├─ 2-VSCODE_TeXLive_SETUP.md
 │   ├─ 3-PYTHON_CONDA_VSCODE_SETUP.md
 │   ├─ 4-OBSIDIAN_VAULT_SETUP.md
 │   ├─ 5-CLAUDE_CODE_SETUP.md

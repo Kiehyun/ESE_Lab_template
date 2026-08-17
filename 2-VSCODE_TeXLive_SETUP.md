@@ -1,4 +1,4 @@
-# Windows 개인 PC의 VS Code에서 KNUE 학위논문 템플릿 사용하기
+# Windows 개인 PC의 VS Code에서 Latex 템플릿 사용하기
 
 이 문서는 LaTeX을 처음 쓰는 사용자가 Windows 개인 컴퓨터에 TeX Live, VS Code, LaTeX Workshop을 설치하고 `KNUE_thesis/` 템플릿으로 한국교원대학교 학위논문 PDF를 만드는 과정을 안내합니다.
 

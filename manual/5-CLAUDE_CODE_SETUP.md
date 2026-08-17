@@ -30,7 +30,7 @@ Windows 10/11 기준으로 설명합니다.
      git --version
      ```
 
-- **VS Code** — 편집기 겸 터미널로 사용합니다. 설치는 [2-VSCODE_LOCAL_THESIS_SETUP.md](2-VSCODE_LOCAL_THESIS_SETUP.md)를 참고합니다.
+- **VS Code** — 편집기 겸 터미널로 사용합니다. 설치는 [2-VSCODE_TeXLive_SETUP.md](2-VSCODE_TeXLive_SETUP.md)를 참고합니다.
 
 ## 2. Claude Code 설치 (PowerShell 네이티브 설치)
 
