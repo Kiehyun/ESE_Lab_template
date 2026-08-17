@@ -6,7 +6,7 @@ tags: [source-file, latex, writing-guide]
 
 # 과학교육 학위논문 작성 안내 (KNUE_thesis)
 
-이 문서는 `KNUE_thesis/` 템플릿으로 과학교육 분야 석사·박사 학위논문을 쓸 때, **각 장에 무엇을 써야 하는지**를 설명합니다. LaTeX 파일 구조, 빌드 방법, 워터마크·표/그림 명령 같은 **템플릿 조작법(양식 사용법)**은 이 문서에서 다루지 않습니다 — [manual/7-KNUE_THESIS_TEMPLATE_USAGE.md](../manual/7-KNUE_THESIS_TEMPLATE_USAGE.md)를 참고하세요.
+이 문서는 `KNUE_thesis/` 템플릿으로 과학교육 분야 석사·박사 학위논문을 쓸 때, **각 장에 무엇을 써야 하는지**를 설명합니다. LaTeX 파일 구조, 빌드 방법, 워터마크·표/그림 명령 같은 **템플릿 조작법(양식 사용법)**은 이 문서에서 다루지 않습니다 — [manual/8-KNUE_THESIS_TEMPLATE_USAGE.md](../manual/8-KNUE_THESIS_TEMPLATE_USAGE.md)를 참고하세요.
 
 학위논문에서는 연구 내용만큼이나 학교가 요구하는 형식을 맞추는 일도 중요합니다. 형식(여백, 표지, 인준면, 목차, 표/그림 번호 등)은 템플릿이 미리 처리해 두었으므로, 이 문서는 그 형식 안에 **무엇을 채워 넣을지**에 집중합니다.
 
@@ -17,9 +17,9 @@ tags: [source-file, latex, writing-guide]
 | 알고 싶은 것 | 참고 문서 |
 | --- | --- |
 | 각 장에 무엇을 써야 하는가 | 이 문서 |
-| 파일 구조, 빌드 방법, 석사/박사 전환, 워터마크, 인용·표·그림 LaTeX 명령 | [manual/7-KNUE_THESIS_TEMPLATE_USAGE.md](../manual/7-KNUE_THESIS_TEMPLATE_USAGE.md) |
-| LaTeX 설치, VS Code 설정 | [manual/2-VSCODE_TeXLive_SETUP.md](../manual/2-VSCODE_TeXLive_SETUP.md) |
-| Overleaf로 작성 시작하기 | [manual/1-OVERLEAF_THESIS_PROJECT.md](../manual/1-OVERLEAF_THESIS_PROJECT.md) |
+| 파일 구조, 빌드 방법, 석사/박사 전환, 워터마크, 인용·표·그림 LaTeX 명령 | [manual/8-KNUE_THESIS_TEMPLATE_USAGE.md](../manual/8-KNUE_THESIS_TEMPLATE_USAGE.md) |
+| LaTeX 설치, VS Code 설정 | [manual/3-VSCODE_TeXLive_SETUP.md](../manual/3-VSCODE_TeXLive_SETUP.md) |
+| Overleaf로 작성 시작하기 | [manual/2-OVERLEAF_THESIS_PROJECT.md](../manual/2-OVERLEAF_THESIS_PROJECT.md) |
 
 ---
 
@@ -63,7 +63,7 @@ tags: [source-file, latex, writing-guide]
 
 ## 참고문헌 인용 원칙
 
-인용 표기 방법과 참고문헌 표기 방법은 학교, 학과, 학술지, 전공 분야에 따라 다를 수 있습니다. 최종 제출 전에는 반드시 소속 학교와 학과의 최신 학위논문 작성 지침을 확인해야 합니다. 이 템플릿은 APA 7판을 기본으로 하되, 한국어 문헌의 저자명 표기와 조사 처리 등 한글 문헌에 필요한 규칙을 추가했습니다. (구체적인 LaTeX 인용 명령은 [manual/7](../manual/7-KNUE_THESIS_TEMPLATE_USAGE.md#참고문헌-인용-명령)을 참고하세요.)
+인용 표기 방법과 참고문헌 표기 방법은 학교, 학과, 학술지, 전공 분야에 따라 다를 수 있습니다. 최종 제출 전에는 반드시 소속 학교와 학과의 최신 학위논문 작성 지침을 확인해야 합니다. 이 템플릿은 APA 7판을 기본으로 하되, 한국어 문헌의 저자명 표기와 조사 처리 등 한글 문헌에 필요한 규칙을 추가했습니다. (구체적인 LaTeX 인용 명령은 [manual/7](../manual/8-KNUE_THESIS_TEMPLATE_USAGE.md#참고문헌-인용-명령)을 참고하세요.)
 
 ### 저자 수에 따른 표기
 
@@ -79,7 +79,7 @@ tags: [source-file, latex, writing-guide]
 
 ### 생성형 AI가 알려준 문헌 검증
 
-생성형 AI가 알려 준 논문은 바로 인용하지 말고 실제 존재 여부를 확인해야 합니다. 제목, 저자, 연도, DOI, 학술지명, 원문 또는 초록을 Google Scholar, RISS, DBpia, KCI, Scopus, Web of Science, 학술지 공식 페이지에서 확인합니다. (Google Scholar에서 BibTeX를 가져와 `sub/references.bib`에 넣는 절차는 [manual/7](../manual/7-KNUE_THESIS_TEMPLATE_USAGE.md#google-scholar에서-bibtex-가져오기) 참고.)
+생성형 AI가 알려 준 논문은 바로 인용하지 말고 실제 존재 여부를 확인해야 합니다. 제목, 저자, 연도, DOI, 학술지명, 원문 또는 초록을 Google Scholar, RISS, DBpia, KCI, Scopus, Web of Science, 학술지 공식 페이지에서 확인합니다. (Google Scholar에서 BibTeX를 가져와 `sub/references.bib`에 넣는 절차는 [manual/7](../manual/8-KNUE_THESIS_TEMPLATE_USAGE.md#google-scholar에서-bibtex-가져오기) 참고.)
 
 ---
 
@@ -87,7 +87,7 @@ tags: [source-file, latex, writing-guide]
 
 표와 그림은 본문 내용을 대신하는 장식 요소가 아니라, 연구 문제에 대한 답을 독자가 더 쉽게 이해하도록 돕는 근거입니다. 표나 그림을 제시한 뒤에는 반드시 본문에서 핵심 패턴, 차이, 의미를 설명합니다.
 
-숫자 자료는 소수점 자릿수와 단위를 통일하고, 그림은 축 이름, 범례, 단위를 명확히 표시합니다. 너무 긴 표나 부가 자료는 본문보다 부록에 두는 편이 좋습니다. (표/그림을 LaTeX으로 입력하는 구체적인 방법은 [manual/7](../manual/7-KNUE_THESIS_TEMPLATE_USAGE.md#표와-그림-명령) 참고.)
+숫자 자료는 소수점 자릿수와 단위를 통일하고, 그림은 축 이름, 범례, 단위를 명확히 표시합니다. 너무 긴 표나 부가 자료는 본문보다 부록에 두는 편이 좋습니다. (표/그림을 LaTeX으로 입력하는 구체적인 방법은 [manual/7](../manual/8-KNUE_THESIS_TEMPLATE_USAGE.md#표와-그림-명령) 참고.)
 
 ---
 
@@ -104,6 +104,6 @@ tags: [source-file, latex, writing-guide]
 7. 생성형 AI가 제시한 선행 연구는 실제 존재하는 문헌인지 확인했는가?
 8. 소속 학교·학과의 최신 학위논문 작성 지침과 내용상 요구사항(연구윤리 서술 등)을 확인했는가?
 
-양식(표지·초록 필드·워터마크·수정 표시 등) 관련 최종 점검 항목은 [manual/7의 "최종 제출 전 확인"](../manual/7-KNUE_THESIS_TEMPLATE_USAGE.md#최종-제출-전-확인-양식-항목)을 참고하세요.
+양식(표지·초록 필드·워터마크·수정 표시 등) 관련 최종 점검 항목은 [manual/7의 "최종 제출 전 확인"](../manual/8-KNUE_THESIS_TEMPLATE_USAGE.md#최종-제출-전-확인-양식-항목)을 참고하세요.
 
 학교 또는 학과의 제출 규정은 바뀔 수 있으므로, 최종 제출 전에는 반드시 공식 학위논문 작성 지침과 대조해야 합니다.

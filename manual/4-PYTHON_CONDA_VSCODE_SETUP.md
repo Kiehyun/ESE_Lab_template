@@ -412,7 +412,7 @@ GitHub Copilot은 계정이나 요금제에 따라 사용할 수 있는 기능�
 | GPT Codex | ChatGPT의 Codex 기능 또는 VS Code 확장 | 대화하며 코드를 단계적으로 만들고 다듬기 좋음 |
 
 > **Claude Code**의 설치(네이티브 설치·Git for Windows 필수)와 로그인, VS Code PowerShell에서
-> 실행하는 방법은 [5-CLAUDE_CODE_SETUP.md](5-CLAUDE_CODE_SETUP.md)에 따로 정리해 두었습니다.
+> 실행하는 방법은 [6-CLAUDE_CODE_SETUP.md](6-CLAUDE_CODE_SETUP.md)에 따로 정리해 두었습니다.
 
 요청하는 기본 흐름은 같습니다.
 

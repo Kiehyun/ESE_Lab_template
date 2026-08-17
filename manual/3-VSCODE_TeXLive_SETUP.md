@@ -4,7 +4,7 @@
 
 Windows 10/11 기준으로 설명합니다.
 
-Overleaf에서 작성하려면 [1-OVERLEAF_THESIS_PROJECT.md](1-OVERLEAF_THESIS_PROJECT.md)를 확인합니다.
+Overleaf에서 작성하려면 [2-OVERLEAF_THESIS_PROJECT.md](2-OVERLEAF_THESIS_PROJECT.md)를 확인합니다.
 
 ## 0. 전체 흐름
 
@@ -440,7 +440,7 @@ D:\LaTeX\MyThesis
    ./make-diff.sh 심사본-1차       # 제출 이후 변경분을 색으로 표시한 PDF 생성 (Windows: make-diff.cmd)
    ```
 
-   자세한 방법(태그 관리, `make-diff`, 심사위원별 색상)은 [4-OBSIDIAN_VAULT_SETUP.md](4-OBSIDIAN_VAULT_SETUP.md)의 "제출 시점을 커밋(태그)해 두면" 절과 [KNUE_thesis Readme](../KNUE_thesis/Readme__KNUEthesis.md)의 "심사위원별 수정 표시" 절을 참고하세요.
+   자세한 방법(태그 관리, `make-diff`, 심사위원별 색상)은 [5-OBSIDIAN_VAULT_SETUP.md](5-OBSIDIAN_VAULT_SETUP.md)의 "제출 시점을 커밋(태그)해 두면" 절과 [KNUE_thesis Readme](../KNUE_thesis/Readme__KNUEthesis.md)의 "심사위원별 수정 표시" 절을 참고하세요.
 
 ## 13. 설치 확인 체크리스트
 

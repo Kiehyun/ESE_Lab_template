@@ -420,7 +420,7 @@ git diff 심사본-1차 -- '*.tex'      # 변경 목록만 텍스트로
 git log --oneline 심사본-1차..HEAD  # 그 사이 커밋 목록
 ```
 
-원고를 고치기 전에 "지금이 어떤 시점인가"를 커밋+태그로 먼저 남겨 두는 것이 핵심입니다. 저장소 전체 관점의 커밋·태그 워크플로는 [4-OBSIDIAN_VAULT_SETUP.md](4-OBSIDIAN_VAULT_SETUP.md)에도 있습니다.
+원고를 고치기 전에 "지금이 어떤 시점인가"를 커밋+태그로 먼저 남겨 두는 것이 핵심입니다. 저장소 전체 관점의 커밋·태그 워크플로는 [5-OBSIDIAN_VAULT_SETUP.md](5-OBSIDIAN_VAULT_SETUP.md)에도 있습니다.
 
 ---
 
@@ -435,7 +435,7 @@ Python 예제 코드는 `code/example_analysis.py`에 있고, `sub/A4_Code_File_
 | `code/rename_ref_pdfs_by_bib.py` | `references.bib`와 `ref/` 폴더 PDF를 대조해 `저자. (연도). 제목. 학술지.pdf` 형태로 이름 정리. CSV 보고서 생성 |
 | `code/download_missing_ref_pdfs.py` | `references.bib`에는 있지만 없는 PDF를 공개 접근·DOI·연구실 검색 서버에서 자동 다운로드 |
 
-필요 패키지: `pymupdf`, `pypdf`, `requests`. [3-PYTHON_CONDA_VSCODE_SETUP.md](3-PYTHON_CONDA_VSCODE_SETUP.md)의 `knue-python` conda 환경 사용을 권장합니다.
+필요 패키지: `pymupdf`, `pypdf`, `requests`. [4-PYTHON_CONDA_VSCODE_SETUP.md](4-PYTHON_CONDA_VSCODE_SETUP.md)의 `knue-python` conda 환경 사용을 권장합니다.
 
 ```powershell
 conda activate knue-python

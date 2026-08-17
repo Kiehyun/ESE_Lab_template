@@ -1,6 +1,6 @@
 # 6. 이 볼트를 "llmwiki"(사람+AI 공용 위키)로 활용하기
 
-이 문서는 저장소를 **사람과 AI가 같은 노트를 함께 읽고 쓰는 위키**로 쓰는 방법을 안내합니다. Obsidian 볼트로서의 기본 사용법은 [4-OBSIDIAN_VAULT_SETUP.md](4-OBSIDIAN_VAULT_SETUP.md)에 이미 정리되어 있으니, 이 문서는 그 위에 "AI와 함께 쓸 때 무엇이 달라지는가"만 추가로 설명합니다.
+이 문서는 저장소를 **사람과 AI가 같은 노트를 함께 읽고 쓰는 위키**로 쓰는 방법을 안내합니다. Obsidian 볼트로서의 기본 사용법은 [5-OBSIDIAN_VAULT_SETUP.md](5-OBSIDIAN_VAULT_SETUP.md)에 이미 정리되어 있으니, 이 문서는 그 위에 "AI와 함께 쓸 때 무엇이 달라지는가"만 추가로 설명합니다.
 
 ---
 
@@ -39,7 +39,7 @@
 
 ## 주의할 점
 
-- **`.tex`/`.cls`/`.bib`는 Obsidian이 아니라 VS Code(또는 Overleaf)에서 편집합니다.** ([4-OBSIDIAN_VAULT_SETUP.md](4-OBSIDIAN_VAULT_SETUP.md) 참고)
+- **`.tex`/`.cls`/`.bib`는 Obsidian이 아니라 VS Code(또는 Overleaf)에서 편집합니다.** ([5-OBSIDIAN_VAULT_SETUP.md](5-OBSIDIAN_VAULT_SETUP.md) 참고)
 - **개인정보에 특히 유의하세요.** 이 볼트는 사람뿐 아니라 AI에게도, 그리고 (공개 저장소라면) 누구에게나 노출되는 자료입니다. 실명·개인 이메일·로컬 경로처럼 특정인을 식별할 수 있는 정보는 예시 노트에도 넣지 않는 것이 안전합니다.
 - **AI가 만든 내용은 사람이 검토합니다.** worklog는 "AI가 무엇을 했는지" 추적하는 기록이지, 검증 없이 그대로 믿어도 된다는 뜻은 아닙니다.
 

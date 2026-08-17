@@ -5,8 +5,8 @@
 ## 시작할 때 먼저 볼 것
 
 - `_MOC.md` — 볼트 전체 지도(진입점)
-- `manual/6-LLMWIKI_GUIDE.md` — 이 볼트를 사람+AI가 함께 쓰는 방법
-- `manual/` 1~7번 — 설치, Obsidian, Claude Code, 각 템플릿(KNUE_thesis 등) 사용법
+- `manual/7-LLMWIKI_GUIDE.md` — 이 볼트를 사람+AI가 함께 쓰는 방법
+- `manual/` 1~8번 — LaTeX 기초, 설치, Obsidian, Claude Code, 각 템플릿(KNUE_thesis 등) 사용법
 
 ## 작업 기록 (필수)
 

@@ -4,7 +4,7 @@
 
 Overleaf에서는 웹 브라우저만으로 `.tex`, `.bib`, 그림 파일을 관리하고 PDF를 만들 수 있습니다. 다만 이 템플릿은 `LuaLaTeX` 기준으로 맞추어져 있으므로, 프로젝트를 만든 뒤 반드시 컴파일러를 `LuaLaTeX`로 바꿔야 합니다.
 
-Windows 개인 PC에 직접 설치해서 작성하려면 [2-VSCODE_TeXLive_SETUP.md](2-VSCODE_TeXLive_SETUP.md)를 확인합니다.
+Windows 개인 PC에 직접 설치해서 작성하려면 [3-VSCODE_TeXLive_SETUP.md](3-VSCODE_TeXLive_SETUP.md)를 확인합니다.
 
 ## 참고: Overleaf 무료/유료 버전 차이
 
@@ -28,7 +28,7 @@ Overleaf는 무료 버전으로도 논문 프로젝트를 만들고 작성할 �
 Overleaf 무료 버전에서 컴파일 시간 초과가 반복되면 아래 방법을 고려합니다.
 
 - Overleaf 유료 버전으로 전환해 컴파일 시간 제한을 늘린다.
-- [2-VSCODE_TeXLive_SETUP.md](2-VSCODE_TeXLive_SETUP.md)를 참고해 개인 PC에서 로컬로 컴파일한다.
+- [3-VSCODE_TeXLive_SETUP.md](3-VSCODE_TeXLive_SETUP.md)를 참고해 개인 PC에서 로컬로 컴파일한다.
 - 작성 초기에는 사용하지 않는 큰 그림 파일이나 예시 파일을 잠시 줄여 컴파일 시간을 낮춘다.
 
 컴파일 시간 외에도 아래 상황에서는 유료 버전 사용을 고려하는 것이 좋습니다.

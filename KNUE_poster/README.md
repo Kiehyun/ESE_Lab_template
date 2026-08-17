@@ -235,7 +235,7 @@ VS Code 작업 메뉴에서는 다음 task 중 하나를 선택해 빌드할 수
 | `code/rename_ref_pdfs_by_bib.py` | `sub/references.bib`의 BibTeX 항목과 `ref/` 폴더의 PDF를 대조하여, 파일명을 `저자. (연도). 제목. 학술지.pdf` 형태로 정리하고 CSV 보고서를 남깁니다. |
 | `code/download_missing_ref_pdfs.py` | `references.bib`에는 있지만 `ref/` 폴더에 없는 PDF를 공개 접근(Open Access), DOI, 연구실 논문 검색 서버에서 내려받습니다. |
 
-필요한 모듈은 `pymupdf`, `pypdf`(PDF 텍스트 추출)와 `requests`(다운로드 전용)입니다. Python 3.10 이상에서, 저장소의 [3-PYTHON_CONDA_VSCODE_SETUP.md](../manual/3-PYTHON_CONDA_VSCODE_SETUP.md)로 만든 `knue-python` conda 환경 사용을 권장합니다.
+필요한 모듈은 `pymupdf`, `pypdf`(PDF 텍스트 추출)와 `requests`(다운로드 전용)입니다. Python 3.10 이상에서, 저장소의 [4-PYTHON_CONDA_VSCODE_SETUP.md](../manual/4-PYTHON_CONDA_VSCODE_SETUP.md)로 만든 `knue-python` conda 환경 사용을 권장합니다.
 
 ```powershell
 conda activate knue-python
@@ -480,7 +480,7 @@ The `code/` folder has two Python scripts for reference PDFs.
 | `code/rename_ref_pdfs_by_bib.py` | Matches the BibTeX entries in `sub/references.bib` against the PDFs in `ref/`, renames them to `Author. (Year). Title. Journal.pdf`, and writes CSV reports. |
 | `code/download_missing_ref_pdfs.py` | Downloads PDFs that are in `references.bib` but missing from `ref/`, using open-access sources, DOIs, and the lab paper-search server. |
 
-The required modules are `pymupdf` and `pypdf` (PDF text extraction) plus `requests` (download only). Install on Python 3.10+, ideally inside the `knue-python` conda environment from [3-PYTHON_CONDA_VSCODE_SETUP.md](../manual/3-PYTHON_CONDA_VSCODE_SETUP.md).
+The required modules are `pymupdf` and `pypdf` (PDF text extraction) plus `requests` (download only). Install on Python 3.10+, ideally inside the `knue-python` conda environment from [4-PYTHON_CONDA_VSCODE_SETUP.md](../manual/4-PYTHON_CONDA_VSCODE_SETUP.md).
 
 ```powershell
 conda activate knue-python

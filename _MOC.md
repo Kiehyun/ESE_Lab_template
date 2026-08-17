@@ -13,13 +13,14 @@ tags: [MOC, index, 볼트지도]
 ## 🚀 시작하기 — 설치·설정 안내
 
 - [[manual/README|매뉴얼 개요]]
-- [[1-OVERLEAF_THESIS_PROJECT]] — Overleaf로 학위논문 프로젝트 만들기
-- [[2-VSCODE_TeXLive_SETUP]] — Windows 로컬 LaTeX 설치
-- [[3-PYTHON_CONDA_VSCODE_SETUP]] — Python · conda · VS Code 분석 환경
-- [[4-OBSIDIAN_VAULT_SETUP]] — 이 저장소를 Obsidian 볼트로 열기
-- [[5-CLAUDE_CODE_SETUP]] — VS Code PowerShell에서 Claude Code 사용
-- [[6-LLMWIKI_GUIDE]] — 이 볼트를 사람+AI가 함께 쓰는 위키(llmwiki)로 활용하기
-- [[7-KNUE_THESIS_TEMPLATE_USAGE]] — KNUE_thesis 템플릿 파일 구조·빌드·석사박사 전환 등 양식 사용법
+- [[1-LATEX_BASICS]] — LaTeX 자체가 무엇이고 어떻게 동작하는지
+- [[2-OVERLEAF_THESIS_PROJECT]] — Overleaf로 학위논문 프로젝트 만들기
+- [[3-VSCODE_TeXLive_SETUP]] — Windows 로컬 LaTeX 설치
+- [[4-PYTHON_CONDA_VSCODE_SETUP]] — Python · conda · VS Code 분석 환경
+- [[5-OBSIDIAN_VAULT_SETUP]] — 이 저장소를 Obsidian 볼트로 열기
+- [[6-CLAUDE_CODE_SETUP]] — VS Code PowerShell에서 Claude Code 사용
+- [[7-LLMWIKI_GUIDE]] — 이 볼트를 사람+AI가 함께 쓰는 위키(llmwiki)로 활용하기
+- [[8-KNUE_THESIS_TEMPLATE_USAGE]] — KNUE_thesis 템플릿 파일 구조·빌드·석사박사 전환 등 양식 사용법
 
 ## 📝 연구 단계별 템플릿
 

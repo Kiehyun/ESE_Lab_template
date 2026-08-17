@@ -45,7 +45,7 @@ This template builds with **LuaLaTeX** and **biber**; it does not build with `pd
 - A LaTeX distribution such as TeX Live (full scheme recommended) or MiKTeX.
 - `lualatex` and `biber` available on your PATH. The build script checks for both and stops if either is missing.
 
-See [2-VSCODE_TeXLive_SETUP.md](../manual/2-VSCODE_TeXLive_SETUP.md) for installation. Use `.\TPT_main_build.cmd` on Windows or `./TPT_main_build.sh` on macOS/Linux.
+See [3-VSCODE_TeXLive_SETUP.md](../manual/3-VSCODE_TeXLive_SETUP.md) for installation. Use `.\TPT_main_build.cmd` on Windows or `./TPT_main_build.sh` on macOS/Linux.
 
 ## Build
 
@@ -80,7 +80,7 @@ The two scripts use the following Python packages.
 - `pypdf` — fallback text extraction when PyMuPDF fails
 - `requests` — paper downloads (download script only)
 
-Install them on Python 3.10 or newer. Running them inside the `knue-python` conda environment from this repository's [3-PYTHON_CONDA_VSCODE_SETUP.md](../manual/3-PYTHON_CONDA_VSCODE_SETUP.md) is recommended.
+Install them on Python 3.10 or newer. Running them inside the `knue-python` conda environment from this repository's [4-PYTHON_CONDA_VSCODE_SETUP.md](../manual/4-PYTHON_CONDA_VSCODE_SETUP.md) is recommended.
 
 ```powershell
 conda activate knue-python

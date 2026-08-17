@@ -184,11 +184,11 @@ AI(Claude·GPT·Gemini 등)에게 시킨 작업 내역**도 이곳에 기록하�
 논문을 AI의 도움으로 작성·분석하려면, 먼저 **Python을 설치하고 가상환경(conda 등)을 구성**해 두는
 것이 좋습니다. Claude Code·GPT Codex·GitHub Copilot 같은 도구는 VS Code와 Python 환경이 갖춰져
 있을 때 코드 실행·자료 분석·그림 생성까지 매끄럽게 도와줄 수 있습니다. 설치와 가상환경 구성,
-그리고 각 AI 도구에 코드를 요청하는 방법은 [3-PYTHON_CONDA_VSCODE_SETUP.md](3-PYTHON_CONDA_VSCODE_SETUP.md)를
+그리고 각 AI 도구에 코드를 요청하는 방법은 [4-PYTHON_CONDA_VSCODE_SETUP.md](4-PYTHON_CONDA_VSCODE_SETUP.md)를
 참고하세요.
 
 Claude Code를 Windows VS Code PowerShell에서 설치하고 사용하는 자세한 방법은
-[5-CLAUDE_CODE_SETUP.md](5-CLAUDE_CODE_SETUP.md)를 참고하세요.
+[6-CLAUDE_CODE_SETUP.md](6-CLAUDE_CODE_SETUP.md)를 참고하세요.
 
 ---
 
@@ -200,7 +200,7 @@ Git으로 커밋해 두면 언제든 과거 상태로 되돌리고, 무엇이 �
 
 ### 준비
 
-- Git 설치(설치 안내는 [2-VSCODE_TeXLive_SETUP.md](2-VSCODE_TeXLive_SETUP.md) 참고).
+- Git 설치(설치 안내는 [3-VSCODE_TeXLive_SETUP.md](3-VSCODE_TeXLive_SETUP.md) 참고).
 - (선택) GitHub 계정 — 원격 백업·협업이 필요할 때.
 - 빌드 부산물(`.aux`, `.log`, `.pdf` 등)과 Obsidian 개인 설정은 이미 `.gitignore`로 제외되어,
   원고 소스와 노트만 깔끔하게 기록됩니다.

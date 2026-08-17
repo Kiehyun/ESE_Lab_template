@@ -4,7 +4,7 @@
 
 Windows 10/11 기준으로 설명합니다.
 
-> Claude Code는 파일을 읽고 고치고, 명령을 실행하는 **에이전트**입니다. 실제 파일을 바꾸므로, 중요한 작업은 git으로 커밋해 두고(→ [4-OBSIDIAN_VAULT_SETUP.md](4-OBSIDIAN_VAULT_SETUP.md)의 Git 절) 변경 내용을 확인하며 쓰는 것이 안전합니다.
+> Claude Code는 파일을 읽고 고치고, 명령을 실행하는 **에이전트**입니다. 실제 파일을 바꾸므로, 중요한 작업은 git으로 커밋해 두고(→ [5-OBSIDIAN_VAULT_SETUP.md](5-OBSIDIAN_VAULT_SETUP.md)의 Git 절) 변경 내용을 확인하며 쓰는 것이 안전합니다.
 
 ## 0. 전체 흐름
 
@@ -30,7 +30,7 @@ Windows 10/11 기준으로 설명합니다.
      git --version
      ```
 
-- **VS Code** — 편집기 겸 터미널로 사용합니다. 설치는 [2-VSCODE_TeXLive_SETUP.md](2-VSCODE_TeXLive_SETUP.md)를 참고합니다.
+- **VS Code** — 편집기 겸 터미널로 사용합니다. 설치는 [3-VSCODE_TeXLive_SETUP.md](3-VSCODE_TeXLive_SETUP.md)를 참고합니다.
 
 ## 2. Claude Code 설치 (PowerShell 네이티브 설치)
 
@@ -126,9 +126,9 @@ VS Code에는 Claude Code 외에도 비슷한 방식으로 동작하는 AI 채�
 ## 8. 이 연구실에서 특히 유용한 사용법
 
 - **변경 리뷰**: 원고나 코드를 고친 뒤 `/code-review`로 변경분을 점검할 수 있습니다.
-- **AI 작업 일지**: 작업이 끝날 때 `오늘 작업 내역을 worklog에 남겨줘`라고 요청하면 `worklog/`에 기록됩니다(→ [4-OBSIDIAN_VAULT_SETUP.md](4-OBSIDIAN_VAULT_SETUP.md)의 AI 작업 일지 절).
+- **AI 작업 일지**: 작업이 끝날 때 `오늘 작업 내역을 worklog에 남겨줘`라고 요청하면 `worklog/`에 기록됩니다(→ [5-OBSIDIAN_VAULT_SETUP.md](5-OBSIDIAN_VAULT_SETUP.md)의 AI 작업 일지 절).
 - **참고문헌 정리**: `References/`의 논문을 `저자_연도-제목` 규칙으로 정리하거나 요약 노트 작성을 요청할 수 있습니다(→ [../References/README.md](../References/README.md)).
-- **데이터 분석**: 그래프·분석 코드는 Python 환경이 준비돼 있어야 원활합니다(→ [3-PYTHON_CONDA_VSCODE_SETUP.md](3-PYTHON_CONDA_VSCODE_SETUP.md)).
+- **데이터 분석**: 그래프·분석 코드는 Python 환경이 준비돼 있어야 원활합니다(→ [4-PYTHON_CONDA_VSCODE_SETUP.md](4-PYTHON_CONDA_VSCODE_SETUP.md)).
 
 ## 9. 자주 나는 오류와 해결
 
