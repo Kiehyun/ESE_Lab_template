@@ -1,0 +1,73 @@
+\begingroup
+\thispagestyle{plain}
+
+% 국문 논문요약 페이지입니다.
+% 이 파일의 역할: 국문 논문요약을 작성합니다.
+% 연구 목적, 연구 방법, 주요 결과, 결론을 짧고 압축적으로 요약합니다.
+% 논문요약은 논문 전체를 대표하는 글이므로 본문을 모두 쓴 뒤 마지막에 작성하는 것이 좋습니다.
+% 제목, 저자명, 학교/전공, 지도교수명처럼 반복 사용되는 정보는
+% sub/0-preamble.tex의 \newcommand 변수에서 수정합니다.
+% 이 파일에서는 논문요약 본문, 주요어, 하단 제출 문구를 주로 수정합니다.
+\begin{center}
+\setstretch{1}
+\vspace*{10mm}
+
+% 논문요약 제목: 고정 문구입니다.
+{\fontsize{14pt}{22.4pt}\selectfont \textbf{논 문 요 약}\par}
+
+\vspace{10mm}
+% 논문 제목: sub/0-preamble.tex의 \thesistitleKor 값을 사용합니다.
+% 줄간격 133%(표지와 동일 비율 28/21): 16pt x 4/3 = 21.33pt.
+{\fontsize{16pt}{21.33pt}\selectfont \thesistitleKor\par}
+
+\vspace{10mm}
+% 저자명: sub/0-preamble.tex의 \authorKor 값을 사용하며, \SpacedAuthorName으로 자간을 조정합니다.
+{\fontsize{13pt}{20.8pt}\selectfont \SpacedAuthorName{\authorKor}\par}
+
+\vspace{10mm}
+% 소속 및 지도교수명: sub/0-preamble.tex의 값을 사용합니다.
+{\fontsize{13pt}{20.8pt}\selectfont \universityKor\ \majorKor\par}
+{\fontsize{13pt}{20.8pt}\selectfont (지도교수\hspace{2em}\SpacedAuthorName{\advisorKor})\par}
+\vspace{15mm}
+\end{center}
+
+\begingroup
+\setstretch{1.8}
+\normalfont\normalsize\selectfont
+
+% 국문 논문요약 본문: 아래 문단들을 논문 내용에 맞게 수정합니다.
+\noindent
+논문요약은 논문 전체를 완성한 뒤 마지막에 작성하는 것이 좋다.
+논문요약에는 연구 목적, 연구 방법, 주요 결과, 결론을 짧고 압축적으로 제시한다.
+첫 문장에서는 연구 주제와 목적을 분명히 밝힌다.
+이때 연구 대상, 핵심 개념, 수업 또는 평가 맥락, 분석하려는 현상을 함께 제시하면 독자가 논문의 범위를 빠르게 이해할 수 있다.
+필요한 경우 실험, 조사, 이론적 분석, 시뮬레이션, 사례 연구, 혼합 연구 등 연구 방법의 성격도 첫 문단 안에서 간단히 밝힌다.
+
+다음으로 연구 방법을 간결하게 요약한다.
+연구 참여자 또는 분석 대상, 자료 수집 절차, 사용한 검사 도구나 분석 자료, 분석 방법을 중심으로 쓴다.
+선행 연구와 구별되는 연구 설계, 자료 수집 방법, 분석 방법이 있다면 그 특징을 중심으로 제시한다.
+다만 방법 자체가 논문의 핵심 기여가 아닌 경우에는 연구 결과를 이해하는 데 필요한 범위에서만 짧게 서술한다.
+논문요약에서는 표, 그림, 장 번호를 직접 참조하기보다 본문을 읽지 않아도 이해될 수 있도록 핵심 절차를 문장으로 풀어 쓰는 것이 좋다.
+
+논문요약에서 가장 중요한 부분은 연구 결과와 결론이다.
+연구 결과는 추론이나 과도한 해석을 덧붙이기보다 객관적으로 제시한다.
+정량 연구에서는 변화의 방향, 집단 간 차이, 통계적으로 확인된 핵심 결과를 중심으로 쓰고, 정성 연구에서는 도출된 범주, 참여자의 반응 양상, 사례에서 확인된 특징을 중심으로 쓴다.
+여러 결과를 모두 나열하기보다 연구 문제에 직접 답하는 결과를 우선 제시한다.
+결론에서는 연구 목적에 대해 어떤 답을 얻었는지 간략히 밝히고, 그 결과가 과학교육 이론, 수업 설계, 평가, 교사 교육 또는 교육과정 실행에 어떤 의미를 갖는지 한두 문장으로 정리한다.
+독자는 논문요약을 통해 연구의 핵심 결과와 의의를 먼저 확인하려 하므로, 논문요약 전체에서 결과와 결론이 충분한 비중을 차지하도록 작성한다.
+마지막으로 연구의 제한점이나 후속 연구 방향을 매우 짧게 덧붙일 수 있으나, 논문요약의 대부분을 제한점 설명에 사용하지 않도록 한다.
+주요어는 논문 제목에 포함된 핵심 용어, 연구 대상, 연구 방법, 중요한 과학교육 개념을 중심으로 4--6개 정도 제시한다.
+
+\vskip 0.5cm
+\noindent
+% 주요어: 논문 주제에 맞게 쉼표로 구분하여 수정합니다.
+\textbf{주요어:} \thesiskeywordsKor
+
+\vfill
+
+% 하단 제출 문구: 학위수여 연월은 sub/0-preamble.tex의 \ThesisConferralYear, \ThesisConferralMonth에서 수정합니다.
+\noindent{\setstretch{1}\fontsize{10pt}{16pt}\selectfont ※ 이 논문은 \ThesisConferralDateKor\ 한국교원대학교 대학원위원회에 제출된 교육학 \degreeProgramKor{}학위 논문임.\par}
+\endgroup
+\endgroup
+
+\newpage

@@ -1,0 +1,162 @@
+% --------------------------------------------------------------------
+% 결과 섹션입니다.
+% Results section.
+%
+% proposal 모드에서는 예상 산출물과 일정을, result 모드에서는 실제 연구 결과와 해석을 제시합니다.
+% In proposal mode, present expected outputs and schedule; in result mode, present actual findings and interpretations.
+% --------------------------------------------------------------------
+
+% 결과 섹션 제목은 sub/preamble_beamer.tex의 \presentationStage 값에 따라 달라집니다.
+% The results-section title changes according to \presentationStage in sub/preamble_beamer.tex.
+\section{\BeamerResultsSectionTitle}
+
+% 첫 번째 결과 하위 섹션입니다.
+% First results subsection.
+\subsection{\BeamerResultsFirstSubsection}
+
+% proposal 모드에서는 예상 산출물을, result 모드에서는 주요 연구 결과를 정리합니다.
+% In proposal mode, summarize expected outputs; in result mode, summarize major findings.
+\begin{frame}[t]{\BeamerResultsFirstFrame}
+\small
+
+% block 안에는 발표 단계에 맞는 결과의 종류를 구체적으로 적습니다.
+% In this block, write concrete output or result types for the selected stage.
+\begin{block}{\BeamerResultsFirstBlock}
+\begin{itemize}
+\tightitems
+
+% 아래 예시는 연구 성격에 맞게 삭제하거나 바꿉니다.
+% Delete or replace the examples below according to the nature of your study.
+\item \KNUEStageText{산출물 1: 분석틀, 수업 모형, 교수-학습자료, 측정 도구 등}{결과 1: 연구 문제 1에 대한 핵심 분석 결과}
+\item \KNUEStageText{산출물 2: 적용 결과, 변화 양상, 사례 분석, 설계 원리}{결과 2: 연구 문제 2에 대한 정량/정성 분석 결과}
+\item \KNUEStageText{산출물 3: 후속 연구와 현장 적용을 위한 제안}{결과 3: 후속 논의와 현장 적용을 위한 해석}
+\end{itemize}
+\end{block}
+
+% exampleblock은 발표 단계에 맞는 결과 제시 방식을 안내합니다.
+% This exampleblock explains how to present results for the selected stage.
+\begin{exampleblock}{\KNUEStageText{결과 제시 방식}{결과 해석 방식}}
+\KNUEStageText
+{연구계획 발표에서는 확정된 결과보다 \textbf{어떤 자료로 어떤 결과를 얻을 예정인지}와 \textbf{결과가 연구 문제에 어떻게 답할 것인지}를 분명히 보여 줍니다.}
+{결과발표에서는 \textbf{무엇을 발견했는지}, \textbf{왜 그렇게 해석할 수 있는지}, \textbf{연구 문제에 어떻게 답하는지}를 분명히 보여 줍니다.}
+\end{exampleblock}
+
+\slidenote{
+\KNUEStageText
+{아직 연구가 끝나지 않았더라도, 예상 산출물의 형태와 판단 기준을 명확히 제시하면 연구의 완성 가능성을 설명할 수 있습니다.}
+{결과발표에서는 통계값이나 사례 자체보다 연구 문제와 연결되는 해석을 먼저 말합니다.}
+}
+\end{frame}
+
+% 두 번째 결과 하위 섹션입니다.
+% Second results subsection.
+\subsection{\BeamerResultsSecondSubsection}
+
+% proposal 모드에서는 연구 일정을, result 모드에서는 결과 해석을 제시합니다.
+% In proposal mode, present the research schedule; in result mode, present result interpretation.
+\begin{frame}[t]{\BeamerResultsSecondFrame}
+\scriptsize
+
+\KNUEStageText{%
+% 표 열 너비는 발표 화면에 맞게 p{...}로 고정했습니다.
+% Column widths are fixed with p{...} so the table fits on the slide.
+\begin{tabular}{p{0.23\textwidth}p{0.15\textwidth}p{0.48\textwidth}}
+\toprule
+단계 & 기간 & 주요 내용 \\
+\midrule
+
+% 아래 일정은 예시입니다. 실제 학사 일정과 심사 일정을 반영해 수정합니다.
+% The schedule below is an example. Revise it according to actual academic and review timelines.
+문헌 검토와 분석틀 정리 & 1--2월 & 선행 연구 검토, 연구 문제 확정, 분석 기준 정리 \\
+자료 또는 수업 설계 & 3--4월 & 도구 개발, 전문가 검토, 파일럿 점검 \\
+자료 수집 & 5--7월 & 수업 실행, 검사, 산출물 수집, 인터뷰 \\
+자료 분석 & 8--9월 & 정량 분석, 질적 코딩, 결과 통합 \\
+논문 작성과 수정 & 10--12월 & 본문 작성, 지도교수 검토, 최종 수정 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.25cm}
+
+% 연구윤리, IRB, 심사 마감처럼 일정에 영향을 주는 요소를 강조합니다.
+% Highlight factors that affect the timeline, such as ethics review, IRB, or defense deadlines.
+\begin{alertblock}{작성 팁}
+실제 학사 일정, 심사 일정, IRB 또는 연구윤리 절차가 있다면 일정표에 함께 반영합니다.
+\end{alertblock}
+
+\slidenote{
+일정표는 연구가 실행 가능한 계획인지 보여 주는 장치입니다. 각 단계가 연구 문제와 방법에 맞게 이어지는지 설명합니다.
+}
+}{%
+% 결과발표에서는 핵심 결과가 이론, 방법, 선행 연구와 어떻게 연결되는지 설명합니다.
+% In result presentations, explain how findings connect to theory, methods, and prior work.
+\begin{block}{해석의 초점}
+\begin{itemize}
+\tightitems
+\item 연구 문제별 핵심 결과를 한 문장으로 요약
+\item 선행 연구와 일치하거나 다른 지점 설명
+\item 방법상의 강점과 제한점이 해석에 미치는 영향 제시
+\end{itemize}
+\end{block}
+
+\begin{alertblock}{작성 팁}
+결과를 나열하기보다, 각 결과가 논문의 주장과 결론을 어떻게 지지하는지 중심으로 설명합니다.
+\end{alertblock}
+
+\slidenote{
+결과 해석에서는 숫자, 표, 사례를 모두 말하려 하기보다 논문 전체의 주장에 필요한 근거를 선별해 설명합니다.
+}
+}
+\end{frame}
+
+% 세 번째 결과 하위 섹션입니다.
+% Third results subsection.
+\subsection{\BeamerResultsThirdSubsection}
+
+% proposal 모드에서는 기대 효과를, result 모드에서는 논의와 시사점을 제시합니다.
+% In proposal mode, present expected contributions; in result mode, present discussion and implications.
+\begin{frame}[t]{\BeamerResultsThirdFrame}
+\small
+
+% 두 열 구조로 학문적 기여와 교육적/현장 기여를 나눕니다.
+% Use two columns to separate academic and educational/practical contributions.
+\begin{columns}[T]
+
+% 왼쪽 열: 학문적 기여입니다.
+% Left column: academic contributions.
+\begin{column}{0.48\textwidth}
+\begin{block}{\KNUEStageText{학문적 기대 효과}{학문적 시사점}}
+\begin{itemize}
+\tightitems
+
+% 이론, 방법, 후속 연구 측면의 기여를 적습니다.
+% Describe contributions to theory, methodology, and future research.
+\item \KNUEStageText{이론 또는 분석틀의 확장}{이론 또는 분석틀에 대한 결과의 의미}
+\item \KNUEStageText{연구 방법의 적용 가능성 제시}{연구 방법의 타당성과 한계}
+\item \KNUEStageText{후속 연구 질문 도출}{후속 연구를 위한 쟁점}
+\end{itemize}
+\end{block}
+\end{column}
+
+% 오른쪽 열: 교육적 또는 현장 적용 기여입니다.
+% Right column: educational or practical contributions.
+\begin{column}{0.48\textwidth}
+\begin{block}{\KNUEStageText{교육적 기대 효과}{교육적 시사점}}
+\begin{itemize}
+\tightitems
+
+% 수업, 평가, 학습자 지원, 자료 개발 측면의 기여를 적습니다.
+% Describe contributions to instruction, assessment, learner support, and material development.
+\item \KNUEStageText{수업 설계와 평가 개선}{수업 설계와 평가에 주는 의미}
+\item \KNUEStageText{학습자 지원 전략 제안}{학습자 지원 전략에 대한 시사점}
+\item \KNUEStageText{현장 적용 자료 제공}{현장 적용 가능성과 주의점}
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+\slidenote{
+\KNUEStageText
+{기대 효과는 과장하지 않고 연구 결과가 실제로 기여할 수 있는 범위 안에서 제시합니다.}
+{시사점은 결과가 실제로 지지하는 범위 안에서 말하고, 제한점은 결론의 신뢰도를 높이는 방식으로 제시합니다.}
+}
+\end{frame}

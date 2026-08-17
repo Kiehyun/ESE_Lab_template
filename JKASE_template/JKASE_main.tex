@@ -1,0 +1,591 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 한국과학교육학회지(JKASE) 투고 템플릿 메인 파일
+% Journal of the Korean Association for Science Education
+%
+% 이 파일은 원고의 "조립 지점" 역할을 합니다. 실제 본문은 sub/ 폴더의
+% 장별 tex 파일에서 불러오고, 이 파일에서는 문서 양식, 투고/심사/최종본
+% 모드, 제목·저자·초록·주제어, 참고문헌, 앞/뒤 표지 요소를 한곳에서
+% 관리합니다.
+%
+% 특징:
+% - 과학교육 전반의 이론, 교수학습, 교육과정, 평가, 교사교육, 교육정책 연구에 적합합니다.
+% - 국문 제목/초록/주제어와 영문 제목/초록/키워드를 함께 관리하도록 구성했습니다.
+% - 빌드 스크립트(JKASE_main_build.cmd/.sh)를 인자 없이 실행하면 투고본(submission),
+%   수정본(review), 최종본(final) PDF가 한 번에 모두 생성됩니다. (특정 모드만: 인자 지정)
+% - submission/review 모드에서는 저자 정보가 비워지고, final 모드에서만 저자 정보가 표시됩니다.
+%
+% 투고 전 확인:
+% - 한국과학교육학회 및 JKASE JAMS의 최신 투고규정을 반드시 확인하세요.
+% - 연구논문은 연구 목적, 연구 문제와 방법의 연결, 선행연구, 방법, 결과, 논의와 결론이
+%   명확히 드러나도록 작성하는 것이 좋습니다.
+% - 국문 원고는 영문 abstract와 국문 요약을 요구할 수 있으므로, 학회 최신 양식을 확인하세요.
+% - 참고문헌은 학회 규정의 APA 기반 양식에 맞추어 본문 인용과 1:1로 대조하세요.
+% - 게재 확정 후 최종 제출 단계에서는 학회 요청에 맞추어 최종본을 아래아한글(HWP) 파일로
+%   변환해 제출해야 할 수 있으므로, 최신 투고규정과 편집위원회 안내를 확인하세요.
+%
+% 편집 요령:
+% - 새 원고를 시작할 때는 아래 Manuscript Metadata 블록부터 수정하세요.
+% - 표와 그림은 본문에서 먼저 설명한 뒤 배치하고, 모든 표/그림에 label을 붙이세요.
+% - 한국과학교육학회지는 최종 조판에서 2단 편집을 사용하므로, 표와 그림은
+%   1단 폭(0.5\textwidth) 또는 2단 폭(1.0\textwidth) 중 하나를 정해 그리는 것이 좋습니다.
+% - 투고본에는 저자 식별 정보, 사사, 연구비 과제번호 등 익명성을 해칠 수 있는 내용을 넣지 마세요.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 이 문서는 한글, 영문, 수식, biblatex/biber 참고문헌을 함께 사용하므로
+% LuaLaTeX로 컴파일해야 합니다. TeX 편집기에서 아래 magic comment를
+% 인식하면 자동으로 LuaLaTeX와 UTF-8 인코딩을 선택합니다.
+% !TEX TS-program = lualatex
+% !TEX encoding = UTF-8 Unicode
+
+% jkase.cls 문서 클래스 사용.
+% backend=biber : 참고문헌 처리 엔진으로 biber를 사용합니다.
+% style=apa     : 본문 인용과 참고문헌 형식을 APA 스타일에 맞춥니다.
+% sortcites=true: 한 괄호 안의 여러 인용을 정렬합니다.
+\documentclass[backend=biber,style=apa,sortcites=true]{jkase}
+
+% 공통 패키지, 글꼴, 간격, 색상, 캡션 등 문서 전반 설정을 불러옵니다.
+% preamble은 \begin{document} 전에 반드시 로드되어야 합니다.
+\input{./sub/0-preamble.tex}
+
+% ==================================================================
+% 논문 출력 모드 설정
+%
+% 이 값은 수동 컴파일할 때의 기본 모드입니다. 빌드 스크립트
+% JKASE_main_build.cmd / JKASE_main_build.sh를 사용할 경우에는
+% 스크립트가 \ANONYMIZED, \REVIEWCOPY, \FINALMODE 같은 명령을 주입하여
+% 아래 기본값을 덮어쓸 수 있습니다.
+%
+%   submission : 투고본. 1단 편집, 저자명과 소속을 숨김.
+%   review     : 심사본. 1단 편집, 저자명과 소속을 숨기고 심사용 표시 가능.
+%   final      : 최종본. 2단 편집, 저자명과 소속을 모두 표시.
+%
+% 수동으로 최종본을 만들고 싶으면 아래 submission 줄을 주석 처리하고
+% \def\PAPERMODE{final} 줄의 주석을 해제하면 됩니다.
+% ==================================================================
+\def\PAPERMODE{submission}
+% \def\PAPERMODE{final}
+
+
+% jkase.cls 안에는 \ifanonymizedsubmission, \ifreviewcopy, \iffinalcopy 같은
+% 모드 판별용 boolean이 선언되어 있습니다. 여기서는 위에서 정한
+% \PAPERMODE 문자열을 읽어 해당 boolean을 켭니다.
+%
+% \makeatletter ... \makeatother 구간에서는 @가 들어간 내부 명령
+% 이름(\@jkpm 등)을 사용할 수 있습니다. 이 내부 임시 변수들은
+% "현재 모드"와 "각 모드 이름"을 비교하기 위해서만 사용합니다.
+\makeatletter
+\edef\@jkpm{\PAPERMODE}
+\edef\@jkpmS{submission}
+\edef\@jkpmR{review}
+\edef\@jkpmF{final}
+\ifx\@jkpm\@jkpmS
+  % 투고본은 익명 처리만 켭니다.
+  \anonymizedsubmissiontrue
+\fi
+\ifx\@jkpm\@jkpmR
+  % 심사본은 익명 처리와 심사용 사본 표시를 함께 켭니다.
+  \anonymizedsubmissiontrue
+  \reviewcopytrue
+\fi
+\ifx\@jkpm\@jkpmF
+  % 최종본은 익명 처리를 끄고 최종본 플래그를 켭니다.
+  \anonymizedsubmissionfalse
+  \reviewcopyfalse
+  \finalcopytrue
+\fi
+\makeatother
+
+% 명령행 빌드 스크립트에서 모드를 지정하는 경우의 우선 처리입니다.
+% 예를 들어 build.cmd final처럼 실행하면 스크립트가 \FINALMODE를 주입하고,
+% 이 구간에서 최종본 설정이 강제로 적용됩니다. 즉, 파일 안의 기본
+% \PAPERMODE 값보다 빌드 스크립트 인자가 우선합니다.
+\ifdefined\ANONYMIZED
+  \anonymizedsubmissiontrue
+  \finalcopyfalse
+\fi
+\ifdefined\REVIEWCOPY
+  \anonymizedsubmissiontrue
+  \reviewcopytrue
+  \finalcopyfalse
+\fi
+\ifdefined\FINALMODE
+  \anonymizedsubmissionfalse
+  \reviewcopyfalse
+  \finalcopytrue
+\fi
+
+% 위에서 확정한 클래스 모드 boolean을 편의 boolean(\ifDocFinal 등)으로
+% 옮겨 둡니다. 아래 표/그림 폭 조정 환경과 sub/ 본문 파일이 이 boolean을
+% 사용합니다.
+%   final      -> \ifDocFinal
+%   review     -> \ifDocReview
+%   그 외      -> \ifDocSubmission
+\newif\ifDocFinal
+\newif\ifDocReview
+\newif\ifDocSubmission
+\iffinalcopy
+  \DocFinaltrue
+\else
+  \ifreviewcopy
+    \DocReviewtrue
+  \else
+    \DocSubmissiontrue
+  \fi
+\fi
+
+% ==================================================================
+% 표/그림 폭 조정 도우미 환경
+%
+% 한국과학교육학회지 최종본은 2단 편집이므로, 표와 그림은 처음부터
+% 2단 폭(1.0\textwidth) 또는 1단 폭(0.5\textwidth)을 정해 두는 것이
+% 좋습니다. 아래 환경은 final 모드에서는 두 단을 가로지르는 표*/그림*
+% (table*/figure*)로, submission/review 모드에서는 일반 표/그림으로
+% 자동 전환합니다.
+% ==================================================================
+\newenvironment{ManuscriptWideTable}[1][htbp]{%
+  \ifDocFinal\begin{table*}[#1]\else\begin{table}[#1]\fi
+}{%
+  \ifDocFinal\end{table*}\else\end{table}\fi
+}
+
+\newenvironment{ManuscriptWideFigure}[1][htbp]{%
+  \ifDocFinal\begin{figure*}[#1]\else\begin{figure}[#1]\fi
+}{%
+  \ifDocFinal\end{figure*}\else\end{figure}\fi
+}
+
+\newlength{\ManuscriptHalfWidthLen}
+\newcommand{\ManuscriptSetHalfWidth}{%
+  \ifDocFinal
+    \setlength{\ManuscriptHalfWidthLen}{\columnwidth}%
+  \else
+    \setlength{\ManuscriptHalfWidthLen}{0.5\textwidth}%
+  \fi
+}
+\newcommand{\ManuscriptHalfWidth}{\ManuscriptHalfWidthLen}
+\newenvironment{ManuscriptColumnTable}[1][htbp]{%
+  \begin{table}[#1]
+  \ManuscriptSetHalfWidth
+  \noindent\begin{minipage}{\ManuscriptHalfWidth}
+  \captionsetup{width=\linewidth,justification=raggedright,singlelinecheck=false}%
+}{%
+  \end{minipage}
+  \end{table}
+}
+\newenvironment{ManuscriptColumnFigure}[1][htbp]{%
+  \begin{figure}[#1]
+  \ManuscriptSetHalfWidth
+  \noindent\begin{minipage}{\ManuscriptHalfWidth}
+  \captionsetup{width=\linewidth,justification=raggedright,singlelinecheck=false}%
+}{%
+  \end{minipage}
+  \end{figure}
+}
+
+
+% 심사본에서 수정·응답 내용을 색으로 구분할 때 쓰는 색상 정의입니다.
+% final/submission 모드에서는 아래 \revone 등 명령이 색을 적용하지 않고
+% 원문 텍스트만 출력하므로, 최종본에 심사 색상이 남지 않습니다.
+\definecolor{reviewerone}{HTML}{2E8B57}   % 심사자1: 초록색
+\definecolor{reviewertwo}{HTML}{7E57C2}   % 심사자2: 보라색
+\definecolor{reviewerthree}{HTML}{40BFEF} % 심사자3: 하늘색
+\definecolor{reviewsummary}{HTML}{1F5AA6} % 심사총평: 파란색
+
+% 심사자별 반영 문구를 감싸는 편의 명령입니다.
+% 사용 예: \revone{심사자 1 의견 반영 문장}
+% review 모드에서는 지정 색상으로 보이고, 그 외 모드에서는 일반 텍스트로 보입니다.
+\newcommand{\revone}[1]{\ifreviewcopy\textcolor{reviewerone}{#1}\else#1\fi}
+\newcommand{\revtwo}[1]{\ifreviewcopy\textcolor{reviewertwo}{#1}\else#1\fi}
+\newcommand{\revthree}[1]{\ifreviewcopy\textcolor{reviewerthree}{#1}\else#1\fi}
+\newcommand{\revsummary}[1]{\ifreviewcopy\textcolor{reviewsummary}{#1}\else#1\fi}
+
+% 참고문헌 데이터베이스 파일입니다. 본문에서 \cite, \parencite 등으로
+% 인용한 항목은 이 bib 파일의 citation key와 연결됩니다.
+\addbibresource{./sub/references.bib}
+
+% APA 스타일에서 본문 인용과 참고문헌 저자 표시 수를 조정합니다.
+% maxcitenames=2 : 본문 인용에서 최대 2명까지 표시.
+% mincitenames=1 : 축약 시 최소 1명은 표시.
+% maxbibnames=99 : 참고문헌 목록에서는 가능한 한 모든 저자명을 표시.
+\ExecuteBibliographyOptions{maxcitenames=2,mincitenames=1,maxbibnames=99}
+
+% bib 파일의 note 필드는 내부 메모나 출처 기록용으로 쓰일 수 있으므로,
+% 최종 참고문헌과 본문 인용에는 출력되지 않게 비웁니다.
+\AtEveryBibitem{\clearfield{note}}
+\AtEveryCitekey{\clearfield{note}}
+
+% langid={korean}으로 표시된 참고문헌은 목록 끝에 "(in Korean)"을 붙입니다.
+% 영문 독자가 한국어 문헌임을 알 수 있도록 하기 위한 표시입니다.
+\renewbibmacro*{finentry}{%
+  \iffieldequalstr{langid}{korean}
+    {\setunit{\addspace}\printtext{(in Korean)}}
+    {}%
+  \finentry}
+
+% 이 아래부터는 실제 논문 정보와 출력 구조를 정의합니다.
+% 세부 패키지 로드는 sub/0-preamble.tex에서 처리합니다.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% ARTICLE METADATA - to be finalized by the editorial office
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 학술지 권호·쪽수·접수일 정보입니다.
+% 실제 출판 시에는 편집부가 최종 권(volume), 호(issue), 시작/끝 쪽수를
+% 확정할 수 있으므로, 투고 단계에서는 임시값을 넣어 둡니다.
+\def\year{20XX} % 출판 연도
+\def\month{Month} % 출판 월
+\def\volume{00} % 권 번호. 확정 전에는 00 유지
+\def\issue{0} % 호 번호. 확정 전에는 0 유지
+\def\beginpage{1} % 논문 시작 쪽
+\def\endpage{1} % 논문 끝 쪽
+\setcounter{page}{\beginpage} % 본문 페이지 번호를 시작 쪽수에 맞춤
+\def\received{} % 1차 원고접수일. 필요할 때만 값 입력
+\def\revised{}  % 수정본 접수일. 필요할 때만 값 입력
+\def\accepted{} % 게재 승인일. 필요할 때만 값 입력
+\date{\it (Received \received ; Revised \revised; Accepted \accepted)}
+
+% 빌드 모드는 파일 상단의 \PAPERMODE 또는 빌드 스크립트 인자로 제어됩니다.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% PLEASE PROVIDE ARTICLE INFORMATION HERE %%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% NECESSARY DEFINITIONS CAN BE PUT HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 논문 제목입니다.
+% \paperTitleKOR는 한글 표제, \paperTitleENG는 영문 표제입니다.
+% 아래에서 표지, running title, 영문/한글 앞표지 블록이 이 값을 재사용합니다.
+\newcommand{\paperTitleKOR}{한국과학교육학회지 투고 원고 제목}
+\newcommand{\paperTitleENG}{English Title for a JKASE Manuscript}
+
+
+% 저자명 정의입니다.
+% KOR/ENG 값을 분리해 두면 앞표지, 영문 초록 영역, 교신저자 표시를
+% 한곳에서 관리할 수 있습니다. 투고본/심사본에서는 아래 safety lock이
+% 이 값을 빈 문자열로 덮어써 익명성을 보장합니다.
+% 저자가 2명 이상이면 \authorTwoKOR 등에 값을 채우면 되고, 1명이면
+% 두 번째 저자 값을 비워 두면 앞표지가 자동으로 단독 저자 형식으로 출력됩니다.
+\newcommand{\authorOneKOR}{저자명}
+\newcommand{\authorTwoKOR}{}
+\newcommand{\authorOneENG}{Author Name}
+\newcommand{\authorTwoENG}{}
+
+% 저자 소속 정의입니다.
+% KOR는 한글 표기, ENG는 영문 표기에 사용합니다.
+\newcommand{\affilOneKOR}{소속 기관, 주소}
+\newcommand{\affilTwoKOR}{}
+\newcommand{\affilOneENG}{Affiliation, Address}
+\newcommand{\affilTwoENG}{}
+
+% 교신저자 연락처입니다. 최종본 저자소개와 앞표지 각주에서 사용됩니다.
+\newcommand{\CorrespondingEmail}{email@example.com}
+\newcommand{\CorrespondingPhone}{000-0000-0000}
+
+% 익명화 안전장치입니다.
+% submission/review 모드에서는 위에서 저자명과 소속을 입력해 두었더라도
+% 이 구간에서 모두 빈 문자열로 바꿉니다. 반드시 저자·소속 정의 뒤에
+% 위치해야 하며, 그래야 이후의 모든 출력 블록에서 익명화된 값이 사용됩니다.
+\ifanonymizedsubmission
+  \renewcommand{\authorOneKOR}{}
+  \renewcommand{\authorTwoKOR}{}
+  \renewcommand{\authorOneENG}{}
+  \renewcommand{\authorTwoENG}{}
+  \renewcommand{\affilOneKOR}{}
+  \renewcommand{\affilTwoKOR}{}
+  \renewcommand{\affilOneENG}{}
+  \renewcommand{\affilTwoENG}{}
+\fi
+
+%%% SECTION NUMBERING %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 장 번호 형식입니다.
+% section은 I., II., III.처럼 로마 숫자로, subsection은 1., 2.처럼
+% 아라비아 숫자로 표시합니다.
+\renewcommand\thesection{\Roman{section}.}
+\renewcommand\thesubsection{\arabic{subsection}.}
+
+% subsubsection 번호를 가., 나., 다.처럼 한글 순서로 표시합니다.
+% \@korean은 LaTeX 내부 명령 이름 규칙 때문에 \makeatletter 안에서 정의합니다.
+\makeatletter
+\newcommand{\@korean}[1]{%
+  \ifcase#1\or가\or나\or다\or라\or마\or바\or사\or아\or자\or차\else\@ctrerr\fi%
+}
+\renewcommand\thesubsubsection{\@korean\c@subsubsection.}
+\makeatother
+
+%%% ARTICLE TITLE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% jkase 클래스가 사용하는 기본 \title입니다.
+% 실제 제목 문자열은 위의 \paperTitleKOR에서 가져오므로, 제목을 바꿀 때는
+% 이 블록이 아니라 \paperTitleKOR만 수정하면 됩니다.
+\title{\setstretch{1.6}\textbf{\large
+\paperTitleKOR
+}}
+
+% 첫 페이지 저자 블록에서 사용할 짧은 소속명입니다.
+% 익명 모드에서는 빈 값으로 두어 첫 페이지에 소속 정보가 남지 않게 합니다.
+\ifanonymizedsubmission
+  \newcommand{\affilOneShortKOR}{}
+  \newcommand{\affilTwoShortKOR}{}
+\else
+  \newcommand{\affilOneShortKOR}{소속 기관}
+  \newcommand{\affilTwoShortKOR}{}
+\fi
+
+%%% AUTHOR NAME(S) / AFFILIATION(S) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% jkase 클래스의 저자/소속 목록입니다(authblk).
+% 익명 모드에서는 빈 저자명·소속을 넘기고, 최종본에서는 실제 값을 넘깁니다.
+\ifanonymizedsubmission
+\author[1]{}
+\affil[1]{}
+\else
+\author[1]{\authorOneKOR}
+\affil[1]{\affilOneKOR}
+\ifstrempty{\authorTwoKOR}{}{%
+  \author[2]{\authorTwoKOR}
+  \affil[2]{\affilTwoKOR}
+}
+\fi
+
+% 이메일 표시 줄입니다.
+% 익명 모드에서는 빈 줄을 사용하고, 최종본에서는 교신저자 이메일을 표시합니다.
+\ifanonymizedsubmission
+\affil[ ]{}
+\else
+\affil[ ]{\vskip -0.2cm { {\it E-mail: \CorrespondingEmail}}}
+\fi
+
+%%% CORRESPONDING AUTHOR %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 교신저자 이름입니다.
+% 익명 모드에서는 비워 두고, 최종본에서는 첫 번째 저자를 교신저자로 지정합니다.
+\ifanonymizedsubmission
+\def\corrauthor{}
+\else
+\def\corrauthor{\authorOneKOR}
+\fi
+
+%%% RUNNING AUTHOR NAME %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 쪽 머리말 등에 들어가는 축약 저자명입니다.
+% 익명 모드에서는 아무것도 출력하지 않도록 조건문으로 감쌉니다.
+\def\runningauthor{%
+\ifanonymizedsubmission \else
+\authorOneKOR\ifstrempty{\authorTwoKOR}{}{, \authorTwoKOR}%
+\fi
+}
+
+%%% RUNNING TITLE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 쪽 머리말에 들어가는 축약 제목입니다.
+% 제목이 너무 길어 머리말에서 넘치면 여기만 짧은 제목으로 바꾸면 됩니다.
+\def\runningtitle{한국과학교육학회지 투고 원고}
+
+%%% ABSTRACT (English) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 영문 초록입니다.
+% jkasehead가 앞표지 영역을 만들 때 이 값을 가져갑니다.
+% 수식 기호와 퍼센트 기호는 LaTeX 문법에 맞게 각각 $...$, \%로 입력합니다.
+\def\abstracttextENG{%
+The Journal of the Korean Association for Science Education publishes research on science education, including teaching and learning, curriculum, assessment, teacher education, and policy. Replace this text with an English abstract summarizing the purpose, methods, major findings, and implications of the study.
+}
+
+%%% KEY WORDS (English) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 영문 키워드입니다. 학회 양식에서 쉼표로 구분해 출력됩니다.
+\def\keywordsENG{%
+science education, teaching and learning, curriculum, assessment
+}
+
+%%% ABSTRACT (Korean) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 한글 초록입니다.
+% 문서 끝의 \jkasetail에서 사용됩니다.
+% 영문 초록과 핵심 내용이 어긋나지 않도록 함께 갱신하는 것이 좋습니다.
+\def\abstracttextKOR{%
+한국과학교육학회지는 과학교육 전반의 연구를 다루는 학술지입니다. 이 위치에는 연구 목적, 연구 방법, 주요 결과, 과학교육적 시사점을 간결하게 요약한 국문 초록을 입력하세요.
+}
+
+%%% KEY WORDS (Korean) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 한글 키워드입니다. 영문 키워드와 대응되도록 순서를 맞춰 둡니다.
+\def\keywordsKOR{%
+과학교육, 교수학습, 교육과정, 평가
+}
+
+
+% 첫 페이지의 별도 저자 블록입니다.
+% jkase 기본 \author/\affil 출력 외에, 학회 양식에 맞춘 저자명과
+% 짧은 소속 표시를 직접 구성합니다. 익명 모드에서는 내용 없는 블록을
+% 넘겨 저자 식별 정보가 남지 않도록 합니다.
+\ifanonymizedsubmission
+\firstpageauthorblock{%
+  {\normalsize }
+}
+\firstpagefootnotetext{%
+
+}
+\else
+\firstpageauthorblock{%
+  {\normalsize
+    \ifstrempty{\authorTwoKOR}{%
+      {\sffamily\bfseries\fontsize{11.0pt}{13.2pt}\selectfont \textbf{\authorOneKOR\textsuperscript{1}}}\par
+      \vspace{0.45mm}%
+      {\rmfamily\mdseries\fontsize{9.5pt}{11.4pt}\selectfont \textsuperscript{1}\affilOneShortKOR}
+    }{%
+      {\sffamily\bfseries\fontsize{11.0pt}{13.2pt}\selectfont \textbf{\authorOneKOR\textsuperscript{1}, \authorTwoKOR\textsuperscript{2}}}\par
+      \vspace{0.45mm}%
+      {\rmfamily\mdseries\fontsize{9.5pt}{11.4pt}\selectfont \textsuperscript{1}\affilOneShortKOR, \textsuperscript{2}\affilTwoShortKOR}
+    }
+  }%
+}
+\firstpagefootnotetext{%
+  \textbf{교신저자:} \authorOneKOR\ (\CorrespondingEmail)
+}
+\fi
+
+% 글꼴과 기본 문서 설정 대부분은 sub/0-preamble.tex에서 처리합니다.
+% 여기에는 표, 그림 캡션, 표 주석처럼 메인 파일의 출력 구조와 밀접한
+% 보조 설정만 남겨 두었습니다.
+
+% 모든 하위 파일(sub/*.tex)의 table 환경에 공통 적용되는 크기 조정입니다.
+% 표가 본문보다 지나치게 커지지 않도록 table 시작 시 \small로 낮추고,
+% table이 끝나면 다시 \normalsize로 복원합니다.
+\AtBeginEnvironment{table}{\small}
+\AtEndEnvironment{table}{\normalsize}
+
+% 캡션에 쓰는 9pt 크기 글꼴(captionnine)을 정의합니다.
+% 표/그림 캡션을 본문보다 약간 작게, 고딕(sf) 계열로 출력하기 위한 설정입니다.
+\DeclareCaptionFont{captionnine}{\fontsize{9.0pt}{10.8pt}\selectfont}
+
+% 표와 그림 캡션의 영문 라벨 형식입니다.
+% name=Table/Figure     : "표", "그림" 대신 "Table", "Figure"로 출력.
+% labelsep=period       : "Table 1."처럼 번호 뒤에 마침표 사용.
+% justification=justified: 여러 줄 캡션을 양쪽 정렬.
+% singlelinecheck=false : 한 줄 캡션도 동일한 정렬 규칙 적용.
+\captionsetup[table]{name=Table,font={sf,captionnine},labelfont={sf,bf,captionnine},labelsep=period,justification=justified,singlelinecheck=false}
+\captionsetup[figure]{name=Figure,font={sf,captionnine},labelfont={sf,bf,captionnine},labelsep=period,justification=justified,singlelinecheck=false}
+
+% 캡션 폭을 상황별로 빠르게 바꾸기 위한 보조 명령입니다.
+% 전체 폭 표/그림에는 \FullCaptionWidth, 2단 편집의 반폭 그림에는
+% \HalfCaptionWidth, minipage나 resizebox 내부처럼 현재 줄폭 기준이
+% 필요한 곳에는 \LocalCaptionWidth를 사용합니다.
+\newcommand{\FullCaptionWidth}{\captionsetup{width=\textwidth,justification=justified,singlelinecheck=false}}
+\newcommand{\HalfCaptionWidth}{\captionsetup{width=0.5\textwidth,justification=justified,singlelinecheck=false}}
+\newcommand{\LocalCaptionWidth}{\captionsetup{width=\linewidth,justification=justified,singlelinecheck=false}}
+
+% 표 아래 주석을 붙일 때 사용하는 명령입니다.
+% \FullTableNote는 본문 전체 폭 기준, \LocalTableNote는 현재 환경의
+% \linewidth 기준으로 주석 박스를 만듭니다.
+\newcommand{\FullTableNote}[1]{%
+  \par\vspace{0.3em}\noindent
+  \begin{minipage}{\textwidth}
+  \rmfamily\footnotesize #1\par
+  \end{minipage}%
+}
+\newcommand{\LocalTableNote}[1]{%
+  \par\vspace{0.3em}\noindent
+  \begin{minipage}{\linewidth}
+  \rmfamily\footnotesize #1\par
+  \end{minipage}%
+}
+
+% 줄바꿈 보정값입니다.
+% 긴 영문 제목, URL, 수식이 들어간 문장이 overfull hbox를 만들 때
+% TeX이 단어 간격을 조금 더 늘려 줄바꿈을 찾을 수 있게 합니다.
+\setlength{\emergencystretch}{6em}
+
+% vbadness는 세로 방향 간격 경고의 민감도입니다.
+% 값이 너무 낮으면 사소한 페이지 나눔에서도 경고가 많이 나오므로,
+% 논문 편집 중 필요한 경고만 보이도록 완화합니다.
+\vbadness=3000
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% STARTING DOCUMENT - DO NOT MODIFY ANYTHING HERE %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 한글 앞표지 영역에 들어갈 제목·저자·소속 블록입니다.
+% 익명 모드에서는 저자와 소속을 비워 두고, 최종본에서는 실제 정보를 넣습니다.
+\titleKOR{\paperTitleKOR}
+\ifanonymizedsubmission
+\authorsKOR{}
+\affilKOR{}
+\else
+\ifstrempty{\authorTwoKOR}{%
+\authorsKOR{\authorOneKOR\textsuperscript{1}}
+\affilKOR{\affilOneKOR}
+}{%
+\authorsKOR{\authorOneKOR\textsuperscript{1}, \authorTwoKOR\textsuperscript{2}}
+\affilKOR{\affilOneKOR\\\affilTwoKOR}
+}
+\fi
+
+% 영문 앞표지 영역에 들어갈 제목·저자·소속 블록입니다.
+% 저자가 1명인 경우와 2명 이상인 경우의 표기 형식을 나누어 두었습니다.
+\titleENG{\paperTitleENG}
+\ifanonymizedsubmission
+\authorsENG{}
+\affilENG{}
+\else
+\ifstrempty{\authorTwoENG}{%
+\authorsENG{\textbf{\authorOneENG\textsuperscript{1}}}
+\affilENG{\textsuperscript{1}\affilOneENG}
+}{%
+\authorsENG{\textbf{\authorOneENG\textsuperscript{1}, \authorTwoENG\textsuperscript{2}}}
+\affilENG{\textsuperscript{1}\affilOneENG, \textsuperscript{2}\affilTwoENG}
+}
+\fi
+
+\begin{document}
+
+% 본문 레이아웃 분기입니다.
+% final 모드는 학회 최종본처럼 2단 편집을 사용하고,
+% submission/review 모드는 심사 편의를 위해 1단 편집을 사용합니다.
+\iffinalcopy
+  % 최종본: jkase 클래스의 fancy 머리말을 유지하고, 앞표지 뒤부터 2단으로 배치합니다.
+  \pagestyle{fancy}
+  \twocolumn[{%
+    \jkasehead %% 제목, 저자, 초록, 키워드 등 앞표지 요소 출력
+  }]
+  \thispagestyle{plain}
+\else
+  % 투고본/심사본: 머리말을 숨기고 1단으로 출력합니다.
+  \pagestyle{plain}
+  \onecolumn
+  \jkasehead %% 제목, 저자, 초록, 키워드 등 앞표지 요소 출력
+\fi
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% BEGIN MAIN TEXT HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 실제 본문 장 파일을 순서대로 불러옵니다.
+% 각 파일은 독립 장처럼 관리되며, 이 메인 파일에서는 장 순서만 제어합니다.
+% 새 장을 추가할 경우 sub/ 폴더에 tex 파일을 만든 뒤 이곳에 \input을 추가합니다.
+\input{./sub/1-Introduction.tex}
+\input{./sub/3-Methods.tex}
+\input{./sub/4-Results.tex}
+\input{./sub/5-Discussion.tex}
+
+
+% -----------------------------
+% 한글 초록 및 한글 키워드
+% -----------------------------
+% \jkasetail은 클래스에서 정의된 뒤표지 성격의 요소(국문요약)를 출력합니다.
+% 여기에는 위에서 정의한 한글 초록과 한글 키워드가 사용됩니다.
+\jkasetail
+
+% 참고문헌 목록입니다.
+% 제목 "References"를 수동으로 출력한 뒤, biblatex의 기본 heading은 끄고
+% \printbibliography[heading=none]으로 실제 문헌 목록만 출력합니다.
+\vspace*{0.2\baselineskip}
+\noindent{\sffamily\bfseries\fontsize{14.5pt}{17pt}\selectfont References\par}
+\vspace{1.25\baselineskip}
+{%
+  \printbibliography[heading=none]
+}
+
+% 최종본에서는 저자소개를 표시합니다.
+% 투고본/심사본에서는 익명성을 위해 출력하지 않습니다.
+\iffinalcopy
+\clearpage
+\section*{저자소개}
+\noindent\textbf{\authorOneKOR\ (\authorOneENG)}: 저자소개를 입력하세요.\\
+이메일: \CorrespondingEmail\\
+전화번호: \CorrespondingPhone
+\fi
+
+
+\end{document}
+
+%%% THE END %%%

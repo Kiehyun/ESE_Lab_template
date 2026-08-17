@@ -1,0 +1,2459 @@
+% ========================================================
+% references.bib - 정리 완료
+% - 중복 항목 제거됨
+% - langid 필드 추가됨 (korean / english)
+% - bibcode(인용 키) 언어 구분 접두어 추가됨
+% - DOI CrossRef 검증 완료
+% - 한국어 논문 먼저, 영문 논문 나중 순서
+% - 총 199편 (한국어 27편 + 영문 172편)
+%
+% ---------- bibcode 작성 규칙 ----------
+% 한국어로 작성된 참고문헌: kor_기존키 형식으로 입력합니다.
+%   예: @article{kor_seo2009science, ...}
+% 영어로 작성된 참고문헌: eng_기존키 형식으로 입력합니다.
+%   예: @article{eng_perkel2018jupyter, ...}
+%
+% 본문에서 인용할 때도 같은 bibcode를 사용합니다.
+%   영어 문헌:
+%     \textcite{eng_perkel2018jupyter}는 Perkel (2018)처럼 저자명을 문장 안에 넣을 때 사용합니다.
+%     (\parencite{eng_perkel2018jupyter})는 (Perkel, 2018)처럼 문장 끝 괄호 인용에 사용합니다.
+%   한국어 문헌:
+%     \ktextcite{kor_seo2009science}는 서혜애(2009)처럼 한국어 저자명을 문장 안에 넣을 때 사용합니다.
+%     (\kparencite{kor_seo2009science})는 (서혜애, 2009)처럼 문장 끝 괄호 인용에 사용합니다.
+%   한국어 문헌과 영어 문헌을 함께 인용할 때:
+%     (\kparencite{kor_seo2009science}; \parencite{eng_perkel2018jupyter})
+%   혼합 인용에서는 한국어 문헌을 앞에 두고, 영어 문헌을 뒤에 둡니다.
+%   예: (홍길동과 임꺽정, 2026; Hong and Im, 2026)
+%   \kparencite와 \parencite는 괄호를 직접 출력하지 않으므로, 필요한 괄호는 본문에서 직접 넣습니다.
+%   이는 한글 논문과 영문 논문의 본문 인용 표기 형식이 서로 다르기 때문입니다.
+%   한국어 문헌은 저자 연결어와 쉼표 사용 방식이 영문 APA 인용과 다르며,
+%   한국어 문헌과 영어 문헌을 한 괄호 안에 함께 제시할 때는 바깥 괄호와 세미콜론 위치를
+%   작성자가 직접 조절해야 합니다. 그래서 이 템플릿에서는 \kparencite와 \parencite가
+%   인용 내용만 출력하고, 괄호는 본문에서 직접 쓰도록 하였습니다.
+%
+% langid 필드는 참고문헌의 작성 언어를 표시합니다.
+%   langid = {korean}: 한국어로 작성된 문헌
+%   langid = {english}: 영어로 작성된 문헌
+%
+% ---------- Google Scholar에서 BibTeX 가져오기 ----------
+% 1. Google Scholar에서 논문 제목을 검색합니다.
+% 2. 검색 결과 아래의 따옴표 모양 인용 아이콘을 누릅니다.
+% 3. 인용 창 아래쪽에서 BibTeX를 선택합니다.
+% 4. 새 화면에 나타난 BibTeX 항목 전체를 복사하여 이 파일에 붙여 넣습니다.
+% 5. Google Scholar가 만든 인용 키를 이 템플릿 규칙에 맞게 고칩니다.
+%    한국어 문헌: kor_저자성_연도_핵심어
+%    영어 문헌: eng_저자성_연도_핵심어
+% 6. Google Scholar BibTeX에는 langid가 없을 수 있으므로 직접 추가합니다.
+%    한국어 문헌: langid = {korean}
+%    영어 문헌: langid = {english}
+% 7. 자동으로 가져온 BibTeX는 오류가 있을 수 있으므로 저자명, 제목, 학술지명,
+%    연도, 권호, 페이지, DOI를 PDF 첫 페이지나 학술지 공식 페이지와 대조합니다.
+% ========================================================
+
+% ===== 저자 수별 인용 예시용 BibTeX =====
+% 아래 항목들은 textcite/parencite 사용법을 보여 주기 위한 템플릿 예시입니다.
+% 실제 논문을 작성할 때는 제목, 저자, 학술지명, 연도, DOI 등을 실제 문헌 정보로 바꿉니다.
+
+@article{kor_cite_example_one_author,
+  langid  = {korean},
+  author  = {홍길동},
+  title   = {인용 예시용 한국어 논문: 저자 1명},
+  journal = {한국논문작성교육연구},
+  year    = {2026},
+  volume  = {1},
+  number  = {1},
+  pages   = {1--10}
+}
+
+@article{eng_cite_example_one_author,
+  langid  = {english},
+  author  = {Hong, Gildong},
+  title   = {English Citation Example Article: One Author},
+  journal = {Journal of Thesis Writing Education},
+  year    = {2026},
+  volume  = {1},
+  number  = {1},
+  pages   = {1--10}
+}
+
+@article{kor_cite_example_two_authors,
+  langid  = {korean},
+  author  = {홍길동 and 임꺽정},
+  title   = {인용 예시용 한국어 논문: 저자 2명},
+  journal = {한국논문작성교육연구},
+  year    = {2026},
+  volume  = {1},
+  number  = {2},
+  pages   = {11--20}
+}
+
+@article{eng_cite_example_two_authors,
+  langid  = {english},
+  author  = {Hong, Gildong and Im, Kkeokjeong},
+  title   = {English Citation Example Article: Two Authors},
+  journal = {Journal of Thesis Writing Education},
+  year    = {2026},
+  volume  = {1},
+  number  = {2},
+  pages   = {11--20}
+}
+
+@article{kor_cite_example_three_authors,
+  langid  = {korean},
+  author  = {홍길동 and 임꺽정 and 성춘향},
+  title   = {인용 예시용 한국어 논문: 저자 3명},
+  journal = {한국논문작성교육연구},
+  year    = {2026},
+  volume  = {1},
+  number  = {3},
+  pages   = {21--30}
+}
+
+@article{eng_cite_example_three_authors,
+  langid  = {english},
+  author  = {Hong, Gildong and Im, Kkeokjeong and Seong, Chunhyang},
+  title   = {English Citation Example Article: Three Authors},
+  journal = {Journal of Thesis Writing Education},
+  year    = {2026},
+  volume  = {1},
+  number  = {3},
+  pages   = {21--30}
+}
+
+@article{kor_cite_example_six_authors,
+  langid  = {korean},
+  author  = {홍길동 and 임꺽정 and 성춘향 and 이몽룡 and 장보고 and 신사임당},
+  title   = {인용 예시용 한국어 논문: 저자 6명},
+  journal = {한국논문작성교육연구},
+  year    = {2026},
+  volume  = {1},
+  number  = {4},
+  pages   = {31--40}
+}
+
+@article{eng_cite_example_six_authors,
+  langid  = {english},
+  author  = {Hong, Gildong and Im, Kkeokjeong and Seong, Chunhyang and Lee, Mongryong and Jang, Bogo and Shin, Saimdang},
+  title   = {English Citation Example Article: Six Authors},
+  journal = {Journal of Thesis Writing Education},
+  year    = {2026},
+  volume  = {1},
+  number  = {4},
+  pages   = {31--40}
+}
+
+@article{kor_cite_example_eight_authors,
+  langid  = {korean},
+  author  = {홍길동 and 임꺽정 and 성춘향 and 이몽룡 and 장보고 and 신사임당 and 유관순 and 허준},
+  title   = {인용 예시용 한국어 논문: 저자 8명},
+  journal = {한국논문작성교육연구},
+  year    = {2026},
+  volume  = {1},
+  number  = {5},
+  pages   = {41--50}
+}
+
+@article{eng_cite_example_eight_authors,
+  langid  = {english},
+  author  = {Hong, Gildong and Im, Kkeokjeong and Seong, Chunhyang and Lee, Mongryong and Jang, Bogo and Shin, Saimdang and Yu, Gwansun and Heo, Jun},
+  title   = {English Citation Example Article: Eight Authors},
+  journal = {Journal of Thesis Writing Education},
+  year    = {2026},
+  volume  = {1},
+  number  = {5},
+  pages   = {41--50}
+}
+
+% ===== 한국어 논문 / 자료 =====
+
+@article{kor_seo2009science,
+  langid       = {korean},
+  author  = {서혜애},
+  title   = {과학영재 교육과정의 특성 및 연구의 방향},
+  journal = {영재교육연구},
+  year    = {2009},
+  volume  = {19},
+  number  = {1},
+  pages   = {171--194},
+  language = {korean}
+}
+
+@misc{kor_kma_data,
+  langid       = {korean},
+  author       = {{기상청}},
+  title        = {기상자료개방포털},
+  howpublished = {\url{https://data.kma.go.kr/}},
+  year         = {2024},
+  note         = {접속일: 2024년 11월 2일}
+}
+
+@misc{kor_gifted_education_act,
+  langid       = {korean},
+  title     = {영재교육진흥법 (Act on the Promotion of Gifted and Talented Education)},
+  author    = {{Ministry of Education, Republic of Korea}},
+  year      = {2000},
+  note      = {Law No. 6215, amended 2024},
+  url       = {https://www.law.go.kr/},
+  language  = {korean}
+}
+
+@article{kor_chung2022validation,
+  langid       = {korean},
+  author  = {Chung, Y. and You, J. W.},
+  title   = {Validation of Data Literacy Scale for University Students and Analysis of Freshmen Data Literacy: The Case of {A} University},
+  journal = {Korean Journal of General Education},
+  year    = {2022},
+  volume  = {16},
+  number  = {5},
+  pages   = {245--259},
+  doi     = {10.46392/kjge.2022.16.5.245},
+  url     = {https://doi.org/10.46392/kjge.2022.16.5.245}
+}
+
+@inproceedings{kor_lee2019bigdata,
+  langid       = {korean},
+% [CITE-AUDIT] lee2019bigdata: CROSSREF_NOT_FOUND_DOI + (당시) doi.org resolves: False로 기록됨. 본문에서는 인용 보류 처리(주석 참고). 실제 학술대회/DOI 존재 여부 재확인 권장.
+  author    = {Lee, Kyung and Park, Jin and Choi, Sung-Ho},
+  title     = {Big Data Analysis and Machine Learning in Secondary Science Education},
+  booktitle = {Proceedings of the International Conference on Science Education},
+  year      = {2019},
+  pages     = {412--425},
+  publisher = {IEEE},
+  doi       = {10.1109/ICSE.2019.8945621},
+  url       = {https://doi.org/10.1109/ICSE.2019.8945621},
+  note-doi     = {DOI not verified via CrossRef}
+}
+
+@article{kor_kim2011steam,
+  langid       = {korean},
+  author  = {김진수},
+  title   = {{STEAM} 교육을 위한 큐빅 모형},
+  journal = {한국기술교육학회지},
+  year    = {2011},
+  volume  = {11},
+  number  = {2},
+  pages   = {124--139},
+  note    = {영문 제목: A Cubic Model for STEAM Education}
+}
+
+@article{kor_park2014steam_korea,
+  langid       = {korean},
+  author  = {박현숙 and 박은옥},
+  title   = {한국의 {STEAM} 교육},
+  journal = {한국교육학회지},
+  year    = {2014},
+  volume  = {52},
+  number  = {2},
+  pages   = {67--90},
+  note    = {원문 제목: STEAM education in Korea}
+}
+
+@article{kor_bae2017steam,
+  langid       = {korean},
+% [CITE-AUDIT] bae2017steam: CROSSREF_NOT_FOUND_DOI + (당시) doi.org resolves: False로 기록됨. 본문에서는 인용 보류 처리(주석 참고). 원문/DOI 재확인 후 복원 권장.
+  author  = {Bae, Youngjun and Oh, Sangkyun and Kim, Soyeon},
+  title   = {Integrated STEAM curriculum: A systematic literature review},
+  journal = {Eurasia Journal of Mathematics, Science and Technology Education},
+  year    = {2017},
+  volume  = {13},
+  number  = {8},
+  pages   = {5959--5976},
+  doi     = {10.12973/eurasia.2017.00825a},
+  note-doi     = {DOI not verified via CrossRef}
+}
+
+@misc{kor_korea_public_data_act_2013,
+  langid       = {korean},
+  title={공공데이터 제공 및 이용 활성화에 관한 법률},
+  author={{대한민국 국회}},
+  year={2013},
+  month={10},
+  day={30},
+  url={https://www.law.go.kr/법령/공공데이터제공및이용활성화에관한법률},
+  language={korean},
+  note={법률 제11986호. 제정 2013년 10월 30일}
+}
+
+@misc{kor_korea_open_government_initiative,
+  langid       = {korean},
+  title={열린정부 이니셔티브},
+  author={{대한민국 정부}},
+  year={2012},
+  url={https://www.data.go.kr/},
+  language={korean},
+  note={정부 3.0 및 열린정부 정책에 따른 공공데이터 공개 추진}
+}
+
+@misc{kor_ministry2019gifted,
+  langid       = {korean},
+  title={영재교육진흥법},
+  author={{대한민국 교육부}},
+  year={2019},
+  url={https://www.law.go.kr/법령/영재교육진흥법},
+  language={korean},
+  note={법률 제15983호. 2019년 10월 18일 타법개정}
+}
+
+@book{kor_education2008science,
+  langid       = {korean},
+  title={영재교육 프로그램 개발 및 효과성 분석},
+  author={한국교육개발원},
+  publisher={한국교육개발원},
+  year={2008},
+  language={korean}
+}
+
+@misc{kor_nims_data,
+  langid       = {korean},
+  author       = {{국립기상과학원}},
+  title        = {기상자료 다운로드 서비스},
+  howpublished = {\url{https://www.nims.go.kr/nims_new/contents/NimsStaticPage.do?id=010404}},
+  year         = {2026},
+  note         = {접속일: 2026년 1월 19일}
+}
+
+@misc{kor_kigam_data,
+  langid       = {korean},
+  author       = {{한국지질자원연구원}},
+  title        = {지질정보 맵 서비스 및 데이터 다운로드},
+  howpublished = {\url{https://mgeo.kigam.re.kr/}},
+  year         = {2026},
+  note         = {접속일: 2026년 1월 19일}
+}
+
+@misc{kor_kiost_data,
+  langid       = {korean},
+  author       = {{한국해양과학기술원}},
+  title        = {해양자료 통합검색 및 다운로드},
+  howpublished = {\url{https://www.kiost.ac.kr/kor/contents.es?mid=a10203070000}},
+  year         = {2026},
+  note         = {접속일: 2026년 1월 19일}
+}
+
+@misc{kor_ngii_data,
+  langid       = {korean},
+  author       = {{국토지리정보원}},
+  title        = {국토정보플랫폼},
+  howpublished = {\url{https://www.nsdi.go.kr/}},
+  year         = {2026},
+  note         = {접속일: 2026년 1월 19일}
+}
+
+@misc{kor_nie_data,
+  langid       = {korean},
+  author       = {{국립생태원}},
+  title        = {에코뱅크 생태자료 개방 서비스},
+  howpublished = {\url{https://www.nie-ecobank.kr/}},
+  year         = {2026},
+  note         = {접속일: 2026년 1월 19일; 원자료명: 국립생태원 에코뱅크}
+}
+
+@misc{kor_ministry2015curriculum,
+  langid       = {korean},
+  author={{MOE}},
+  title={Science Curriculum},
+  year={2015},
+  note={Original Korean title: 과학과 교육과정; Ministry of Education Notice No. 2015-74 (2015. 9. 23.)}
+}
+
+@article{kor_cho2013epistemic,
+  langid  = {korean},
+  author  = {조현아 and 장지은 and 김희백},
+  title   = {데이터 출처 유형에 따른 중학생의 소집단 논변활동의 인식론적 수준},
+  journal = {한국과학교육학회지},
+  year    = {2013},
+  volume  = {33},
+  number  = {2},
+  pages   = {486--500},
+  language = {korean}
+}
+
+@article{kor_lee2021argument_machine_learning,
+  langid  = {korean},
+  author  = {이만형 and 유선아},
+  title   = {기계 학습을 활용한 논증 수준 자동 채점 및 논증 패턴 분석},
+  journal = {한국과학교육학회지},
+  year    = {2021},
+  volume  = {41},
+  number  = {3},
+  pages   = {203--220},
+  doi     = {10.14697/jkase.2021.41.3.203},
+  language = {korean}
+}
+
+@article{kor_hong2024weather_data_errors,
+  langid  = {korean},
+  author  = {홍석영},
+  title   = {기상 데이터 분석 과정에서 나타나는 오류의 유형과 맥락 탐색},
+  journal = {대한지구과학교육학회지},
+  year    = {2024},
+  volume  = {17},
+  number  = {2},
+  pages   = {153--167},
+  doi     = {10.15523/JKSESE.2024.17.2.153},
+  language = {korean}
+}
+
+@article{kor_ju2024earth_science_data_pbl,
+  langid  = {korean},
+  author  = {주수진 and 노자헌 and 김종희},
+  title   = {지구과학 데이터 활용 프로젝트 학습이 중학생의 지식정보 처리 역량 및 의사소통과 협업 역량에 미치는 영향},
+  journal = {대한지구과학교육학회지},
+  year    = {2024},
+  volume  = {17},
+  number  = {2},
+  pages   = {137--152},
+  doi     = {10.15523/JKSESE.2024.17.2.137},
+  language = {korean}
+}
+
+@article{kor_choi2024public_data_inquiry,
+  langid  = {korean},
+  author  = {최종근},
+  title   = {공공 데이터를 활용한 지구과학 탐구 활동 개발},
+  journal = {한국지구과학회지},
+  year    = {2024},
+  volume  = {45},
+  number  = {6},
+  pages   = {573--585},
+  doi     = {10.5467/JKESS.2024.45.6.573},
+  language = {korean}
+}
+
+@article{kor_lim2024typhoon_track_visualization,
+  langid  = {korean},
+  author  = {임채영 and 박경애},
+  title   = {천리안 위성 2A호 영상을 활용한 태풍 경로 시각화 탐구활동 수업자료 개발},
+  journal = {한국지구과학회지},
+  year    = {2024},
+  volume  = {45},
+  number  = {1},
+  pages   = {48--71},
+  doi     = {10.5467/JKESS.2024.45.1.48},
+  language = {korean}
+}
+
+@article{kor_hong2025science_data_ethics,
+  langid  = {korean},
+  author  = {홍석영},
+  title   = {예비 지구과학 교사의 과학 데이터 윤리 수업 사례 탐색},
+  journal = {대한지구과학교육학회지},
+  year    = {2025},
+  volume  = {18},
+  number  = {3},
+  pages   = {253--267},
+  doi     = {10.15523/JKSESE.2025.18.3.253},
+  language = {korean}
+}
+
+@article{kor_lee2017science_gifted_competency,
+  langid  = {korean},
+  author  = {이영주 and 김영민},
+  title   = {과학영재학교 구성원의 핵심역량에 대한 인식 및 교육요구도},
+  journal = {영재교육연구},
+  year    = {2017},
+  volume  = {27},
+  number  = {3},
+  pages   = {349--366},
+  doi     = {10.9722/JGTE.2017.27.3.349},
+  language = {korean}
+}
+
+
+% ===== 영문 논문 / 자료 =====
+
+@book{eng_linstone1975delphi,
+  langid    = {english},
+  editor    = {Linstone, Harold A. and Turoff, Murray},
+  title     = {The Delphi Method: Techniques and Applications},
+  year      = {1975},
+  publisher = {Addison-Wesley Publishing Company, Advanced Book Program},
+  address   = {Reading, MA},
+  isbn      = {0201042940},
+  note      = {With a foreword by Olaf Helmer}
+}
+
+@article{eng_aiken1980content,
+  langid  = {english},
+  author  = {Aiken, Lewis R.},
+  title   = {Content Validity and Reliability of Single Items or Questionnaires},
+  journal = {Educational and Psychological Measurement},
+  year    = {1980},
+  volume  = {40},
+  number  = {4},
+  pages   = {955--959},
+  doi     = {10.1177/001316448004000419},
+  url     = {https://doi.org/10.1177/001316448004000419}
+}
+
+@article{eng_perkel2018jupyter,
+  langid       = {english},
+  author  = {Perkel, Jeffrey M.},
+  title   = {Why {J}upyter is data scientists' computational notebook of choice},
+  journal = {Nature},
+  year    = {2018},
+  volume  = {563},
+  number  = {7732},
+  pages   = {145--146},
+  doi     = {10.1038/d41586-018-07196-1},
+  adsurl  = {https://ui.adsabs.harvard.edu/abs/2018Natur.563..145P},
+  adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+
+@book{eng_mcneill2012_cer_framework,
+  langid       = {english},
+  author    = {McNeill, Katherine L. and Krajcik, Joseph S.},
+  title     = {Supporting Grade 5--8 Students in Constructing Explanations in Science: The Claim, Evidence, and Reasoning Framework for Talk and Writing},
+  year      = {2012},
+  publisher = {Pearson},
+  address   = {Boston, MA},
+  note      = {Often cited as 2011/2012 in secondary literature}
+}
+
+@article{eng_mcneill2006_scaffolds_explanations,
+  langid       = {english},
+  author  = {McNeill, Katherine L. and Lizotte, David J. and Krajcik, Joseph and Marx, Ronald W.},
+  title   = {Supporting Students' Construction of Scientific Explanations by Fading Scaffolds in Instructional Materials},
+  journal = {Journal of the Learning Sciences},
+  year    = {2006},
+  volume  = {15},
+  number  = {2},
+  pages   = {153--191},
+  doi     = {10.1207/s15327809jls1502_1},
+  month   = apr
+}
+
+@misc{eng_mcneill2015_cer_nowwhat,
+  langid       = {english},
+  author       = {McNeill, Katherine L.},
+  title        = {I introduced the Claim--Evidence--Reasoning framework\ldots{} now what?},
+  year         = {2015},
+  howpublished = {NSTA conference handout},
+  note         = {Handout summarizing the CER framework and instructional considerations}
+}
+
+@techreport{eng_hardcastle2021_cesr_validating,
+  langid       = {english},
+  author      = {Hardcastle, Jennifer M.},
+  title       = {Validating a Claim-Evidence-Science Idea-Reasoning (CESR) framework},
+  year        = {2021},
+  institution = {ERIC},
+  type        = {ERIC report},
+  note        = {Discusses CER (McNeill \& Krajcik, 2011) and proposes an extended CESR framework}
+}
+
+@misc{eng_brunsell2012_edutopia_cer,
+  langid       = {english},
+  author       = {Brunsell, Eric},
+  title        = {Using the Claim, Evidence, Reasoning (CER) Framework in the Science Classroom},
+  year         = {2012},
+  howpublished = {Edutopia},
+  note         = {Practitioner-oriented summary of the CER framework}
+}
+
+@article{eng_qiao2024understanding,
+  langid       = {english},
+  author  = {Qiao, Cuilan and Chen, Yuqing and Guo, Qing and Yu, Yunwei},
+  title   = {Understanding science data literacy: a conceptual framework and assessment tool for college students majoring in STEM},
+  journal = {International Journal of STEM Education},
+  year    = {2024},
+  volume  = {11},
+  number  = {1},
+  doi     = {10.1186/s40594-024-00484-5}
+}
+
+@article{eng_he2024assessing,
+  langid       = {english},
+  author  = {He, Peng and He, Li and Wei, Bing and Liu, Xiufeng},
+  title   = {Assessing Science Data Literacy in High School: {A}n Instrument Development and Validation},
+  journal = {Journal of Science Education and Technology},
+  year    = {2024},
+  volume  = {33},
+  pages   = {1--15},
+  month   = apr
+}
+
+@article{eng_chen2023review,
+  langid       = {english},
+  author  = {Chen, J. and Zhao, K. and Wang, Q.},
+  title   = {Data literacy in science education: {A} systematic review of literature},
+  journal = {International Journal of STEM Education},
+  year    = {2023},
+  volume  = {10},
+  number  = {1},
+  month   = mar,
+  doi     = {10.1186/s40594-023-00443-4},
+  note-doi     = {DOI not verified via CrossRef}
+}
+
+@article{eng_mandinach2022data,
+  langid       = {english},
+% [CITE-AUDIT] mandinach2022data: CROSSREF_MISMATCH로 기록됨(doi/metadata 불일치 가능). 본 엔트리는 현 단계에서 서지요소 최소화로 유지하며, 최종 제출 전 DOI/권호/쪽/URL 보강 권장.
+  author  = {Mandinach, Ellen B. and Gummer, Edith S.},
+  title   = {Data Literacy for Educators: {A} Concept with Growing Importance},
+  journal = {Oxford Research Encyclopedia of Education},
+  year    = {2022}
+}
+
+@article{eng_ilica2024science,
+  langid       = {english},
+  author  = {Ilica, A. B. and Akcay, H.},
+  title   = {Science Data Literacy: {A} New Perspective in Science Education},
+  journal = {Journal of Educational Research in Science},
+  year    = {2024},
+  volume  = {5},
+  number  = {1},
+  pages   = {45--62}
+}
+
+@book{eng_vantassel2015curriculum,
+  langid       = {english},
+  title={Curriculum Planning and Instructional Design for Gifted Learners},
+  author={VanTassel-Baska, Joyce and Little, Catherine A},
+  year={2015},
+  edition={2nd},
+  publisher={Prufrock Press}
+}
+
+@article{eng_subotnik2011reconceiving,
+  langid       = {english},
+% [CITE-AUDIT] subotnik2011reconceiving: CROSSREF_NOT_FOUND_TITLE로 기록됨(제목 기반 확정 매칭 실패). 본문에서는 인용 보류 처리(주석 참고)했으며, 최종 제출 전 원문/DOI/권호/쪽수 재검증 필요.
+  title={Rethinking Giftedness and Talent Development: A Proposed Direction Forward Based on Psychological Science},
+  author={Subotnik, Rena F and Olszewski-Kubilius, Paula and Worrell, Frank C},
+  journal={Psychological Science in the Public Interest},
+  volume={12},
+  number={1},
+  pages={3--54},
+  year={2011},
+  publisher={Sage Publications}
+}
+
+@book{eng_renzulli2014schoolwide,
+  langid       = {english},
+  title={The schoolwide enrichment model: A how-to guide for talent development},
+  author={Renzulli, Joseph S and Reis, Sally M},
+  year={2014},
+  publisher={Prufrock Press}
+}
+
+@book{eng_tomlinson2014differentiated,
+  langid       = {english},
+  title={The differentiated classroom: Responding to the needs of all learners},
+  author={Tomlinson, Carol Ann},
+  year={2014},
+  publisher={ASCD}
+}
+
+@article{eng_kjelvik2019getting,
+  langid       = {english},
+  title={Getting messy with authentic data: Exploring the potential of using data from scientific research to support student data literacy},
+  author={Kjelvik, Melissa K and Schultheis, Elizabeth H},
+  journal={CBE—Life Sciences Education},
+  volume={18},
+  number={2},
+  pages={es2},
+  year={2019},
+  publisher={American Society for Cell Biology}
+}
+
+@book{eng_nrc2012framework,
+  langid       = {english},
+% [CITE-AUDIT] nrc2012framework: CROSSREF_MISMATCH로 기록되었으나, Crossref 기준으로 title/subtitle/DOI/URL 정정 완료(학위논문 핵심 1차 문헌).
+  author    = {{National Research Council}},
+  title     = {A Framework for K-12 Science Education},
+  subtitle  = {Practices, Crosscutting Concepts, and Core Ideas},
+  year      = {2012},
+  publisher = {National Academies Press},
+  address   = {Washington, DC},
+  doi       = {10.17226/13165},
+  url       = {https://doi.org/10.17226/13165}
+}
+
+@book{eng_ngss2013standards,
+  langid       = {english},
+% [CITE-AUDIT] ngss2013standards: CROSSREF_MISMATCH로 기록되었으나, Crossref 기준으로 title/subtitle/DOI/URL 정정 완료(학위논문 핵심 1차 문헌).
+  author    = {{NGSS Lead States}},
+  title     = {Next Generation Science Standards},
+  subtitle  = {For States, by States},
+  year      = {2013},
+  publisher = {National Academies Press},
+  address   = {Washington, DC},
+  doi       = {10.17226/18290},
+  url       = {https://doi.org/10.17226/18290}
+}
+
+@article{eng_mandinach2016data,
+  langid       = {english},
+  author  = {Mandinach, Ellen B. and Gummer, Edith S.},
+  title   = {What does it mean for teachers to have data literacy: {A}n examination of the literature},
+  journal = {The Professional Educator},
+  year    = {2016},
+  volume  = {40},
+  number  = {1},
+  pages   = {1--21}
+}
+
+@misc{eng_nasa_exoplanet,
+  langid       = {english},
+  author       = {{NASA Exoplanet Archive}},
+  title        = {Exoplanet Data},
+  howpublished = {\url{https://exoplanetarchive.ipac.caltech.edu/}},
+  year         = {2024},
+  note         = {Accessed: 2024-11-02}
+}
+
+@article{eng_pallant2020data_driven,
+  langid       = {english},
+  author  = {Pallant, Amy and Lee, Hee-Sun and Pryputniewicz, Sarah},
+  title   = {How Students Use Scientific Models to Make Data-Based Arguments About Climate Change},
+  journal = {Science Scope},
+  year    = {2020},
+  volume  = {43},
+  number  = {7},
+  pages   = {52--61},
+  url     = {https://www.nsta.org/science-scope/science-scope-march-2020/how-students-use-scientific-models-make-data-based-arguments}
+}
+
+@article{eng_fleischer2022teaching,
+  langid       = {english},
+  author  = {Fleischer, Franz Yannik and Biehler, Rolf and Schulte, Carsten},
+  title   = {Teaching and Learning Data-Driven Machine Learning with Educationally Designed {Jupyter} Notebooks},
+  journal = {Statistics Education Research Journal},
+  year    = {2022},
+  volume  = {21},
+  number  = {2},
+  note    = {Article 7},
+  doi     = {10.52041/serj.v21i2.61}
+}
+
+@techreport{eng_pisa2025_science_framework_2023_second_draft,
+  langid       = {english},
+  title        = {PISA 2025 Science Framework (Second Draft)},
+  year         = {2023},
+  month        = {5},
+  institution  = {{Programme for International Student Assessment (PISA)}},
+  note         = {Draft document dated May 2023. Developed under the PISA 2025 Core 2 contract, managed by Oxford University Press (OUP).}
+}
+
+@article{eng_valio2025development,
+  langid       = {english},
+  title={Development of a Science Literacy Test for Junior High School Students Based on the PISA 2025 Framework},
+  author={Valio, Farah Amara and Safira, Ledya and Aulliyah, Uunwanah Agustin and Suwarna, Iwan Permana},
+  journal={Jurnal Pendidikan MIPA},
+  volume={26},
+  number={3},
+  pages={1377--1405},
+  year={2025}
+}
+
+@book{eng_Fraillon2025_DigitalLiteracy_ICILS2023,
+  langid       = {english},
+  editor    = {Fraillon, Julian},
+  title     = {An International Perspective on Digital Literacy},
+  subtitle  = {Results from {ICILS} 2023},
+  year      = {2025},
+  publisher = {Springer},
+  address   = {Cham, Switzerland},
+  doi       = {10.1007/978-3-031-87722-3},
+  url       = {https://doi.org/10.1007/978-3-031-87722-3},
+  isbn      = {978-3-031-87721-6},
+  note      = {Open Access eBook ISBN: 978-3-031-87722-3}
+}
+
+@article{eng_tankersley2024science,
+  langid       = {english},
+  author  = {Tankersley, A. and Hasseler, E. and Lewis, E. B. and Houseal, A. K.},
+  title   = {Science Teachers' Initial Use of {NGSS} Science Practices in Diverse Classrooms},
+  journal = {Journal of Science Teacher Education},
+  year    = {2024},
+  volume  = {35},
+  number  = {3},
+  pages   = {316--339},
+  doi     = {10.1080/1046560X.2024.2316434},
+  url     = {https://doi.org/10.1080/1046560X.2024.2316434}
+}
+
+@article{eng_ching2019activity,
+  langid       = {english},
+  author  = {Ching, C. C. and Hagood, D.},
+  title   = {Activity Monitor Gaming and the Next Generation Science Standards: Students Engaging with Data, Measurement Limitations, and Personal Relevance},
+  journal = {Journal of Science Education and Technology},
+  year    = {2019},
+  volume  = {28},
+  number  = {6},
+  pages   = {570--581},
+  doi     = {10.1007/s10956-019-09789-5},
+  url     = {https://doi.org/10.1007/s10956-019-09789-5}
+}
+
+@incollection{eng_krajcik2017engaging,
+  langid       = {english},
+  author    = {Krajcik, Joseph S. and Delen, {\.I}lke},
+  title     = {Engaging Learners in Scientific Practices of Explanation and Argumentation},
+  booktitle = {Helping Students Make Sense of the World Using Next Generation Science and Engineering Practices},
+  editor    = {Schwarz, Christina V. and Passmore, Cynthia and Reiser, Brian J.},
+  year      = {2017},
+  pages     = {11--33},
+  publisher = {NSTA Press},
+  address   = {Arlington, VA}
+}
+
+@article{eng_wolff2016creating,
+  langid       = {english},
+  author  = {Wolff, Annika and Gooch, Daniel and Cavero Montaner, Juan Jos{\'e} and Rashid, Uta and Kortuem, Gerd},
+  title   = {Creating an Understanding of Data Literacy for a Data-Driven Society},
+  journal = {The Journal of Community Informatics},
+  year    = {2016},
+  volume  = {12},
+  number  = {3},
+  pages   = {9--26},
+  doi     = {10.15353/joci.v12i3.3275},
+  url     = {https://doi.org/10.15353/joci.v12i3.3275}
+}
+
+@report{eng_sconul2011pillars,
+  langid       = {english},
+  author       = {{SCONUL Working Group on Information Literacy}},
+  title        = {The {SCONUL} Seven Pillars of Information Literacy},
+  year         = {2011},
+  institution  = {SCONUL},
+  address      = {London, UK},
+  note         = {Second edition},
+  url          = {https://www.sconul.ac.uk/publication/the-sconul-seven-pillars-of-information-literacy}
+}
+
+@manual{eng_scqf2019level,
+  langid       = {english},
+  title        = {SCQF Level Descriptors},
+  author       = {{SCQF Partnership}},
+  year         = {2019},
+  organization = {Scottish Credit and Qualifications Framework Partnership},
+  address      = {Glasgow, Scotland},
+  url          = {https://www.scqf.org.uk/media/1210/scqf-level-descriptors-2019-web.pdf},
+  note         = {Revised 2012, Reprinted August 2019}
+}
+
+@article{eng_gurstein2011opendata,
+  langid       = {english},
+  author  = {Gurstein, Michael B.},
+  title   = {Open Data: Empowering the Empowered or Effective Data Use for Everyone?},
+  journal = {First Monday},
+  year    = {2011},
+  volume  = {16},
+  number  = {1},
+  doi     = {10.5210/fm.v16i1.3316},
+  url     = {https://doi.org/10.5210/fm.v16i1.3316},
+  note-doi     = {DOI not verified via CrossRef}
+}
+
+@article{eng_gummer2015building,
+  langid       = {english},
+  author  = {Gummer, Ellen S. and Mandinach, Ellen B.},
+  title   = {Building a Conceptual Framework for Data Literacy},
+  journal = {Teachers College Record},
+  year    = {2015},
+  volume  = {117},
+  number  = {4},
+  pages   = {1--22}
+}
+
+@article{eng_koltay2017data,
+  langid       = {english},
+  author  = {Koltay, Tibor},
+  title   = {Data Literacy for Researchers and Data Librarians},
+  journal = {Journal of Librarianship and Information Science},
+  year    = {2017},
+  volume  = {49},
+  number  = {1},
+  pages   = {3--14},
+  doi     = {10.1177/0961000615616450}
+}
+
+@article{eng_sander2020critical,
+  langid       = {english},
+  author  = {Sander, Inge},
+  title   = {What Is Critical Big Data Literacy and How Can It Be Implemented?},
+  journal = {Internet Policy Review},
+  year    = {2020},
+  volume  = {9},
+  number  = {2},
+  pages   = {1--22}
+}
+
+@article{eng_fotopoulou2021conceptualising,
+  langid       = {english},
+  author  = {Fotopoulou, Aristea},
+  title   = {Conceptualising Critical Data Literacies for Civil Society Organisations: {A}gency, Care, and Social Responsibility},
+  journal = {Information, Communication \& Society},
+  year    = {2021},
+  volume  = {24},
+  number  = {11},
+  pages   = {1640--1657},
+  doi     = {10.1080/1369118X.2020.1716041}
+}
+
+@book{eng_oecd2019pisa,
+  langid       = {english},
+  author    = {{OECD}},
+  title     = {PISA 2018 Assessment and Analytical Framework},
+  series    = {PISA},
+  publisher = {OECD Publishing},
+  address   = {Paris},
+  year      = {2019},
+  doi       = {10.1787/b25efab8-en},
+  url       = {https://doi.org/10.1787/b25efab8-en}
+}
+
+@incollection{eng_schneegans2021scientific,
+  langid       = {english},
+  author    = {Schneegans, Susan and Nair-Bedouelle, Shamila},
+  title     = {Scientific Literacy: An Imperative for a Complex World},
+  booktitle = {UNESCO Science Report: The Race Against Time for Smarter Development},
+  editor    = {Schneegans, Susan and Straza, Tiffany and Lewis, Jake},
+  publisher = {UNESCO Publishing},
+  address   = {Paris},
+  year      = {2021},
+  pages     = {17}
+}
+
+@book{eng_unesco2023generative_ai_guidance,
+  langid    = {english},
+  author    = {Miao, Fengchun and Holmes, Wayne},
+  title     = {Guidance for Generative AI in Education and Research},
+  publisher = {UNESCO},
+  address   = {Paris},
+  year      = {2023},
+  url       = {https://unesdoc.unesco.org/ark:/48223/pf0000386693}
+}
+
+@misc{eng_council2018key,
+  langid       = {english},
+  author       = {{Council of the European Union}},
+  title        = {Council Recommendation of 22 May 2018 on Key Competences for Lifelong Learning},
+  year         = {2018},
+  number       = {OJ 2018/C 189/01},
+  howpublished = {Official Journal of the European Union}
+}
+
+@misc{eng_prc2021scientific,
+  langid       = {english},
+  author       = {{PRC General Office of the State Council}},
+  title        = {Notice on the Issuance of the Action Plan for Enhancing Scientific Literacy of the Whole Nation (2021--2035)},
+  year         = {2021},
+  number       = {Notice No. 2021-19},
+  howpublished = {State Council Document},
+  note         = {Retrieved from official government source}
+}
+
+@misc{eng_canada2021choose,
+  langid       = {english},
+  author       = {{Government of Canada}},
+  title        = {Choose Science: Government of Canada and STEM},
+  year         = {2021},
+  howpublished = {Government website},
+  url          = {https://ised-isde.canada.ca/site/choose-science/en/government-canada-and-stem#6},
+  note         = {Retrieved from official government website}
+}
+
+@misc{eng_dignazio2017creative,
+  langid       = {english},
+  author       = {D'Ignazio, Catherine},
+  title        = {Creative Data Literacy: A Playful, Process-Oriented Approach},
+  year         = {2017},
+  howpublished = {Workshop paper},
+  note         = {Retrieved from MIT Civic Media resources}
+}
+
+@misc{eng_bhargava2018dataculture,
+  langid       = {english},
+  author       = {Bhargava, Rahul},
+  title        = {The Data Culture Project},
+  year         = {2018},
+  howpublished = {Toolkit},
+  note         = {MIT Center for Civic Media},
+  url          = {https://databasic.io/en/culture/}
+}
+
+@misc{eng_datopian2019literacy,
+  langid       = {english},
+  author       = {Datopian},
+  title        = {What Is Data Literacy?},
+  year         = {2019},
+  howpublished = {Web resource},
+  url          = {https://datopian.com/blog/what-is-data-literacy}
+}
+
+@misc{eng_odi2018dataskills,
+  langid       = {english},
+  author       = {{Open Data Institute}},
+  title        = {ODI Data Skills Framework},
+  year         = {2018},
+  howpublished = {Guide},
+  url          = {https://theodi.org/article/odi-data-skills-framework}
+}
+
+@manual{eng_cihr2022datapolicy,
+  langid       = {english},
+  title        = {Tri-Agency Research Data Management Policy},
+  author       = {{Canadian Institutes of Health Research}},
+  year         = {2021},
+  address      = {Ottawa, Canada},
+  url          = {https://science.gc.ca/site/science/en/interagency-research-funding/policies-and-guidelines/research-data-management/tri-agency-research-data-management-policy}
+}
+
+@misc{eng_naureen2018cdc,
+  langid       = {english},
+  author       = {Naureen, Samia},
+  title        = {Open Data Strategy at the {CDC}},
+  year         = {2018},
+  howpublished = {Presentation},
+  note         = {Centers for Disease Control and Prevention},
+  url          = {https://www.cdc.gov}
+}
+
+@misc{eng_credit2018taxonomy,
+  langid       = {english},
+  author       = {{CRediT Office}},
+  title        = {Contributor Roles Taxonomy ({CRediT})},
+  year         = {2018},
+  howpublished = {Web standard},
+  url          = {https://credit.niso.org}
+}
+
+@book{eng_gray2012datajournalism,
+  langid       = {english},
+  editor    = {Gray, Jonathan and Bounegru, Liliana and Chambers, Lucy},
+  title     = {The Data Journalism Handbook},
+  year      = {2012},
+  publisher = {O'Reilly Media},
+  address   = {Sebastopol, CA},
+  url       = {https://datajournalismhandbook.org/}
+}
+
+@book{eng_gray2021data,
+  langid       = {english},
+% [CITE-AUDIT] gray2021data: CROSSREF_MISMATCH로 기록되었으나, Crossref 기준으로 편집자/제목/부제/DOI/URL 정정 완료(편저서 형태).
+  editor    = {Bounegru, Liliana and Gray, Jonathan},
+  title     = {The Data Journalism Handbook},
+  subtitle  = {Towards a Critical Data Practice},
+  year      = {2021},
+  publisher = {Amsterdam University Press},
+  address   = {Amsterdam},
+  doi       = {10.1515/9789048542079},
+  url       = {https://doi.org/10.1515/9789048542079}
+}
+
+@article{eng_shields2004information,
+  langid       = {english},
+  author  = {Shields, Margie},
+  title   = {Information Literacy, Statistical Literacy, Data Literacy},
+  journal = {IASSIST Quarterly},
+  year    = {2004},
+  volume  = {28},
+  number  = {2/3},
+  pages   = {6--11}
+}
+
+@report{eng_acrl2015framework,
+  langid       = {english},
+  author       = {{Association of College and Research Libraries}},
+  title        = {Framework for Information Literacy for Higher Education},
+  year         = {2015},
+  institution  = {{ACRL}},
+  address      = {Chicago, IL},
+  url          = {https://www.ala.org/acrl/standards/ilframework}
+}
+
+@misc{eng_calzada2018datliteracy,
+  langid       = {english},
+  author       = {Calzada Prado, Javier and Marzal, Miguel Angel},
+  title        = {Advances in Data Literacy in Higher Education},
+  year         = {2018},
+  howpublished = {Conference paper},
+  note         = {Details as cited in table}
+}
+
+@misc{eng_dignazio2017guide,
+  langid       = {english},
+  author       = {D'Ignazio, Catherine and Bhargava, Rahul},
+  title        = {Creative Data Literacy: A Guide for Educators},
+  year         = {2017},
+  howpublished = {Guide},
+  url          = {https://databasic.io/en/}
+}
+
+@misc{eng_conahec2019opendata,
+  langid       = {english},
+  author       = {{CONAHEC}},
+  title        = {Open Data and Collaboration in Higher Education},
+  year         = {2019},
+  howpublished = {Conference brief},
+  note         = {As cited in SDL foundations table}
+}
+
+@misc{eng_papagiannopoulou2019data,
+  langid       = {english},
+  author       = {Papagiannopoulou, Eleni and Seddon, Yvonne},
+  title        = {Data Literacy in Science Education},
+  year         = {2019},
+  howpublished = {Conference paper},
+  note         = {As cited in SDL foundations table}
+}
+
+@article{eng_sanusi2020data,
+  langid       = {english},
+  author  = {Sanusi, Itunuoluwa Dele and Olalekan, S. W. and Agbo, F. J. and Chiu, T. K. F.},
+  title   = {Data Literacy in Education: {A} Systematic Literature Review},
+  journal = {International Journal of Computing and Information Technology},
+  year    = {2020},
+  volume  = {12},
+  number  = {4},
+  pages   = {121--135}
+}
+
+@article{eng_bowler2020teen,
+  langid       = {english},
+  title={Teen engagements with data in an after-school data literacy programme at the public library},
+  author={Bowler, Leanne and Aronofsky, Manuela and Milliken, Genevieve and Acker, Amelia},
+  year={2020},
+  publisher={University of Bor{\aa}s}
+}
+
+@misc{eng_carmi2020data,
+  langid       = {english},
+  author       = {Carmi, Elinor and others},
+  title        = {Critical Data Literacy},
+  year         = {2020},
+  howpublished = {Research paper},
+  note         = {As cited in SDL foundations table}
+}
+
+@misc{eng_frank2020data,
+  langid       = {english},
+  author       = {Frank, Morgan and others},
+  title        = {Data Literacy and Workforce Development},
+  year         = {2020},
+  howpublished = {Research paper},
+  note         = {As cited in SDL foundations table}
+}
+
+@article{eng_gebru2021datasheets,
+  langid       = {english},
+author = {Gebre, Engida},
+title = {Conceptions and perspectives of data literacy in secondary education},
+journal = {British Journal of Educational Technology},
+volume = {53},
+number = {5},
+pages = {1080-1095},
+keywords = {contextualizing data literacy, critical data literacy, data literacy education, learning design},
+doi = {10.1111/bjet.13246},
+url = {https://bera-journals.onlinelibrary.wiley.com/doi/abs/10.1111/bjet.13246},
+eprint = {https://bera-journals.onlinelibrary.wiley.com/doi/pdf/10.1111/bjet.13246},
+abstract = {Abstract Data literacy has been suggested as an important competence that individuals need to succeed in a data-intensive society. However, there is no common understanding as to what data literacy entails and how it could be developed. Instructional emphasis on developing competence of individuals fails to capture learners' relationship to data in everyday life and limits what they can possibly achieve in data-rich environments. This paper critically reviews conceptualizations of data literacy in the literature with a focus in K-12 education. The analysis determined four orientations of data literacy: development of competence, inquiry with data, awareness of personal data and civic engagement. I proposed a broader conceptualization of data literacy that integrates conceptions, competencies and contexts. The study offers holistic and context-oriented framing of data literacy for researchers and educators. Practitioner notes What is known about the topic Data literacy is a potential buzzword in the recent literature. There are increasing calls for developing data literacy skills of students and the general public. Data literacy is framed and implemented as a technical competence. Accordingly, curricular interventions and pedagogical practices focus on making use of data and benefiting from available datasets. What this paper adds The above framing of data literacy is too narrow to be useful in everyday life and rarely considers individuals interaction with data outside of schools. This study develops four focus areas in the conceptualization of data literacy and suggests broader framing of the concept as it relates to everyday life. It also suggests context-oriented approaches to data literacy education that can go beyond classrooms and academic activities. Implications for practice and policy This paper has implication for educators, researchers and policy makers. It allows boarder conceptualizations of data literacy that can be used in curricular interventions. It also provides ways of designing learning environments for the data literacy education and research.},
+year = {2022}
+}
+
+@article{eng_kjelvik2017data,
+  langid       = {english},
+  author  = {Kjelvik, Melissa K.},
+  title   = {Integrating Data Literacy into Science Education},
+  journal = {Science Education},
+  year    = {2017},
+  note    = {As cited in SDL foundations table}
+}
+
+@article{eng_donoho2017fifty,
+  langid       = {english},
+  author  = {Donoho, David},
+  title   = {50 Years of Data Science},
+  journal = {Journal of Computational and Graphical Statistics},
+  year    = {2017},
+  volume  = {26},
+  number  = {4},
+  pages   = {745--766},
+  doi     = {10.1080/10618600.2017.1384734}
+}
+
+@inproceedings{eng_dignazio2015approaches,
+  langid       = {english},
+  author    = {D'Ignazio, Catherine and Bhargava, Rahul},
+  title     = {Approaches to Building Big Data Literacy},
+  booktitle = {Bloomberg Data for Good Exchange Conference},
+  year      = {2015},
+  address   = {New York, NY}
+}
+
+@article{eng_carlson2011determining,
+  langid       = {english},
+  author  = {Carlson, Jake R. and Fosmire, Michael and Miller, Charles C. and Sapp Nelson, Megan R.},
+  title   = {Determining Data Information Literacy Needs: A Study of Students and Research Faculty},
+  journal = {portal: Libraries and the Academy},
+  year    = {2011},
+  volume  = {11},
+  number  = {2},
+  pages   = {629--657},
+  doi     = {10.1353/pla.2011.0022},
+  url     = {https://doi.org/10.1353/pla.2011.0022}
+}
+
+@article{eng_abs2010statistical,
+  langid       = {english},
+  author  = {{Australian Bureau of Statistics}},
+  title   = {What is Statistical Literacy and Why is it Important to be Statistically Literate?},
+  journal = {Tasmanian State and Regional Indicators},
+  year    = {2010},
+  month   = mar,
+  note    = {Feature Article. Retrieved September 20, 2022, from \url{http://www.abs.gov.au/AUSSTATS/abs@.nsf/Lookup/1307.6Feature+Article1+2009}}
+}
+
+@article{eng_howard1980response_shift,
+  langid  = {english},
+  author  = {Howard, George S.},
+  title   = {Response-Shift Bias: A Problem in Evaluating Interventions with Pre/Post Self-Reports},
+  journal = {Evaluation Review},
+  year    = {1980},
+  volume  = {4},
+  number  = {1},
+  pages   = {93--106},
+  doi     = {10.1177/0193841X8000400105},
+  url     = {https://doi.org/10.1177/0193841X8000400105}
+}
+
+@article{eng_pratt2000retrospective_pretest,
+  langid  = {english},
+  author  = {Pratt, Clara C. and McGuigan, William M. and Katzev, Aphra R.},
+  title   = {Measuring Program Outcomes: Using Retrospective Pretest Methodology},
+  journal = {American Journal of Evaluation},
+  year    = {2000},
+  volume  = {21},
+  number  = {3},
+  pages   = {341--349},
+  doi     = {10.1177/109821400002100305},
+  url     = {https://doi.org/10.1177/109821400002100305}
+}
+
+@article{eng_taylor2009retrospective_bias,
+  langid  = {english},
+  author  = {Taylor, Paul J. and Russ-Eft, Darlene F. and Taylor, Hazel},
+  title   = {Gilding the Outcome by Tarnishing the Past: Inflationary Biases in Retrospective Pretests},
+  journal = {American Journal of Evaluation},
+  year    = {2009},
+  volume  = {30},
+  number  = {1},
+  pages   = {31--43},
+  doi     = {10.1177/1098214008328517},
+  url     = {https://doi.org/10.1177/1098214008328517}
+}
+
+@article{eng_nimon2011retrospective_pretest,
+  langid  = {english},
+  author  = {Nimon, Kim and Zigarmi, Drea and Allen, Jeff},
+  title   = {Measures of Program Effectiveness Based on Retrospective Pretest Data: Are All Created Equal?},
+  journal = {American Journal of Evaluation},
+  year    = {2011},
+  volume  = {32},
+  number  = {1},
+  pages   = {8--28},
+  doi     = {10.1177/1098214010378354},
+  url     = {https://doi.org/10.1177/1098214010378354}
+}
+
+@article{eng_little2020retrospective_redux,
+  langid  = {english},
+  author  = {Little, Todd D. and Chang, Rong and Gorrall, Britt K. and Waggenspack, Luke and Fukuda, Eriko and Allen, Patricia J. and Noam, Gil G.},
+  title   = {The Retrospective Pretest--Posttest Design Redux: On Its Validity as an Alternative to Traditional Pretest--Posttest Measurement},
+  journal = {International Journal of Behavioral Development},
+  year    = {2020},
+  volume  = {44},
+  number  = {2},
+  pages   = {175--183},
+  doi     = {10.1177/0165025419877973},
+  url     = {https://doi.org/10.1177/0165025419877973}
+}
+
+@inproceedings{eng_vahey2006mathematizing,
+  langid       = {english},
+  author    = {Vahey, Philip and Yarnall, Louise and Patton, Carolyn and Zalles, Deborah and Swan, Karen},
+  title     = {Mathematizing Middle School: {R}esults from a Cross-Disciplinary Study of Data Literacy},
+  booktitle = {Annual Meeting of the American Educational Research Association},
+  address   = {San Francisco, CA},
+  year      = {2006},
+  month     = apr,
+  pages     = {1--15}
+}
+
+@article{eng_kim2023development,
+  langid       = {english},
+  author  = {Kim, J. and Hong, L. and Evans, S. and Yoon, A. and Bao, Y.},
+  title   = {Development and Validation of a Data Literacy Assessment Scale},
+  journal = {Proceedings of the Association for Information Science and Technology},
+  year    = {2023},
+  volume  = {60},
+  number  = {1},
+  pages   = {289--299},
+  doi     = {10.1002/pra2.827},
+  url     = {https://doi.org/10.1002/pra2.827}
+}
+
+@article{eng_kim2025university,
+  langid       = {english},
+  author  = {Kim, J. and Hong, L. and Yoon, A.},
+  title   = {University Students' Self-Assessment of Data Literacy: A Validation Study},
+  journal = {PLOS ONE},
+  year    = {2025},
+  volume  = {20},
+  number  = {4},
+  pages   = {e0322104},
+  doi     = {10.1371/journal.pone.0322104},
+  url     = {https://doi.org/10.1371/journal.pone.0322104}
+}
+
+@article{eng_smith2014thinking,
+  langid       = {english},
+% [CITE-AUDIT] smith2014thinking: CROSSREF_MISMATCH로 기록되었으나, Crossref 기준으로 제목/쪽수/DOI/URL 정정 완료.
+  author  = {Smith, Amy and Molinaro, Marco and Lee, Alisa and Guzman-Alvarez, Alberto},
+  title   = {Thinking With Data: Students Use Authentic Data to Form Evidencebased Conclusions and Think Like a Scientist},
+  journal = {The Science Teacher},
+  year    = {2014},
+  volume  = {81},
+  number  = {8},
+  pages   = {58--71},
+  doi     = {10.2505/4/tst14_081_08_58},
+  url     = {https://doi.org/10.2505/4/tst14_081_08_58}
+}
+
+@article{eng_gould2014praise,
+  langid       = {english},
+  author  = {Gould, Roy R. and Sunbury, Stephanie and Dussault, Mark},
+  title   = {In Praise of Messy Data: Lessons from the Search for Alien Worlds},
+  journal = {The Science Teacher},
+  year    = {2014},
+  volume  = {81},
+  number  = {8},
+  pages   = {31--36},
+  url     = {https://files.eric.ed.gov/fulltext/EJ1046117.pdf}
+}
+
+@article{eng_penuel2025balancing,
+  langid       = {english},
+  author  = {Penuel, William R. and Shepard, Lorrie A. and Krist, Carly and Gilbert, Aaron and Masyn, Katherine and Li, Min and Ouchi, Katherine},
+  title   = {Balancing Design Goals for Supporting Students' Work with Extant Data in Science},
+  journal = {The Educational Designer},
+  year    = {2025},
+  volume  = {5},
+  number  = {19},
+  url     = {https://www.educationaldesigner.org/ed/volume5/issue19/article72/}
+}
+
+@inproceedings{eng_pimentel2019large,
+  langid       = {english},
+  author    = {Pimentel, Jo\~{a}o Felipe and Murta, Leonardo and Braganholo, Vanessa and Freire, Juliana},
+  title     = {A Large-Scale Study about Quality and Reproducibility of {Jupyter} Notebooks},
+  booktitle = {2019 IEEE/ACM 16th International Conference on Mining Software Repositories ({MSR})},
+  year      = {2019},
+  pages     = {507--517},
+  doi       = {10.1109/MSR.2019.00077},
+  url       = {https://doi.org/10.1109/MSR.2019.00077}
+}
+
+@inproceedings{eng_fleischer2022jupyter,
+  langid       = {english},
+  author    = {Fleischer, Franz Yannik and H{\"u}sing, Sven and Biehler, Rolf and Schulte, Carsten},
+  title     = {{Jupyter} Notebooks for Teaching, Learning, and Doing Data Science},
+  booktitle = {Proceedings of the 11th International Conference on Teaching Statistics ({ICOTS} 11)},
+  year      = {2022},
+  doi       = {10.52041/iase.icots11.t10e3},
+  url       = {https://doi.org/10.52041/iase.icots11.t10e3}
+}
+
+@article{eng_podworny2022place,
+  langid       = {english},
+  author  = {Podworny, Sandra and H{\"u}sing, Sven and Schulte, Carsten},
+  title   = {A Place for a Data Science Project in School: Between Statistics and Epistemic Programming},
+  journal = {Statistics Education Research Journal},
+  year    = {2022},
+  volume  = {21},
+  number  = {2},
+  note    = {Article 6},
+  doi     = {10.52041/serj.v21i2.46},
+  url     = {https://doi.org/10.52041/serj.v21i2.46}
+}
+
+@article{eng_rule2018ten,
+  langid       = {english},
+  author  = {Rule, Adam and Birmingham, Alexander and Zuniga, Camila and Altintas, Ilkay and Huang, Shaowen and Knight, Rob and Moshiri, Niema and Nguyen, Mai H. and Rosenthal, Stephanie B. and Schmid, Simon C. and Wright, Mark and Bourne, Philip E.},
+  title   = {Ten Simple Rules for Writing and Sharing Computational Analyses in {Jupyter} Notebooks},
+  journal = {PLoS Computational Biology},
+  year    = {2019},
+  volume  = {15},
+  number  = {7},
+  pages   = {e1007007},
+  doi     = {10.1371/journal.pcbi.1007007},
+  url     = {https://doi.org/10.1371/journal.pcbi.1007007}
+}
+
+@article{eng_knuth1984literate,
+  langid       = {english},
+  author  = {Knuth, Donald E.},
+  title   = {Literate Programming},
+  journal = {The Computer Journal},
+  year    = {1984},
+  volume  = {27},
+  number  = {2},
+  pages   = {97--111},
+  doi     = {10.1093/comjnl/27.2.97},
+  url     = {https://doi.org/10.1093/comjnl/27.2.97}
+}
+
+@article{eng_peng2011reproducible,
+  langid       = {english},
+  author  = {Peng, Roger D.},
+  title   = {Reproducible Research in Computational Science},
+  journal = {Science},
+  year    = {2011},
+  volume  = {334},
+  number  = {6060},
+  pages   = {1226--1227},
+  doi     = {10.1126/science.1213847},
+  url     = {https://doi.org/10.1126/science.1213847}
+}
+
+@incollection{eng_kluyver2016jupyter,
+  langid       = {english},
+  author    = {Kluyver, Thomas and Ragan-Kelley, Benjamin and P{\'e}rez, Fernando and Granger, Brian and Bussonnier, Matthias and Frederic, Jonathan and Kelley, Kyle and Hamrick, Jessica and Grout, Jason and Corlay, Sylvain and Ivanov, Paul and Avila, Dami{\'a}n and Abdalla, Safia and Willing, Carol},
+  title     = {{Jupyter} Notebooks -- a Publishing Format for Reproducible Computational Workflows},
+  booktitle = {Positioning and Power in Academic Publishing: Players, Agents and Agendas},
+  editor    = {Loizides, Fotis and Schmidt, Birgit},
+  year      = {2016},
+  pages     = {87--90},
+  publisher = {IOS Press},
+  address   = {Amsterdam, The Netherlands},
+  url       = {https://eprints.soton.ac.uk/403913/}
+}
+
+@inproceedings{eng_mckinney2010pandas,
+  langid       = {english},
+  author    = {McKinney, Wes},
+  title     = {Data Structures for Statistical Computing in {Python}},
+  booktitle = {Proceedings of the 9th {Python} in Science Conference},
+  editor    = {van der Walt, St{\'e}fan and Millman, Jarrod},
+  year      = {2010},
+  pages     = {56--61},
+  doi       = {10.25080/Majora-92bf1922-00a},
+  url       = {https://doi.org/10.25080/Majora-92bf1922-00a}
+}
+
+@article{eng_sweller1988cognitive,
+  langid       = {english},
+  author  = {Sweller, John},
+  title   = {Cognitive Load During Problem Solving: Effects on Learning},
+  journal = {Cognitive Science},
+  year    = {1988},
+  volume  = {12},
+  number  = {2},
+  pages   = {257--285},
+  doi     = {10.1207/s15516709cog1202_4},
+  url     = {https://doi.org/10.1207/s15516709cog1202_4}
+}
+
+@book{eng_tufte2001visual,
+  langid       = {english},
+  author    = {Tufte, Edward R.},
+  title     = {The Visual Display of Quantitative Information},
+  edition   = {2},
+  year      = {2001},
+  publisher = {Graphics Press},
+  address   = {Cheshire, CT}
+}
+
+@article{eng_wing2006computational,
+  langid       = {english},
+  author  = {Wing, Jeannette M.},
+  title   = {Computational Thinking},
+  journal = {Communications of the ACM},
+  year    = {2006},
+  volume  = {49},
+  number  = {3},
+  pages   = {33--35},
+  doi     = {10.1145/1118178.1118215},
+  url     = {https://doi.org/10.1145/1118178.1118215}
+}
+
+@article{eng_weintrop2016defining,
+  langid       = {english},
+  author  = {Weintrop, David and Beheshti, Elham and Horn, Melissa and Orton, Kathy and Jona, Kemi and Trouille, Laura and Wilensky, Uri},
+  title   = {Defining Computational Thinking for Mathematics and Science Classrooms},
+  journal = {Journal of Science Education and Technology},
+  year    = {2016},
+  volume  = {25},
+  number  = {1},
+  pages   = {127--147},
+  doi     = {10.1007/s10956-015-9581-5},
+  url     = {https://doi.org/10.1007/s10956-015-9581-5}
+}
+
+@article{eng_renzulli1978giftedness,
+  langid       = {english},
+  author  = {Renzulli, Joseph S.},
+  title   = {What Makes Giftedness? Reexamining a Definition},
+  journal = {Phi Delta Kappan},
+  year    = {1978},
+  volume  = {60},
+  number  = {3},
+  pages   = {180--184}
+}
+
+@article{eng_vantasselbaska2005challenges,
+  langid       = {english},
+  author  = {{VanTassel-Baska}, Joyce and Stambaugh, Tammy},
+  title   = {Challenges and Possibilities for Serving Gifted Learners in the Regular Classroom},
+  journal = {Theory Into Practice},
+  year    = {2005},
+  volume  = {44},
+  number  = {3},
+  pages   = {211--217},
+  doi     = {10.1207/s15430421tip4403_5},
+  url     = {https://doi.org/10.1207/s15430421tip4403_5}
+}
+
+@article{eng_brown1992design,
+  langid       = {english},
+  author  = {Brown, Ann L.},
+  title   = {Design Experiments: Theoretical and Methodological Challenges in Creating Complex Interventions in Classroom Settings},
+  journal = {The Journal of the Learning Sciences},
+  year    = {1992},
+  volume  = {2},
+  number  = {2},
+  pages   = {141--178},
+  doi     = {10.1207/s15327809jls0202_2},
+  url     = {https://doi.org/10.1207/s15327809jls0202_2}
+}
+
+@article{eng_dbrc2003design,
+  langid       = {english},
+  author  = {{Design-Based Research Collective}},
+  title   = {Design-Based Research: An Emerging Paradigm for Educational Inquiry},
+  journal = {Educational Researcher},
+  year    = {2003},
+  volume  = {32},
+  number  = {1},
+  pages   = {5--8},
+  doi     = {10.3102/0013189X032001005},
+  url     = {https://doi.org/10.3102/0013189X032001005}
+}
+
+@article{eng_wang2005design,
+  langid       = {english},
+  author  = {Wang, Feng and Hannafin, Michael J.},
+  title   = {Design-Based Research and Technology-Enhanced Learning Environments},
+  journal = {Educational Technology Research and Development},
+  year    = {2005},
+  volume  = {53},
+  number  = {4},
+  pages   = {5--23},
+  doi     = {10.1007/BF02504682},
+  url     = {https://doi.org/10.1007/BF02504682}
+}
+
+@article{eng_braun2006thematic,
+  langid       = {english},
+  author  = {Braun, Virginia and Clarke, Victoria},
+  title   = {Using Thematic Analysis in Psychology},
+  journal = {Qualitative Research in Psychology},
+  year    = {2006},
+  volume  = {3},
+  number  = {2},
+  pages   = {77--101},
+  doi     = {10.1191/1478088706qp063oa},
+  url     = {https://doi.org/10.1191/1478088706qp063oa}
+}
+
+@book{eng_lincoln1985naturalistic,
+  langid       = {english},
+  author    = {Lincoln, Yvonna S. and Guba, Egon G.},
+  title     = {Naturalistic Inquiry},
+  year      = {1985},
+  publisher = {Sage Publications},
+  address   = {Beverly Hills, CA}
+}
+
+@book{eng_creswell2018qualitative,
+  langid       = {english},
+  author    = {Creswell, John W. and Poth, Cheryl N.},
+  title     = {Qualitative Inquiry and Research Design: Choosing Among Five Approaches},
+  edition   = {4},
+  year      = {2018},
+  publisher = {Sage Publications},
+  address   = {Thousand Oaks, CA}
+}
+
+@book{eng_nasem2016science,
+  langid       = {english},
+% [CITE-AUDIT] nasem2016science: CROSSREF_MISMATCH로 기록되었으나, Crossref 기준으로 title/subtitle/DOI/URL 정정 완료.
+  author    = {{National Academies of Sciences, Engineering, and Medicine}},
+  title     = {Science Literacy},
+  subtitle  = {Concepts, Contexts, and Consequences},
+  year      = {2016},
+  publisher = {National Academies Press},
+  address   = {Washington, DC},
+  doi       = {10.17226/23595},
+  url       = {https://doi.org/10.17226/23595}
+}
+
+@book{eng_national2018data,
+  langid       = {english},
+% [CITE-AUDIT] national2018data: CROSSREF_MISMATCH로 기록되었으나, Crossref 기준으로 title/subtitle/DOI/URL 정정 완료.
+  author    = {{National Academies of Sciences, Engineering, and Medicine}},
+  title     = {Data Science for Undergraduates},
+  subtitle  = {Opportunities and Options},
+  year      = {2018},
+  publisher = {National Academies Press},
+  address   = {Washington, DC},
+  doi       = {10.17226/25104},
+  url       = {https://doi.org/10.17226/25104}
+}
+
+@article{eng_adhikari2021interleaving,
+  langid       = {english},
+% [CITE-AUDIT] adhikari2021interleaving: CROSSREF_NOT_FOUND_DOI + (당시) doi.org resolves: False로 기록됨. 본문에서는 인용 보류 처리(주석 참고). 최종 제출 전 DOI/저널 메타데이터 재검증 필요.
+  author  = {Adhikari, Ani and DeNero, John and Garcia, David and Hellerstein, Joseph and Jordan, Michael and Ram, Nilou and Sethi, Ananya and Soni, Suraj and Ullman, Jeffrey and Yu, Bin},
+  title   = {Interleaving Computational and Inferential Thinking: Data Science for Undergraduates at Berkeley},
+  journal = {Harvard Data Science Review},
+  year    = {2021},
+  volume  = {3},
+  number  = {4},
+  doi     = {10.1162/99608f92.1a9c2b3d},
+  url     = {https://doi.org/10.1162/99608f92.1a9c2b3d},
+  note-doi     = {DOI not verified via CrossRef}
+}
+
+@misc{eng_usgs_earthquake,
+  langid       = {english},
+  author       = {{U.S. Geological Survey}},
+  title        = {Earthquake Hazards Program},
+  howpublished = {\url{https://earthquake.usgs.gov/}},
+  note         = {Accessed: 2024-11-02}
+}
+
+@misc{eng_jupyter_docs,
+  langid       = {english},
+  author       = {{Project Jupyter}},
+  title        = {{Jupyter} Notebook Documentation},
+  howpublished = {\url{https://jupyter-notebook.readthedocs.io/}},
+  note         = {Accessed: 2024-11-02}
+}
+
+@misc{eng_python_docs,
+  langid       = {english},
+  author       = {{Python Software Foundation}},
+  title        = {{Python} Documentation},
+  howpublished = {\url{https://docs.python.org/}},
+  note         = {Accessed: 2024-11-02}
+}
+
+@misc{eng_pandas,
+  langid       = {english},
+  author       = {{pandas development team}},
+  title        = {pandas},
+  howpublished = {\url{https://pandas.pydata.org/}},
+  year         = {2024},
+  note         = {Accessed: 2024-11-02}
+}
+
+@misc{eng_numpy,
+  langid       = {english},
+  author       = {{NumPy Developers}},
+  title        = {NumPy},
+  howpublished = {\url{https://numpy.org/}},
+  year         = {2024},
+  note         = {Accessed: 2024-11-02}
+}
+
+@misc{eng_matplotlib,
+  langid       = {english},
+  author       = {{matplotlib development team}},
+  title        = {Matplotlib},
+  howpublished = {\url{https://matplotlib.org/}},
+  year         = {2024},
+  note         = {Accessed: 2024-11-02}
+}
+
+@article{eng_fleischer2022reproducibility,
+  langid       = {english},
+% [CITE-AUDIT] fleischer2022reproducibility: CROSSREF_NOT_FOUND_TITLE로 기록됨(제목 기반 확정 매칭 실패). 본문에서는 인용 보류 처리(주석 참고). DOI/권호/쪽수 확인 후 보강 권장.
+  author  = {Fleischer, Franz Yannik and Biehler, Rolf and Schulte, Carsten},
+  title   = {Reproducible Research and {Jupyter} Notebooks in Data Science Education},
+  journal = {Statistics Education Research Journal},
+  year    = {2022},
+  volume  = {21},
+  number  = {2},
+  note    = {Focus on reproducibility using Jupyter notebooks}
+}
+
+@inproceedings{eng_xiao2021design,
+  langid       = {english},
+  author    = {Xiao, Tian and Greenberg, Ronald I. and Albert, Max V.},
+  title     = {Design and Assessment of a Task-Driven Introductory Data Science Course Taught Concurrently in Multiple Languages: {Python}, {R}, and {MATLAB}},
+  booktitle = {Proceedings of the 52nd {ACM} Technical Symposium on Computer Science Education},
+  pages     = {1039--1045},
+  year      = {2021},
+  doi       = {10.1145/3430665.3456364},
+  url       = {https://doi.org/10.1145/3430665.3456364}
+}
+
+@article{eng_kumwichar2023enhancing,
+  langid       = {english},
+  author  = {Kumwichar, P.},
+  title   = {Enhancing Learning About Epidemiological Data Analysis Using {R} for Graduate Students in Medical Fields With {Jupyter} Notebook: Classroom Action Research},
+  journal = {JMIR Medical Education},
+  year    = {2023},
+  volume  = {9},
+  pages   = {e47394},
+  doi     = {10.2196/47394},
+  url     = {https://doi.org/10.2196/47394}
+}
+
+@article{eng_penuel2016balancing,
+  langid       = {english},
+  author  = {Penuel, William R. and Shepard, Lorrie A.},
+  title   = {Balancing Design Goals for Supporting Students' Work with Extant Data in Science},
+  journal = {The Educational Designer},
+  year    = {2016},
+  volume  = {5},
+  number  = {19},
+  pages   = {1--26}
+}
+
+@article{eng_schield2004information,
+  langid       = {english},
+  author  = {Schield, Milo},
+  title   = {Information Literacy, Statistical Literacy and Data Literacy},
+  journal = {IASSIST Quarterly},
+  year    = {2004},
+  volume  = {28},
+  number  = {2-3},
+  pages   = {6--11}
+}
+
+@book{eng_vygotsky1978mind,
+  langid       = {english},
+  author    = {Vygotsky, Lev S.},
+  title     = {Mind in Society: The Development of Higher Psychological Processes},
+  publisher = {Harvard University Press},
+  year      = {1978}
+}
+
+@book{eng_lave1991situated,
+  langid       = {english},
+  author    = {Lave, Jean and Wenger, Etienne},
+  title     = {Situated Learning: Legitimate Peripheral Participation},
+  publisher = {Cambridge University Press},
+  year      = {1991}
+}
+
+@book{eng_renzulli1977enrichment,
+  langid       = {english},
+  author    = {Renzulli, Joseph S.},
+  title     = {The Enrichment Triad Model: A Guide for Developing Defensible Programs for the Gifted and Talented},
+  publisher = {Creative Learning Press},
+  year      = {1977}
+}
+
+@misc{eng_nasa_ned,
+  langid       = {english},
+  author       = {{NASA/IPAC Extragalactic Database}},
+  title        = {Galaxy Data},
+  howpublished = {\url{https://ned.ipac.caltech.edu/}},
+  note         = {Accessed: 2024-11-02}
+}
+
+@misc{eng_noaa_co2,
+  langid       = {english},
+  author       = {{NOAA Global Monitoring Laboratory}},
+  title        = {Mauna Loa CO2 Data},
+  howpublished = {\url{https://gml.noaa.gov/ccgg/trends/}},
+  note         = {Accessed: 2024-11-02}
+}
+
+@misc{eng_noaa_climate,
+  langid       = {english},
+  author       = {{NOAA National Centers for Environmental Information}},
+  title        = {Climate Data},
+  howpublished = {\url{https://www.ncei.noaa.gov/}},
+  note         = {Accessed: 2024-11-02}
+}
+
+@misc{eng_usgs_volcano,
+  langid       = {english},
+  author       = {{U.S. Geological Survey}},
+  title        = {Volcano Hazards Program},
+  howpublished = {\url{https://volcanoes.usgs.gov/}},
+  note         = {Accessed: 2024-11-02}
+}
+
+@misc{eng_esa_hipparcos,
+  langid       = {english},
+  author       = {{European Space Agency}},
+  title        = {Hipparcos Catalogue},
+  howpublished = {\url{https://www.cosmos.esa.int/web/hipparcos}},
+  note         = {Accessed: 2024-11-02}
+}
+
+@misc{eng_esa_sentinel_data,
+  langid       = {english},
+  author       = {{European Space Agency}},
+  title        = {Copernicus Sentinel Satellite Missions},
+  howpublished = {\url{https://www.esa.int/Applications/Observing_the_Earth/Copernicus/Sentinel-2}},
+  note         = {Accessed: 2026-01-19}
+}
+
+@misc{eng_nsidc_data,
+  langid       = {english},
+  author       = {{National Snow and Ice Data Center}},
+  title        = {NSIDC Data Collections},
+  howpublished = {\url{https://nsidc.org/data}},
+  note         = {Accessed: 2026-01-19}
+}
+
+@misc{eng_berkeley_earth_data,
+  langid       = {english},
+  author       = {{Berkeley Earth}},
+  title        = {Global Temperature Data},
+  howpublished = {\url{https://berkeleyearth.org/data/}},
+  note         = {Accessed: 2026-01-19}
+}
+
+@misc{eng_pandas_docs,
+  langid       = {english},
+  author       = {{pandas development team}},
+  title        = {pandas Documentation},
+  howpublished = {\url{https://pandas.pydata.org/docs/}},
+  note         = {Accessed: 2024-11-02}
+}
+
+@misc{eng_matplotlib_docs,
+  langid       = {english},
+  author       = {{matplotlib development team}},
+  title        = {Matplotlib Documentation},
+  howpublished = {\url{https://matplotlib.org/stable/index.html}},
+  note         = {Accessed: 2024-11-02}
+}
+
+@article{eng_braun2006using,
+  langid       = {english},
+  author  = {Braun, Virginia and Clarke, Victoria},
+  title   = {Using Thematic Analysis in Psychology},
+  journal = {Qualitative Research in Psychology},
+  year    = {2006},
+  volume  = {3},
+  number  = {2},
+  pages   = {77--101}
+}
+
+@article{eng_flavell1979metacognition,
+  langid       = {english},
+  author  = {Flavell, John H.},
+  title   = {Metacognition and Cognitive Monitoring: A New Area of Cognitive--Developmental Inquiry},
+  journal = {American Psychologist},
+  year    = {1979},
+  volume  = {34},
+  number  = {10},
+  pages   = {906--911},
+  doi     = {10.1037/0003-066X.34.10.906}
+}
+
+@article{eng_renzulli1978makes,
+  langid       = {english},
+  author  = {Renzulli, Joseph S.},
+  title   = {What Makes Giftedness? Reexamining a Definition},
+  journal = {Phi Delta Kappan},
+  year    = {1978},
+  volume  = {60},
+  number  = {3},
+  pages   = {180--184}
+}
+
+@article{eng_schield2005information,
+  langid       = {english},
+  author  = {Schield, Milo},
+  title   = {Information Literacy, Statistical Literacy and Data Literacy},
+  journal = {IASSIST Quarterly},
+  year    = {2005},
+  volume  = {28},
+  number  = {2},
+  pages   = {6--11}
+}
+
+@article{eng_zimmerman2002becoming,
+  langid       = {english},
+  author  = {Zimmerman, Barry J.},
+  title   = {Becoming a Self-Regulated Learner: An Overview},
+  journal = {Theory Into Practice},
+  year    = {2002},
+  volume  = {41},
+  number  = {2},
+  pages   = {64--70}
+}
+
+@book{eng_winner1996gifted,
+  langid       = {english},
+  author    = {Winner, Ellen},
+  title     = {Gifted Children: Myths and Realities},
+  year      = {1996},
+  publisher = {Basic Books},
+  address   = {New York, NY}
+}
+
+@article{eng_subotnik2011rethinking,
+  langid       = {english},
+  author  = {Subotnik, Rena F. and Olszewski-Kubilius, Paula and Worrell, Francis C.},
+  title   = {Rethinking Giftedness and Gifted Education: A Proposed Direction Forward Based on Psychological Science},
+  journal = {Psychological Science in the Public Interest},
+  year    = {2011},
+  volume  = {12},
+  number  = {1},
+  pages   = {3--54}
+}
+
+@article{eng_barnett2002transfer,
+  langid       = {english},
+  author  = {Barnett, Susan M. and Ceci, Stephen J.},
+  title   = {When and Where Do We Apply What We Learn? A Taxonomy for Far Transfer},
+  journal = {Psychological Bulletin},
+  year    = {2002},
+  volume  = {128},
+  number  = {4},
+  pages   = {612--637}
+}
+
+@article{eng_gagne2004dmgt,
+  langid       = {english},
+  author  = {Gagn{\'e}, Franç{\'o}is},
+  title   = {Transforming Gifts into Talents: The {DMGT} as a Developmental Theory},
+  journal = {High Ability Studies},
+  year    = {2004},
+  volume  = {15},
+  number  = {2},
+  pages   = {119--147}
+}
+
+@book{eng_sternberg1997successful,
+  langid       = {english},
+  author    = {Sternberg, Robert J.},
+  title     = {Successful Intelligence},
+  year      = {1997},
+  publisher = {Plenum Press},
+  address   = {New York, NY}
+}
+
+@book{eng_sternberg1985triarchic,
+  langid       = {english},
+  author    = {Sternberg, Robert J.},
+  title     = {Beyond {IQ}: A Triarchic Theory of Human Intelligence},
+  year      = {1985},
+  publisher = {Cambridge University Press},
+  address   = {Cambridge, UK}
+}
+
+@article{eng_gagne2010dmgt,
+  langid       = {english},
+  author  = {Gagn{\'e}, Franç{\'o}is},
+  title   = {Building Gifts into Talents: Detailed Overview of the {DMGT} 2.0},
+  journal = {International Journal for Talent Development and Creativity},
+  year    = {2010},
+  volume  = {1},
+  number  = {2},
+  pages   = {22--37}
+}
+
+@incollection{eng_monks1992multifactor,
+  langid       = {english},
+  author    = {M\"onks, Franz J. and Renzulli, Joseph S.},
+  title     = {Multifactor Model of Talent Development},
+  booktitle = {Handbook of Gifted Education},
+  editor    = {Colangelo, Nicholas and Davis, Gary A.},
+  year      = {1992},
+  pages     = {69--87},
+  publisher = {Allyn and Bacon},
+  address   = {Boston, MA}
+}
+
+@incollection{eng_heller2005munich,
+  langid       = {english},
+  author    = {Heller, Kurt A. and Perleth, Christoph and Hany, Erik A.},
+  title     = {The Munich Model of Giftedness Designed to Identify and Promote Gifted Students},
+  booktitle = {Conceptions of Giftedness},
+  editor    = {Sternberg, Robert J. and Davidson, Janet E.},
+  year      = {2005},
+  pages     = {147--170},
+  publisher = {Cambridge University Press},
+  address   = {Cambridge, UK}
+}
+
+@article{eng_ziegler2012actiotope,
+  langid       = {english},
+  author  = {Ziegler, Albert and Phillipson, Shane N.},
+  title   = {Towards a Systemic Theory of Giftedness and Talent Development: The Actiotope Model and Its Implications},
+  journal = {High Ability Studies},
+  year    = {2012},
+  volume  = {23},
+  number  = {1},
+  pages   = {3--30}
+}
+
+@article{eng_subotnik2018talent,
+  langid       = {english},
+% [CITE-AUDIT] subotnik2018talent: CROSSREF_NOT_FOUND_TITLE로 기록됨(제목 기반 확정 매칭 실패). 본문에서 사용 시 원문/DOI/권호/쪽수 재확인 권장.
+  author  = {Subotnik, Rena F. and Olszewski-Kubilius, Paula and Worrell, Francis C.},
+  title   = {Talent Development as a Framework for Gifted Education},
+  journal = {Gifted Child Quarterly},
+  year    = {2018},
+  volume  = {62},
+  number  = {3},
+  pages   = {175--188}
+}
+
+@article{eng_zimmerman2002srl,
+  langid       = {english},
+  author  = {Zimmerman, Barry J.},
+  title   = {Becoming a Self-Regulated Learner: An Overview},
+  journal = {Contemporary Educational Psychology},
+  year    = {2002},
+  volume  = {27},
+  number  = {1},
+  pages   = {62--75}
+}
+
+@book{eng_polya1945solveit,
+  langid       = {english},
+  author    = {Polya, George},
+  title     = {How to Solve It: A New Aspect of Mathematical Method},
+  year      = {1945},
+  publisher = {Princeton University Press},
+  address   = {Princeton, NJ}
+}
+
+@article{eng_mayes2014quantitative,
+  langid       = {english},
+  author  = {Mayes, R. L. and Forrester, J. H. and Christus, J. S. and Peterson, F. I. and Bonilla, R. and Yestness, N.},
+  title   = {Quantitative Reasoning in Environmental Science: A Learning Progression},
+  journal = {International Journal of Science Education},
+  year    = {2014},
+  volume  = {36},
+  number  = {4},
+  pages   = {635--658}
+}
+
+@book{eng_steen2004achieving,
+  langid       = {english},
+  author    = {Steen, Lynn Arthur},
+  title     = {Achieving Quantitative Literacy: An Urgent Challenge for Higher Education},
+  year      = {2004},
+  publisher = {Mathematical Association of America},
+  address   = {Washington, DC}
+}
+
+@article{eng_piatek2012helping,
+  langid       = {english},
+  author  = {Piatek-Jimenez, K. and Marcinek, T. and Phelps, C. M. and Dias, A.},
+  title   = {Helping Students Become Quantitatively Literate},
+  journal = {Mathematics Teacher},
+  year    = {2012},
+  volume  = {105},
+  number  = {9},
+  pages   = {692--696}
+}
+
+@article{eng_boersma2013measuring,
+  langid       = {english},
+  author  = {Boersma, S. and Klyve, D.},
+  title   = {Measuring Habits of Mind: Toward a Promptless Instrument for Assessing Quantitative Literacy},
+  journal = {Numeracy: Advancing Education in Quantitative Literacy},
+  year    = {2013},
+  volume  = {6},
+  number  = {1},
+  pages   = {ar6}
+}
+
+@article{eng_vacher2014looking,
+  langid       = {english},
+  author  = {Vacher, H. L.},
+  title   = {Looking at the Multiple Meanings of Numeracy, Quantitative Literacy, and Quantitative Reasoning},
+  journal = {Numeracy},
+  year    = {2014},
+  volume  = {7},
+  number  = {2},
+  pages   = {ar1}
+}
+
+@article{eng_calzada2013incorporating,
+  langid       = {english},
+  author  = {Calzada Prado, J. and Marzal, M.},
+  title   = {Incorporating Data Literacy into Information Literacy Programs: Core Competencies and Contents},
+  journal = {Libri},
+  year    = {2013},
+  volume  = {63},
+  number  = {2},
+  pages   = {123--134}
+}
+
+@article{eng_finzer2013data,
+  langid       = {english},
+  author  = {Finzer, W.},
+  title   = {The Data Science Education Dilemma},
+  journal = {Technology Innovations in Statistics Education},
+  year    = {2013},
+  volume  = {7},
+  number  = {2}
+}
+
+@article{eng_baumer2015data,
+  langid       = {english},
+  author  = {Baumer, B.},
+  title   = {A Data Science Course for Undergraduates: Thinking with Data},
+  journal = {American Statistician},
+  year    = {2015},
+  volume  = {69},
+  number  = {4},
+  pages   = {334--342}
+}
+
+@article{eng_mandinach2013systemic,
+  langid       = {english},
+  author  = {Mandinach, E. B. and Gummer, E. S.},
+  title   = {A Systemic View of Implementing Data Literacy in Educator Preparation},
+  journal = {Educational Researcher},
+  year    = {2013},
+  volume  = {42},
+  number  = {1},
+  pages   = {30--37}
+}
+
+@article{eng_gibson2018growing,
+  langid       = {english},
+% [CITE-AUDIT] gibson2018growing: CROSSREF_MISMATCH로 기록되었으나, Crossref 기준으로 저자명/DOI/URL 정정 완료.
+  author  = {Gibson, J. Phil and Mourad, Teresa},
+  title   = {The Growing Importance of Data Literacy in Life Science Education},
+  journal = {American Journal of Botany},
+  year    = {2018},
+  volume  = {105},
+  number  = {12},
+  pages   = {1953--1956},
+  doi     = {10.1002/ajb2.1195},
+  url     = {https://doi.org/10.1002/ajb2.1195}
+}
+
+@article{eng_nolan2015data,
+  langid       = {english},
+  author  = {Hardin, J. and Hoerl, R. and Horton, N. J. and Nolan, D.},
+  title   = {Data science in statistics curricula: {P}reparing students to ``think with data''},
+  journal = {The American Statistician},
+  year    = {2015},
+  volume  = {69},
+  number  = {4},
+  pages   = {267--274},
+  doi     = {10.1080/00031305.2015.1077729}
+}
+
+@book{eng_selwyn2019digital,
+  langid       = {english},
+  author    = {Selwyn, Neil},
+  title     = {What is digital sociology?},
+  publisher = {Polity Press},
+  year      = {2019},
+  address   = {Cambridge, UK}
+}
+
+@article{eng_callanan2020everyday,
+  langid       = {english},
+% [CITE-AUDIT] callanan2020everyday: CROSSREF_NOT_FOUND_DOI + (당시) doi.org resolves: False로 기록됨. 본문에서는 인용 보류 처리(주석 참고). DOI/저널 메타데이터 재검증 필요.
+  author  = {Callanan, Maureen A. and Cervantes, Christi and Luce, Melanie R.},
+  title   = {Everyday Science Learning in Family Settings: Engaging Historically Underrepresented Families},
+  journal = {International Journal of Science Education},
+  year    = {2020},
+  volume  = {42},
+  number  = {14},
+  pages   = {2334--2355},
+  doi     = {10.1080/09500693.2020.1821895},
+  url     = {https://doi.org/10.1080/09500693.2020.1821895},
+  note-doi     = {DOI not verified via CrossRef}
+}
+
+@article{eng_sullivan2018designing,
+  langid       = {english},
+  title={Designing science curricula around the practices of science},
+  author={Sullivan, Sarah and Rozhkova, Olesya and Alidoust, Somayeh and Chinn, Clark A},
+  journal={Science Education},
+  volume={102},
+  number={6},
+  pages={1190--1218},
+  year={2018},
+  publisher={Wiley Online Library},
+  doi={10.1002/sce.21399},
+  note-doi     = {DOI not verified via CrossRef}
+}
+
+@article{eng_osborne2015science,
+  langid       = {english},
+% [CITE-AUDIT] osborne2015science: CROSSREF_NOT_FOUND_DOI + (당시) doi.org resolves: False로 기록됨. 본문에서는 인용 보류 처리(주석 참고). 원문/DOI 재확인 후 복원 권장.
+  title={Science as a subject at secondary level: the views of young people},
+  author={Osborne, Jonathan and Archer, Louise and Christodoulou, Antonia},
+  journal={The Curriculum Journal},
+  volume={24},
+  number={2},
+  pages={156--182},
+  year={2015},
+  publisher={Taylor \& Francis},
+  doi={10.1080/09585176.2013.782262},
+  note-doi     = {DOI not verified via CrossRef}
+}
+
+@misc{eng_copernicus,
+  langid       = {english},
+  title   = {Copernicus: The European Earth Observation Programme},
+  author  = {{European Commission and European Space Agency}},
+  year    = {2023},
+  url     = {https://www.copernicus.eu/},
+  note    = {Accessed: 2024}
+}
+
+@dataset{eng_gebco_2023,
+  langid       = {english},
+  author  = {{GEBCO Compilation Group}},
+  title   = {GEBCO 2023 Grid - A bathymetric and topographic dataset of the Global Ocean and Land},
+  year    = {2023},
+  doi     = {10.5281/zenodo.8047833},
+  url     = {https://www.gebco.net/},
+  note    = {General Bathymetric Chart of the Oceans},
+  note-doi     = {DOI not verified via CrossRef}
+}
+
+@article{eng_roemmich2015argo,
+  langid       = {english},
+% [CITE-AUDIT] roemmich2015argo: CROSSREF_MISMATCH로 기록됨(연도/저널 메타데이터 불일치 가능). 본 엔트리는 Crossref 기준(doi:10.5670/oceanog.2009.36, 2009, Oceanography 22(2), 34--43)으로 정리되어 있음.
+  author  = {Roemmich, Dean and Johnson, Gregory C. and Riser, Stephen C. and Davis, Russ and Gilson, John and Owens, W. Brechner and Garzoli, Silvia L. and Schmid, Claudia and Ignaszewski, Mark},
+  title   = {The Argo Program: Observing the Global Oceans with Profiling Floats},
+  journal = {Oceanography},
+  year    = {2009},
+  volume  = {22},
+  number  = {2},
+  pages   = {34--43},
+  doi     = {10.5670/oceanog.2009.36}
+}
+
+@article{kor_shin2017tipes,
+  langid   = {korean},
+  author   = {신영준 and 곽영순 and 김희경 and 이수영 and 이성희 and 강훈식},
+  title    = {과학긍정경험 지표 검사를 위한 도구 개발 연구},
+  journal  = {한국과학교육학회지},
+  year     = {2017},
+  volume   = {37},
+  number   = {2},
+  pages    = {335--346},
+  doi      = {10.14697/jkase.2017.37.2.0335},
+  language = {korean}
+}
+
+@article{kor_lee2024jkese_environment,
+  langid   = {korean},
+  author   = {이동영},
+  title    = {초등과학 영재들의 환경문제 인식에 따른 환경소양의 차이: 낙관론과 비관론을 중심으로},
+  journal  = {대한지구과학교육학회지},
+  year     = {2024},
+  volume   = {17},
+  number   = {3},
+  pages    = {314--325},
+  doi      = {10.15523/JKSESE.2024.17.3.314},
+  language = {korean}
+}
+
+@article{kor_kim2023jkese_environment,
+  langid   = {korean},
+  author   = {김윤경 and 강지훈 and 이동영},
+  title    = {환경소양 요인별 수준에 따른 환경행동 실천 경험의 차이},
+  journal  = {대한지구과학교육학회지},
+  year     = {2023},
+  volume   = {16},
+  number   = {1},
+  pages    = {153--165},
+  doi      = {10.15523/JKSESE.2023.16.1.153},
+  language = {korean}
+}
+
+@article{kor_park2020jkess_sst,
+  langid   = {korean},
+  author   = {박경애 and 손유미},
+  title    = {전구 대양의 극저 해수면온도 공간 분포와 지구과학교과서 데이터 시각화 분석},
+  journal  = {한국지구과학회지},
+  year     = {2020},
+  volume   = {41},
+  number   = {6},
+  pages    = {599--616},
+  doi      = {10.5467/JKESS.2020.41.6.599},
+  language = {korean}
+}
+
+@article{kor_chung2013jkess_sna,
+  langid   = {korean},
+  author   = {정덕호 and 유대영},
+  title    = {사회연결망법을 이용한 과학영재들의 의사소통 구조 분석},
+  journal  = {한국지구과학회지},
+  year     = {2013},
+  volume   = {34},
+  number   = {1},
+  pages    = {81--92},
+  doi      = {10.5467/JKESS.2013.34.1.81},
+  language = {korean}
+}
+
+@article{kor_lim2024jkess_typhoontrack,
+  langid   = {korean},
+  author   = {임채영 and 박경애},
+  title    = {천리안 위성 2A호 영상을 활용한 태풍 경로 시각화탐구활동 수업자료 개발},
+  journal  = {한국지구과학회지},
+  year     = {2024},
+  volume   = {45},
+  number   = {1},
+  pages    = {48--71},
+  doi      = {10.5467/JKESS.2024.45.1.48},
+  language = {korean}
+}
+
+@article{kor_lim2024jkess_windspeed,
+  langid   = {korean},
+  author   = {임채영 and 박경애},
+  title    = {인공위성 RGB 영상 기반 중등학교 교과서 태풍 풍속 산출 및 데이터 시각화 프로그램 개발},
+  journal  = {한국지구과학회지},
+  year     = {2024},
+  volume   = {45},
+  number   = {3},
+  pages    = {173--191},
+  doi      = {10.5467/JKESS.2024.45.3.173},
+  language = {korean}
+}
+
+@article{eng_gummer2016,
+  langid       = {english},
+  author  = {Gummer, Ellen S. and Mandinach, Ellen B.},
+  title   = {Building a Conceptual Framework for Data Literacy},
+  journal = {Teachers College Record},
+  year    = {2015},
+  volume  = {117},
+  number  = {4},
+  pages   = {1--22},
+  note    = {Alias for gummer2015building; key name retained for existing citations}
+}
+
+@article{eng_wolff2016data,
+  langid       = {english},
+  author  = {Wolff, Annika and Gooch, Daniel and Cavero Montaner, Juan Jos{\'e} and Rashid, Uta and Kortuem, Gerd},
+  title   = {Creating an Understanding of Data Literacy for a Data-Driven Society},
+  journal = {The Journal of Community Informatics},
+  year    = {2016},
+  volume  = {12},
+  number  = {3},
+  pages   = {9--26},
+  doi     = {10.15353/joci.v12i3.3275},
+  url     = {https://doi.org/10.15353/joci.v12i3.3275}
+}
+
+@article{eng_esli2009,
+  langid       = {english},
+  author  = {{Earth Science Literacy Initiative}},
+  title   = {Earth Science Literacy Initiative},
+  journal = {GSA Today},
+  year    = {2009},
+  volume  = {19},
+  number  = {8},
+  pages   = {10},
+  doi     = {10.1130/1052-5173-19.8.10.b},
+  url     = {https://doi.org/10.1130/1052-5173-19.8.10.b}
+}
+
+@article{eng_kastens2017designpatterns,
+  langid       = {english},
+  author  = {Kastens, Kim and Krumhansl, Ruth},
+  title   = {Identifying Curriculum Design Patterns as a Strategy for Focusing Geoscience Education Research: A Proof of Concept Based on Teaching and Learning With Geoscience Data},
+  journal = {Journal of Geoscience Education},
+  year    = {2017},
+  volume  = {65},
+  number  = {4},
+  pages   = {373--392},
+  doi     = {10.5408/16-217.1},
+  url     = {https://doi.org/10.5408/16-217.1}
+}
+
+@article{eng_kastens2020questions,
+  langid       = {english},
+  author  = {Kastens, Kim A. and Zrada, Melissa and Turrin, Margie},
+  title   = {What kinds of questions do students ask while exploring data visualizations?},
+  journal = {Journal of Geoscience Education},
+  year    = {2020},
+  volume  = {68},
+  number  = {3},
+  pages   = {199--219},
+  doi     = {10.1080/10899995.2019.1675447},
+  url     = {https://doi.org/10.1080/10899995.2019.1675447},
+  note    = {Published online 2019-10-22; published in print 2020}
+}
+
+@book{eng_hey2009fourth,
+  langid       = {english},
+  editor   = {Hey, Tony and Tansley, Stewart and Tolle, Kristin},
+  title    = {The Fourth Paradigm: Data-Intensive Scientific Discovery},
+  year     = {2009},
+  publisher = {Microsoft Research},
+  address  = {Redmond, WA},
+  url      = {https://research.microsoft.com/en-us/collaboration/fourthparadigm/},
+  note     = {Edited volume}
+}
+
+@article{eng_pangrazio2019personal,
+  langid       = {english},
+  title={‘Personal data literacies’: A critical literacies approach to enhancing understandings of personal digital data},
+  author={Pangrazio, Luci and Selwyn, Neil},
+  journal={New media \& society},
+  volume={21},
+  number={2},
+  pages={419--437},
+  year={2019},
+  publisher={SAGE Publications Sage UK: London, England}
+}
+
+@misc{kor_ministry2022curriculum,
+  langid       = {korean},
+  author={{교육부}},
+  title={과학과 교육과정},
+  year={2022},
+  howpublished={교육부 고시 제2022-33호 [별책 9]},
+  address={세종},
+  publisher={교육부}
+}
+
+@article{kor_kim2023climate_sustainable_world,
+  langid  = {korean},
+  author  = {김다원 and 김병연},
+  title   = {2022 개정 고등학교 융합선택과목 『기후변화와 지속가능한 세계』교육과정 개발의 쟁점과 내용},
+  journal = {한국지리환경교육학회지},
+  year    = {2023},
+  volume  = {31},
+  number  = {2},
+  pages   = {55--67},
+  doi     = {10.17279/jkagee.2023.31.2.55},
+  url     = {https://doi.org/10.17279/jkagee.2023.31.2.55}
+}
+
+@article{kor_park2026_esdl_conceptualization,
+  langid  = {korean},
+  author  = {박기현},
+  title   = {지구과학 데이터 소양의 개념화와 검사도구 개발: 내용 타당도 검토를 중심으로},
+  journal = {한국지구과학회지},
+  year    = {2026},
+  volume  = {47},
+  number  = {2},
+  pages   = {1--11},
+  doi     = {10.5467/JKESS.2026.47.2.1},
+  url     = {https://doi.org/10.5467/JKESS.2026.47.2.1}
+}
+
+

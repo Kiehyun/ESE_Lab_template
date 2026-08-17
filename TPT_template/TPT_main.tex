@@ -1,0 +1,138 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The Physics Teacher (TPT) anonymous submission template
+%
+% Journal features:
+% - TPT focuses on practical and classroom-facing physics teaching.
+% - Manuscripts are usually concise, readable, and useful to physics teachers.
+% - This template is anonymous by default; keep author names and affiliations out
+%   of the review file unless the journal asks otherwise.
+% - TPT generally does not use a separate abstract. Use the opening paragraph to
+%   make the article's teaching purpose and value clear.
+%
+% Before submission:
+% - Check the current AAPT/TPT author instructions and AIP submission system.
+% - Initial submission normally uses one self-contained PDF with text, figures,
+%   tables, and references; accepted/revised files may require editable source files.
+% - TPT papers are generally short. Keep the manuscript classroom-ready and concise.
+% - Use line numbers for the original submission and remove them when final files are requested.
+%
+% Editing tips:
+% - Start by editing the title and section files in sub/.
+% - Put the practical teaching idea early. Teachers should understand what they can use.
+% - Keep references selective and useful; avoid letting literature review dominate the article.
+% - Tables should be understandable by themselves and placed near the end if following TPT style.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% !TEX TS-program = lualatex
+% !TEX encoding = UTF-8 Unicode
+
+\documentclass{tpt}
+
+\newif\ifDocSubmission
+\newif\ifDocReview
+\newif\ifDocFinal
+\DocSubmissiontrue
+\DocReviewfalse
+\DocFinalfalse
+
+\newenvironment{TPTWideTable}[1][tbp]{%
+  \begin{table}[#1]
+}{%
+  \end{table}
+}
+
+\newenvironment{TPTWideFigure}[1][tbp]{%
+  \begin{figure}[#1]
+}{%
+  \end{figure}
+}
+
+\newlength{\TPTHalfWidthLen}
+\newcommand{\TPTSetHalfWidth}{\setlength{\TPTHalfWidthLen}{0.5\textwidth}}
+\newcommand{\TPTHalfWidth}{\TPTHalfWidthLen}
+\newenvironment{TPTColumnTable}[1][tbp]{%
+  \begin{table}[#1]
+  \TPTSetHalfWidth
+  \noindent\begin{minipage}{\TPTHalfWidth}
+  \captionsetup{width=\linewidth,justification=raggedright,singlelinecheck=false}%
+}{%
+  \end{minipage}
+  \end{table}
+}
+\newenvironment{TPTColumnFigure}[1][tbp]{%
+  \begin{figure}[#1]
+  \TPTSetHalfWidth
+  \noindent\begin{minipage}{\TPTHalfWidth}
+  \captionsetup{width=\linewidth,justification=raggedright,singlelinecheck=false}%
+}{%
+  \end{minipage}
+  \end{figure}
+}
+
+\input{./sub/0-preamble}
+\addbibresource{./sub/references.bib}
+
+\newcommand{\revOne}[1]{#1}
+\newcommand{\revTwo}[1]{#1}
+\newcommand{\revThree}[1]{#1}
+\newcommand{\revSum}[1]{#1}
+
+% ===== Manuscript Metadata ==================================================
+\newcommand*{\PaperTitleENG}{Title for a The Physics Teacher Manuscript}
+\title{\PaperTitleENG}
+
+% TPT review submissions should remain anonymous unless the journal asks otherwise.
+\author[]{}
+\affil[]{}
+
+\titleKOR{\PaperTitleENG}
+\titleENG{\PaperTitleENG}
+\authorsKOR{}
+\affilKOR{}
+\authorsENG{}
+\affilENG{}
+
+\def\year{YYYY}
+\def\month{Month}
+\def\volume{00}
+\def\issue{0}
+\def\beginpage{001}
+\def\endpage{000}
+\setcounter{page}{\beginpage}
+
+\def\received{}
+\def\revised{}
+\def\accepted{}
+\date{\it (Received \received ; Revised \revised; Accepted \accepted)}
+
+\def\runningauthor{}
+\def\runningtitle{TPT Manuscript Template}
+
+% TPT usually does not use an abstract. These variables are retained for class compatibility.
+\newcommand*{\AbstractTextENG}{}
+\newcommand*{\KeywordsENG}{physics teaching, classroom activity, instructional strategy}
+\newcommand*{\AbstractTextKOR}{}
+\newcommand*{\KeywordsKOR}{physics teaching, classroom activity, instructional strategy}
+
+\def\abstracttextENG{\AbstractTextENG}
+\def\keywordsENG{\KeywordsENG}
+\def\abstracttextKOR{\AbstractTextKOR}
+\def\keywordsKOR{\KeywordsKOR}
+
+\providecommand{\kesshead}{\pkashead}
+\setlength{\emergencystretch}{3em}
+
+\begin{document}
+\kesshead
+
+\input{./sub/1-Introduction.tex}
+\input{./sub/2-TheoreticalBackground.tex}
+\input{./sub/3-Methods.tex}
+\input{./sub/4-Results.tex}
+\input{./sub/5-Discussion.tex}
+\input{./sub/6-Tables.tex}
+
+\clearpage
+\printbibliography
+
+\end{document}

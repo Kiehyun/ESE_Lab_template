@@ -1,0 +1,51 @@
+\section*{Python 코드 파일 삽입 예시}
+\phantomsection
+\label{app:code-file-example}
+\addcontentsline{toc}{subsection}{Python 코드 파일 삽입 예시}
+
+% --------------------------------------------------------------------
+% 이 파일의 역할
+% --------------------------------------------------------------------
+% A4_Code_File_Example.tex에는 Python 코드 파일을 부록에 넣는 예시를 작성합니다.
+% code 폴더에 저장한 .py 파일을 파일명으로 불러와 논문 부록에 그대로 출력하는 방법을 보여 줍니다.
+% 실제 논문에서는 분석 코드, 자료 전처리 코드, 시각화 코드 등 재현성 확인에 필요한 코드를
+% 이 방식으로 부록에 제시할 수 있습니다.
+%
+% --------------------------------------------------------------------
+% 부록에 코드 파일을 넣는 방법
+% --------------------------------------------------------------------
+% 긴 Python 코드를 논문 본문에 직접 붙여 넣으면 읽기 어렵고 관리하기도 어렵습니다.
+% 이 템플릿에서는 code 폴더에 .py 파일을 저장한 뒤, 부록에서 파일명으로 불러오는
+% 방식을 권장합니다. 이렇게 하면 Python 파일은 독립적으로 실행하고, 논문에서는
+% 같은 파일을 자동으로 출력할 수 있습니다.
+%
+% 기본 절차
+% 1. Python 파일을 저장소 공용 code 폴더(저장소 루트의 code/)에 저장합니다.
+%    예: (저장소 루트)/code/example_analysis.py
+%    ※ 자신만의 코드 파일은 원하는 위치에 두고 상대경로로 불러와도 됩니다.
+% 2. 부록 tex 파일에서 \VerbatimInput 명령으로 파일을 불러옵니다.
+%    예: \VerbatimInput[fontsize=\scriptsize,numbers=left]{../code/example_analysis.py}
+% 3. KNUE_thesis_main.tex의 부록 영역에 이 파일을 \input으로 추가합니다.
+%    예: \input{./sub/A4_Code_File_Example}
+%
+% 경로는 KNUE_thesis_main.tex가 있는 KNUE_thesis 폴더를 기준으로 적습니다.
+% 공용 code 폴더는 저장소 루트에 있으므로, 그 안의 파일은 ../code/파일명.py 형식으로 씁니다.
+
+연구 과정에서 사용한 분석 코드, 자료 처리 코드, 시각화 코드는 필요한 경우 부록에 제시할 수 있다.
+코드가 짧으면 본문에 직접 넣을 수도 있지만, 코드가 길거나 별도 파일로 실행해야 하는 경우에는
+저장소 공용 \verb|code| 폴더(저장소 루트)에 저장한 뒤 파일명으로 불러오는 방식이 편리하다.
+
+아래 예시는 \verb|../code/example_analysis.py| 파일을 부록에 자동으로 삽입한 것이다.
+사용자는 같은 방식으로 자신의 Python 파일명을 바꾸어 넣으면 된다.
+
+\begin{center}
+\textbf{Python 분석 코드 파일 삽입 예시}
+\end{center}
+
+\begingroup
+\scriptsize
+\VerbatimInput[numbers=left]{../code/example_analysis.py}
+\endgroup
+
+위 예시와 같이 \verb|\VerbatimInput|을 사용하면 외부 Python 파일의 내용이 논문 PDF에 자동으로 들어간다.
+코드를 수정한 뒤 LaTeX 문서를 다시 빌드하면 부록의 코드 내용도 함께 갱신된다.

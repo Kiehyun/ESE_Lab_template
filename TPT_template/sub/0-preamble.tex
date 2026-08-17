@@ -1,0 +1,213 @@
+% -----------------------------------------------------------------------------
+% Metadata note: Title, authors, and running headers are managed centrally in
+% the main .tex file. TPT does not use abstracts; the first paragraph of the
+% manuscript should summarize the article.
+% -----------------------------------------------------------------------------
+
+% -----------------------------------------------------------------------------
+% Font setup: Select common U.S. manuscript fonts for LuaLaTeX/XeLaTeX.
+% -----------------------------------------------------------------------------
+% fontspec allows LaTeX to use system fonts directly.
+\usepackage{fontspec}
+% Prefer fonts commonly available on U.S. Windows/macOS systems. The TeX Gyre
+% fallbacks keep the manuscript portable when system fonts are unavailable.
+\defaultfontfeatures{Ligatures=TeX,Renderer=Harfbuzz}
+
+% Main serif font helper: Test Times-compatible candidates in order.
+\newcommand{\SetMainManuscriptSerif}{%
+	\IfFontExistsTF{Times New Roman}{%
+		\setmainfont{Times New Roman}
+	}{%
+		\IfFontExistsTF{Times}{%
+			\setmainfont{Times}
+		}{%
+			\IfFontExistsTF{TeX Gyre Termes}{%
+				\setmainfont{TeX Gyre Termes}
+			}{%
+				\setmainfont{Latin Modern Roman}
+			}%
+		}%
+	}%
+}
+
+% Sans/mono font helper: Configure support fonts for figures, code, and tables.
+\newcommand{\SetSansMono}{%
+	\IfFontExistsTF{Arial}{%
+		\setsansfont{Arial}
+	}{%
+		\IfFontExistsTF{Helvetica}{%
+			\setsansfont{Helvetica}
+		}{%
+			\IfFontExistsTF{TeX Gyre Heros}{%
+				\setsansfont{TeX Gyre Heros}
+			}{%
+				\setsansfont{Latin Modern Sans}
+			}%
+		}%
+	}%
+	\IfFontExistsTF{Consolas}{%
+		\setmonofont{Consolas}
+	}{%
+		\IfFontExistsTF{Courier New}{%
+			\setmonofont{Courier New}
+		}{%
+			\setmonofont{Latin Modern Mono}
+		}%
+	}%
+}
+
+% Apply font settings: Run the helper macros to select real document fonts.
+\SetMainManuscriptSerif
+\SetSansMono
+
+% Line-spacing package: Adjust line spacing for manuscript review readability.
+\usepackage{setspace}
+
+% Default line spacing: use double spacing for submission/review manuscripts
+% with line numbers; final editable files use one-and-a-half spacing.
+\ifdefined\ifDocFinal
+	\ifDocFinal
+		\onehalfspacing
+	\else
+		\doublespacing
+	\fi
+\else
+	\doublespacing
+\fi
+
+% Typesetting tolerance: Reduce non-critical box warnings around long tables or English text.
+\emergencystretch=2em
+\raggedbottom
+
+% First-paragraph indentation: Indent the first paragraph after section headings.
+\usepackage{indentfirst} % Add this package to enable first paragraph indentation
+\setlength{\parindent}{1em}
+
+% -----------------------------------------------------------------------------
+% Basic packages and global settings: Shared dependencies for tables, figures,
+% color, math, TikZ, and PDF inclusion.
+% -----------------------------------------------------------------------------
+% TPT submissions are single-column manuscripts. The final publishable layout is
+% handled by the journal, so column-balancing packages are avoided here.
+\usepackage{color}
+\usepackage{verbatim}
+\usepackage{epstopdf}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,shadows,fit,shapes}
+\usepackage{pgfpages}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{xparse}
+\usepackage{caption}
+
+% Citation aliases: Use \ktextcite and \kparencite when a separate alias is useful.
+\let\ktextcite\textcite
+\let\kparencite\parencite
+\usepackage{subcaption}
+\renewcommand{\figurename}{Fig.}
+\renewcommand{\tablename}{Table}
+\usepackage{pdfpages}
+\usepackage{amsmath}
+\usepackage{unicode-math}
+\IfFontExistsTF{TeX Gyre Termes Math}{%
+	\setmathfont{TeX Gyre Termes Math}
+}{%
+	\setmathfont{Latin Modern Math}
+}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{threeparttable}
+
+% Table style helpers: keep journal tables at fixed 1.0\textwidth or 0.5\textwidth
+% without graphic scaling, so font size remains consistent across tables.
+\newcommand{\TPTTableFont}{\small}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+
+\tikzset{
+	sep code badge/.style={
+		rounded corners=1.4pt,
+		draw=black!75,
+		fill=black!4,
+		line width=0.35pt,
+		inner xsep=0.9pt,
+		inner ysep=0.25pt,
+		outer sep=0pt
+	}
+}
+\DeclareRobustCommand{\SEPCode}[1]{%
+	\tikz[baseline=(sep.base)]{\node[sep code badge] (sep) {\sffamily\bfseries\fontsize{6.8}{7.2}\selectfont #1};}%
+}
+
+\usepackage{newunicodechar}
+\newunicodechar{₂}{$_2$}
+\usepackage{etoolbox}
+\usepackage[unicode,hidelinks]{hyperref}
+\urlstyle{same}
+
+% TikZ grayscale output: Map common colors to black for print-friendly manuscripts.
+\AtBeginEnvironment{tikzpicture}{%
+	\colorlet{blue}{black}%
+	\colorlet{red}{black}%
+	\colorlet{orange}{black}%
+	\colorlet{violet}{black}%
+	\colorlet{green}{black}%
+	\colorlet{yellow}{black}%
+	\colorlet{cyan}{black}%
+	\colorlet{magenta}{black}%
+	\colorlet{purple}{black}%
+	\colorlet{teal}{black}%
+	\colorlet{brown}{black}%
+}
+
+% Graphics path: Let \includegraphics search the images folder by default.
+\graphicspath{{images/}}
+
+% Ion notation helper: Typeset ions such as C IV in a compact form.
+\newcommand\ion[2]{{#1}\,{\sc #2}} % ions: \ion{C}{iv} = C IV
+\newcommand{\ManuscriptMath}[1]{\ensuremath{#1}}
+
+% TPT manuscripts read more naturally with unnumbered section headings.
+\setcounter{secnumdepth}{0}
+
+% Legacy citation compatibility note: Manage \cite/\citet redefinitions here if needed.
+% Parenthetical: \cite -> \parencite; narrative: \citet -> \textcite.
+% \let\origcite\cite
+% \renewcommand{\cite}{\parencite}
+% \newcommand{\citet}{\textcite}
+
+% Table font size: TPT tables should be intelligible by themselves; avoid tiny text.
+\AtBeginEnvironment{table}{\small}
+\AtEndEnvironment{table}{\normalsize}
+
+% Table-note style: Add a small, left-aligned note below a table body.
+\newcommand{\TableNote}[1]{%
+	\par\smallskip
+	\begin{minipage}{\linewidth}
+	\raggedright\footnotesize *#1
+	\end{minipage}%
+}
+
+% -----------------------------------------------------------------------------
+% TPT note: Do not insert an abstract or keyword block. Instead, make the first
+% paragraph a brief searchable summary of the paper.
+% -----------------------------------------------------------------------------
+
+% -----------------------------------------------------------------------------
+% Citation tweak: Keep name delimiters simple for numbered endnotes/references.
+% -----------------------------------------------------------------------------
+% Applies to both narrative (\textcite) and parenthetical (\parencite) forms.
+\DefineBibliographyStrings{english}{andothers = {\emph{et\addabbrvspace al\adddot}}}
+\DefineBibliographyStrings{american}{andothers = {\emph{et\addabbrvspace al\adddot}}}
+
+% Use "and" instead of "&" in name delimiters.
+\renewcommand*{\finalnamedelim}{\addspace and\addspace}
+\renewcommand*{\multinamedelim}{\addcomma\addspace}
+
+% TPT reference examples use article titles in quotation marks and abbreviated
+% journal titles with volume and full page range. Biblatex handles most of this;
+% avoid APA-specific bibliography rewrites here.

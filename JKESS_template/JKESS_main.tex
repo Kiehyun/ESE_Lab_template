@@ -1,0 +1,220 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 한국지구과학회지(JKESS) 투고 템플릿 메인 파일
+% Journal of the Korean Earth Science Society
+%
+% 특징:
+% - 지구과학, 지구과학교육, 대기/해양/지질/천문/환경 관련 연구에 적합합니다.
+% - 국문 제목/초록/주제어와 영문 제목/초록/키워드를 함께 관리하도록 구성했습니다.
+% - 빌드 스크립트(JKESS_main_build.cmd/.sh)를 인자 없이 실행하면 투고본(submission),
+%   수정본(review), 최종본(final) PDF가 한 번에 모두 생성됩니다. (특정 모드만: 인자 지정)
+% - submission/review 모드에서는 저자 정보가 비워지고, final 모드에서만 저자 정보가 표시됩니다.
+%
+% 투고 전 확인:
+% - 한국지구과학회 및 한국지구과학회지의 최신 투고규정을 반드시 확인하세요.
+% - 온라인 투고, 원고 종류, 초록/주요어 길이, 표/그림 언어, 저자소개 요구사항은
+%   학회 규정이 우선합니다.
+% - 인간대상연구 또는 교육 연구 자료가 포함된 경우 IRB 승인/면제 여부와 연구윤리 문구를 확인하세요.
+% - 게재 확정 후 최종 제출 단계에서는 학회 요청에 맞추어 최종본을 아래아한글(HWP) 파일로
+%   변환해 제출해야 할 수 있으므로, 최신 투고규정과 편집위원회 안내를 확인하세요.
+%
+% 편집 요령:
+% - 새 원고를 시작할 때는 아래 Manuscript Metadata 블록부터 수정하세요.
+% - 지구과학 자료를 사용할 때는 자료 출처, 시공간 범위, 단위, 전처리, 불확실성을 명확히 쓰세요.
+% - 한국지구과학회지는 최종 조판에서 2단 편집을 사용하므로, 표와 그림은
+%   1단 폭(0.5\textwidth) 또는 2단 폭(1.0\textwidth) 중 하나를 정해 그리는 것이 좋습니다.
+% - 투고본에는 저자 식별 정보, 사사, 연구비 과제번호 등 익명성을 해칠 수 있는 내용을 넣지 마세요.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% !TEX TS-program = lualatex
+% !TEX encoding = UTF-8 Unicode
+
+\documentclass{kess}
+
+% DocMode 값: submission(투고본) | review(수정본) | final(최종본)
+\ifdefined\DocMode\else
+  \def\DocMode{submission}
+\fi
+
+\newif\ifDocSubmission
+\newif\ifDocReview
+\newif\ifDocFinal
+{\def\tmpA{submission}\ifx\DocMode\tmpA\global\DocSubmissiontrue\fi}
+{\def\tmpA{review}    \ifx\DocMode\tmpA\global\DocReviewtrue\fi}
+{\def\tmpA{final}     \ifx\DocMode\tmpA\global\DocFinaltrue\fi}
+
+\newenvironment{ManuscriptWideTable}[1][htbp]{%
+  \ifDocFinal\begin{table*}[#1]\else\begin{table}[#1]\fi
+}{%
+  \ifDocFinal\end{table*}\else\end{table}\fi
+}
+
+\newenvironment{ManuscriptWideFigure}[1][htbp]{%
+  \ifDocFinal\begin{figure*}[#1]\else\begin{figure}[#1]\fi
+}{%
+  \ifDocFinal\end{figure*}\else\end{figure}\fi
+}
+
+\newlength{\ManuscriptHalfWidthLen}
+\newcommand{\ManuscriptSetHalfWidth}{%
+  \ifDocFinal
+    \setlength{\ManuscriptHalfWidthLen}{\columnwidth}%
+  \else
+    \setlength{\ManuscriptHalfWidthLen}{0.5\textwidth}%
+  \fi
+}
+\newcommand{\ManuscriptHalfWidth}{\ManuscriptHalfWidthLen}
+\newenvironment{ManuscriptColumnTable}[1][htbp]{%
+  \begin{table}[#1]
+  \ManuscriptSetHalfWidth
+  \noindent\begin{minipage}{\ManuscriptHalfWidth}%
+  \raggedright
+  \captionsetup{width=\linewidth,justification=raggedright,singlelinecheck=false,margin=0pt}%
+}{%
+  \end{minipage}
+  \end{table}
+}
+\newenvironment{ManuscriptColumnFigure}[1][htbp]{%
+  \begin{figure}[#1]
+  \ManuscriptSetHalfWidth
+  \noindent\begin{minipage}{\ManuscriptHalfWidth}%
+  \raggedright
+  \captionsetup{width=\linewidth,justification=raggedright,singlelinecheck=false,margin=0pt}%
+}{%
+  \end{minipage}
+  \end{figure}
+}
+
+\input{./sub/0-preamble}
+\addbibresource{./sub/references.bib}
+
+\ifDocReview
+  \definecolor{ReviewerOneColor}{RGB}{0,128,70}
+  \definecolor{ReviewerTwoColor}{RGB}{102,0,153}
+  \definecolor{ReviewerThreeColor}{RGB}{0,150,210}
+  \definecolor{ReviewSummaryColor}{RGB}{0,70,170}
+  % 마크업 명령은 캡션·제목 등 이동 인수(.aux/LoF/LoT 기록)에서도 안전하도록 robust로 정의합니다.
+  \DeclareRobustCommand{\revOne}[1]{\textcolor{ReviewerOneColor}{#1}}
+  \DeclareRobustCommand{\revTwo}[1]{\textcolor{ReviewerTwoColor}{#1}}
+  \DeclareRobustCommand{\revThree}[1]{\textcolor{ReviewerThreeColor}{#1}}
+  \DeclareRobustCommand{\revSum}[1]{\textcolor{ReviewSummaryColor}{#1}}
+\else
+  \DeclareRobustCommand{\revOne}[1]{#1}
+  \DeclareRobustCommand{\revTwo}[1]{#1}
+  \DeclareRobustCommand{\revThree}[1]{#1}
+  \DeclareRobustCommand{\revSum}[1]{#1}
+\fi
+
+% ===== Manuscript Metadata ==================================================
+\newcommand*{\PaperTitleKOR}{한국지구과학회지 투고 원고 제목}
+\newcommand*{\PaperTitleENG}{English Title for a JKESS Manuscript}
+\title{\textbf{\large \PaperTitleKOR \\ \PaperTitleENG}}
+
+\newcommand*{\AuthorOneNameKOR}{저자명}
+\newcommand*{\AuthorOneNameENG}{Author Name}
+\newcommand*{\AuthorOneKOR}{\AuthorOneNameKOR}
+\newcommand*{\AuthorOneENG}{\AuthorOneNameENG}
+\newcommand*{\AuthorOneAffil}{1}
+
+\ifDocFinal\else
+  \renewcommand*{\AuthorOneKOR}{}
+  \renewcommand*{\AuthorOneENG}{}
+\fi
+
+\newcommand*{\AffilOneInstitutionKOR}{소속 기관}
+\newcommand*{\AffilOneAddressKOR}{주소}
+\newcommand*{\AffilOneInstitutionENG}{Affiliation}
+\newcommand*{\AffilOneAddressENG}{Address}
+\newcommand*{\AffilOneKOR}{\AffilOneInstitutionKOR, \AffilOneAddressKOR}
+\newcommand*{\AffilOneENG}{\AffilOneInstitutionENG, \AffilOneAddressENG}
+\newcommand*{\CorrespondingEmail}{email@example.com}
+\newcommand*{\CorrespondingPhone}{000-0000-0000}
+
+\ifDocFinal
+  \author[]{\AuthorOneKOR\textsuperscript{*}}
+  \author[]{\AuthorOneENG\textsuperscript{*}}
+  \affil[]{\AffilOneKOR}
+  \affil[]{\AffilOneENG}
+  \affil[ ]{\vskip -0.2cm { {\it E-mail: \CorrespondingEmail}}}
+\else
+  \author[]{}
+  \author[]{}
+  \affil[]{}
+  \affil[]{}
+\fi
+
+\titleKOR{\PaperTitleKOR}
+\ifDocFinal
+  \authorsKOR{\AuthorOneKOR\textsuperscript{*}}
+  \affilKOR{\AffilOneKOR}
+  \authorsENG{\AuthorOneENG\textsuperscript{*}}
+  \affilENG{\AffilOneENG}
+\else
+  \authorsKOR{}
+  \affilKOR{}
+  \authorsENG{}
+  \affilENG{}
+\fi
+
+\def\year{YYYY}
+\def\month{Month}
+\def\volume{00}
+\def\issue{0}
+\def\beginpage{001}
+\def\endpage{000}
+\setcounter{page}{\beginpage}
+
+\def\received{}
+\def\revised{}
+\def\accepted{}
+\date{\it (Received \received ; Revised \revised; Accepted \accepted)}
+
+\def\runningauthor{\ifDocFinal \AuthorOneNameKOR\else\fi}
+\def\runningtitle{한국지구과학회지 투고 원고}
+
+\newcommand*{\AbstractTextKOR}{한국지구과학회지는 지구과학 및 관련 교육 연구를 다루는 학술지입니다. 이 위치에는 연구 목적, 연구 방법, 주요 결과, 지구과학 또는 지구과학교육 분야의 시사점을 간결하게 요약한 국문 초록을 입력하세요.}
+\newcommand*{\KeywordsKOR}{지구과학, 지구과학교육, 연구 방법, 교육적 시사점}
+\newcommand*{\AbstractTextENG}{The Journal of the Korean Earth Science Society publishes research in Earth science and related Earth science education fields. Replace this text with an English abstract summarizing the purpose, methods, major findings, and implications of the study.}
+\newcommand*{\KeywordsENG}{Earth science, Earth science education, research methods, educational implications}
+
+\def\abstracttextKOR{\AbstractTextKOR}
+\def\keywordsKOR{\KeywordsKOR}
+\def\abstracttextENG{\AbstractTextENG}
+\def\keywordsENG{\KeywordsENG}
+
+\providecommand{\kesshead}{\pkashead}
+
+% ===== final 모드: 1단 제목면 → 2단 본문 전환 =================================
+% 제목/저자/초록 블록(\kessheadcontent)은 전폭 1단으로 자연 출력하여 초록 길이에
+% 관계없이 페이지 넘김이 정상 처리되도록 하고, 그 뒤 \twocolumn 으로 본문을 2단
+% 전환합니다. (이전 방식 \twocolumn[\kessheadcontent] 는 제목면 블록이 페이지 경계를
+%  넘지 못해 긴 초록에서 1쪽 아래로 넘치는 문제가 있었습니다. 전폭 표/그림은 2단의
+%  table*/figure* 로 유지합니다.)
+\ifDocFinal
+  \renewcommand{\kesshead}{%
+    \thispagestyle{empty}%
+    \kessheadcontent\par
+    \twocolumn
+  }
+\fi
+
+\setlength{\emergencystretch}{3em}
+
+\begin{document}
+\kesshead
+
+\input{./sub/1-Introduction.tex}
+\input{./sub/3-Methods.tex}
+\input{./sub/4-Results.tex}
+\input{./sub/5-Discussion.tex}
+
+\printbibliography
+
+\ifDocFinal
+\clearpage
+\section*{저자소개}
+\noindent\textbf{저자명(Author Name)}: 저자소개를 입력하세요.\\
+이메일: \CorrespondingEmail\\
+전화번호: \CorrespondingPhone
+\fi
+
+\end{document}

@@ -1,0 +1,409 @@
+﻿% !TEX program = lualatex
+% 이 파일은 논문 전체를 조립해서 PDF로 만드는 메인 파일입니다.
+% This is the main file that assembles the whole thesis and builds the PDF.
+% 본 양식은 https://github.com/Kiehyun/ESE_Lab_template 에서 다운로드할 수 있습니다.
+% This template is available at https://github.com/Kiehyun/ESE_Lab_template.
+% 템플릿을 수정할 때는 예시 내용을 바로 지우기보다 먼저 %로 주석 처리한 뒤
+% 자신의 논문 내용을 작성하면, 필요할 때 원래 안내와 예시를 다시 참고할 수 있습니다.
+% When editing examples, comment them out with % before replacing them so the original guidance remains available.
+% Overleaf에서 컴파일할 때는 메인 파일을 KNUE_thesis_main.tex로 설정하고
+% Menu 또는 Settings의 Compiler를 LuaLaTeX로 바꿉니다.
+% In Overleaf, set the main file to KNUE_thesis_main.tex and set
+% Menu or Settings > Compiler to LuaLaTeX.
+% 처음 이 양식을 사용하는 경우에는 보통 아래 순서로 수정합니다.
+% If this is your first time using the template, edit the files in this order.
+% 1. sub/0-preamble.tex에서 제목, 저자명, 지도교수, 심사위원, 학위/전공 정보를 입력합니다.
+% 1. Enter the title, author, advisor, committee, degree, and major in sub/0-preamble.tex.
+%    석사학위 논문이면 \degreeProgramKor를 {석사}로,
+%    박사학위 논문이면 \degreeProgramKor를 {박사}로 바꿉니다.
+%    영문 학위명은 같은 파일의 \degreeEng에서 함께 수정합니다.
+%    For a master's thesis, set \degreeProgramKor to {석사}; for a doctoral thesis, set it to {박사}.
+%    Edit the English degree name in \degreeEng in the same file.
+% 2. sub/abstractKor.tex와 sub/abstractEng.tex에서 국문/영문 논문요약과 주요어를 수정합니다.
+% 2. Edit the Korean/English abstracts and keywords in sub/abstractKor.tex and sub/abstractEng.tex.
+% 3. 본문은 언어와 관계없이 sub/1-Introduction.tex부터 sub/5-Conclusions.tex까지 작성합니다.
+% 3. Write the body chapters, regardless of language, from sub/1-Introduction.tex through sub/5-Conclusions.tex.
+%    영어 논문을 쓰는 경우에도 sub/en 폴더를 만들지 않고 같은 장별 파일에 영어 본문을 작성합니다.
+%    For an English thesis, do not create a sub/en folder; write the English body in the same chapter files.
+% 4. sub/references.bib에 참고문헌 BibTeX 정보를 넣습니다.
+% 4. Add BibTeX entries to sub/references.bib.
+% 5. appendix/와 sub/A... 파일에서 부록 내용을 정리합니다.
+% 5. Edit appendices in appendix/ and the sub/A... files.
+
+% --------------------------------------------------------------------
+% 문서 양식 선택
+% Document Class Selection
+% --------------------------------------------------------------------
+% \documentclass는 논문 전체의 기본 양식을 정하는 가장 중요한 명령입니다.
+% 여기서는 직접 만든 KNUE_thesis.cls 파일을 사용합니다.
+% \documentclass sets the base layout for the whole thesis.
+% This template uses the custom KNUE_thesis.cls class file.
+%
+% KNUE_thesis.cls에서 설정하는 내용
+% Main settings provided by KNUE_thesis.cls
+% - 한국교원대학교 대학원 학위논문 형식
+% - KNUE graduate thesis format
+% - A4 용지 크기와 상하좌우 여백
+% - A4 paper size and page margins
+% - 본문 줄간격과 페이지 번호 모양
+% - Body line spacing and page number style
+% - 한글/영문 글꼴 설정
+% - Korean/English font settings
+% - 표, 그림, 참고문헌의 기본 서식
+% - Default table, figure, and bibliography formatting
+% - 워터마크 옵션
+% - Watermark option
+%
+% 워터마크가 필요한 경우
+% To use the watermark
+% - 아래처럼 [watermark] 옵션을 사용합니다.
+% - 모든 페이지 가운데에 logo/Knue_logo.png가 연한 배경 로고로 들어갑니다.
+% - 논문 심사용 또는 학위 양식 확인용 PDF를 만들 때 사용할 수 있습니다.
+% - Use the [watermark] option below.
+% - logo/Knue_logo.png is placed lightly at the center of each page.
+% - This can be useful for review copies or format checks.
+% - 사용 방법:
+% - How to enable it:
+%   1. 아래의 \documentclass[watermark]{KNUE_thesis} 줄 앞의 %를 지웁니다.
+%   2. 현재 활성화된 \documentclass[nowatermark,notrimbox]{KNUE_thesis} 줄 앞에는 %를 붙입니다.
+%   3. 다시 빌드하면 각 페이지 배경 중앙에 로고 워터마크가 출력됩니다.
+%   1. Remove % before \documentclass[watermark]{KNUE_thesis}.
+%   2. Add % before the currently active \documentclass[nowatermark,notrimbox]{KNUE_thesis}.
+%   3. Rebuild the PDF.
+% \documentclass[watermark]{KNUE_thesis}
+%
+% 워터마크가 필요 없는 경우
+% To build without the watermark
+% - 아래처럼 [nowatermark,notrimbox] 옵션을 사용합니다.
+% - 최종 제출처에서 워터마크 없는 PDF를 요구할 때 사용합니다.
+% - Use the [nowatermark,notrimbox] options below.
+% - Use this when the final submission must not include a watermark.
+\documentclass[nowatermark,notrimbox]{KNUE_thesis}
+%
+% 주의
+% Caution
+% - \documentclass 명령은 하나만 활성화되어야 합니다.
+% - [watermark] 줄과 [nowatermark] 줄을 동시에 켜면 오류가 납니다.
+% - Only one \documentclass command should be active.
+% - Enabling both [watermark] and [nowatermark] will cause an error.
+% - 로고 그림 파일은 logo/Knue_logo.png입니다. 파일명이 바뀌면 KNUE_thesis.cls의
+%   \includegraphics{logo/Knue_logo.png} 부분도 함께 수정해야 합니다.
+% - 워터마크 크기와 투명도는 KNUE_thesis.cls의
+%   "Optional KNUE Logo Watermark" 부분에서 조정할 수 있습니다.
+% - If the logo file name changes, also update \includegraphics{logo/Knue_logo.png} in KNUE_thesis.cls.
+% - Watermark size and opacity can be adjusted in the "Optional KNUE Logo Watermark" block.
+
+% ── 그림 컬러/흑백 모드 선택 (선택 사항) ─────────────────────────────
+% 그림을 컬러본/흑백본으로 각각 만들어 두고(images/그림_color.pdf, 그림_bw.pdf),
+% 본문에서 \includegraphics{...}{images/\figf{그림}} 처럼 넣으면 아래 값에 따라
+% 자동으로 한쪽이 선택됩니다. 기본값은 bw(흑백). 컬러로 빌드하려면 아래 줄의 %를
+% 지우세요. (빌드 스크립트의 color 인자로도 전환할 수 있습니다.)
+% Choose color/bw figure variants. Default bw; uncomment for color.
+%\def\figmode{color}
+
+% 논문 전체에서 반복해서 쓰는 변수, 명령, 패키지 설정을 불러옵니다.
+% Load shared variables, commands, and package settings used throughout the thesis.
+\input{sub/0-preamble}
+
+% 참고문헌 데이터베이스 파일입니다. 본문에서 \cite{}로 인용한 항목이 여기에서 찾아집니다.
+% Bibliography database file. Items cited in the body are looked up here.
+%
+% bibcode 입력 방법
+% How to write bibcodes
+% - bibcode는 references.bib 안에서 각 참고문헌을 구별하는 이름입니다.
+% - A bibcode is the internal key that identifies each reference in references.bib.
+% - 예를 들어 본문에 \parencite{eng_kwak2019science_teacher_education}라고 쓰면,
+%   LaTeX은 sub/references.bib 파일에서 eng_kwak2019science_teacher_education이라는 항목을 찾습니다.
+% - For example, \parencite{eng_kwak2019science_teacher_education} tells LaTeX to find
+%   the entry named eng_kwak2019science_teacher_education in sub/references.bib.
+% - bibcode는 논문 PDF에 그대로 출력되지 않고, 원고 안에서 참고문헌을 부르기 위한 내부 이름입니다.
+% - The bibcode is not printed in the PDF; it is only an internal citation key.
+%
+% 이 논문에서는 참고문헌 언어를 구분하기 위해 bibcode 앞에 접두어를 붙입니다.
+% - 한국어 문헌: kor_저자성_연도_핵심어
+%   예: kor_kwak2020process_assessment, kor_choi2024public_data_inquiry
+% - 영어 문헌: eng_저자성_연도_핵심어
+%   예: eng_kwak2019science_teacher_education, eng_kjelvik2019getting
+% - 기관 자료도 같은 원칙으로 적습니다.
+%   예: kor_kma_data, eng_nasa_data
+%
+% references.bib에 새 참고문헌을 넣는 기본 형식
+% - 한국어 논문 예시:
+%   @article{kor_kwak2020process_assessment,
+%     langid  = {korean},
+%     author  = {홍길동 and 성춘향},
+%     title   = {초등학교 과학 수업에서 과정중심평가 적용 실태 분석},
+%     journal = {한국과학교육학회지},
+%     year    = {2020},
+%     volume  = {40},
+%     number  = {5},
+%     pages   = {463--471},
+%     doi     = {10.14697/jkase.2020.40.5.463}
+%   }
+%
+% - 영어 논문 예시:
+%   @article{eng_kwak2019science_teacher_education,
+%     langid  = {english},
+%     author  = {Hong, Gildong},
+%     title   = {Secondary School Science Teacher Education and Quality Control in Korea Based on the Teacher Qualifications and the Teacher Employment Test in Korea},
+%     journal = {Asia-Pacific Science Education},
+%     year    = {2019},
+%     volume  = {5},
+%     number  = {14},
+%     doi     = {10.1186/s41029-019-0040-0}
+%   }
+%
+% Google Scholar에서 BibTeX를 가져오는 방법
+% - Google Scholar에서 논문 제목을 검색합니다.
+% - 검색 결과 아래의 따옴표 모양 인용 아이콘을 누릅니다.
+% - 인용 창 아래쪽에서 BibTeX를 선택합니다.
+% - 새 화면에 나타난 @article, @book, @inproceedings 등의 BibTeX 항목 전체를 복사합니다.
+% - 복사한 항목을 sub/references.bib에 붙여 넣습니다.
+% - Google Scholar가 만든 인용 키는 길거나 중복될 수 있으므로,
+%   이 템플릿의 규칙에 맞게 한국어 문헌은 kor_저자성_연도_핵심어,
+%   영어 문헌은 eng_저자성_연도_핵심어 형식으로 고칩니다.
+% - Google Scholar가 만든 BibTeX에는 langid 필드가 없을 수 있으므로,
+%   한국어 문헌에는 langid = {korean}, 영어 문헌에는 langid = {english}를 추가합니다.
+% - 자동으로 가져온 정보에는 저자명, 제목 대소문자, 학술지명, 권호, 페이지, DOI 오류가
+%   있을 수 있으므로 PDF 첫 페이지, 학술지 공식 페이지, DOI 페이지와 반드시 대조합니다.
+%
+% 본문에서 인용하는 방법
+% - 영어 문헌은 biblatex-apa의 기본 명령인 \textcite와 \parencite를 사용합니다.
+%   \textcite{eng_kwak2019science_teacher_education}
+%     -> Kwak (2019)처럼 저자명이 문장 안에 들어가는 서술형 인용입니다.
+%   (\parencite{eng_kwak2019science_teacher_education})
+%     -> (Kwak, 2019)처럼 문장 끝 괄호 안에 넣는 괄호형 인용입니다.
+%
+% - 한국어 문헌은 이 양식에서 추가한 \ktextcite와 \kparencite를 사용합니다.
+%   \ktextcite{kor_kwak2020process_assessment}
+%     -> 홍길동과 성춘향(2020)처럼 한국어 저자 연결어를 쓰는 서술형 인용입니다.
+%   (\kparencite{kor_kwak2020process_assessment})
+%     -> (홍길동과 성춘향, 2020)처럼 문장 끝 괄호 안에 넣는 괄호형 인용입니다.
+%
+% - 정리하면, 문장 주어/목적어처럼 저자명을 직접 언급할 때는 textcite 계열을,
+%   문장 끝에서 근거 문헌만 제시할 때는 parencite 계열을 사용합니다.
+%   영어 문헌: \textcite / \parencite
+%   한국어 문헌: \ktextcite / \kparencite
+% - 한국어 문헌과 영어 문헌을 한 괄호 안에 함께 인용할 때는 한국어 문헌을 앞에,
+%   영어 문헌을 뒤에 둡니다.
+%   예: (\kparencite{kor_cite_example_two_authors}; \parencite{eng_cite_example_two_authors})
+%     -> (홍길동과 임꺽정, 2026; Hong and Im, 2026)처럼 출력되도록 의도한 형식입니다.
+% - 한국어 문헌과 영어 문헌은 저자 연결어, 쉼표, 축약 표기 방식이 서로 다르므로,
+%   이 템플릿에서는 한국어 괄호형 인용을 위한 \kparencite와 영어 괄호형 인용을 위한
+%   \parencite를 구분해서 적용해 두었습니다.
+%
+% - 참고문헌 목록은 references.bib에 항목을 넣는 것만으로는 생성되지 않습니다.
+%   반드시 본문 어딘가에서 해당 bibcode를 실제로 인용해야 참고문헌 목록에 나타납니다.
+%   예: \ktextcite{kor_seo2009science}는 한국어 문헌을 서술형으로 인용합니다.
+%   예: 관련 논의는 여러 연구에서 확인할 수 있다(\kparencite{kor_seo2009science}; \parencite{eng_perkel2018jupyter}).
+%   위처럼 실제 인용 명령을 본문에 넣으면, 문서 끝의 참고문헌 목록에 해당 문헌이 자동으로 출력됩니다.
+%
+% - 여러 문헌을 한 번에 인용할 때는 쉼표로 구분합니다.
+%   예: (\kparencite{kor_kwak2020process_assessment, kor_choi2024public_data_inquiry})
+%
+% - 한국어 문헌과 영어 문헌을 한 문장에서 함께 인용할 때는 바깥 괄호를 직접 넣고,
+%   한국어 문헌을 먼저, 영어 문헌을 나중에 쓰며 세미콜론(;)으로 구분합니다.
+%   예: (\kparencite{kor_kwak2020process_assessment}; \parencite{eng_kwak2019science_teacher_education})
+%
+% - 괄호 중복을 막기 위해 \kparencite와 \parencite 자체는 괄호를 출력하지 않도록 설정되어 있습니다.
+%   따라서 괄호형 인용을 만들 때는 위 예시처럼 본문에서 직접 ( )를 씁니다.
+%   이렇게 설정한 이유는 한글 논문과 영문 논문을 함께 인용할 때 요구되는 표기 방식이 다르기 때문입니다.
+%   예를 들어 한국어 문헌은 저자 연결어와 쉼표 사용 방식이 영문 APA 인용과 다르고,
+%   한국어 문헌과 영어 문헌을 한 괄호 안에 함께 제시할 때는
+%   (한국어 문헌; 영어 문헌)처럼 바깥 괄호와 세미콜론의 위치를 작성자가 직접 조절해야 합니다.
+%   따라서 이 템플릿에서는 \kparencite와 \parencite가 인용 내용만 출력하게 하고,
+%   괄호는 본문 문맥에 맞게 작성자가 직접 넣도록 하였습니다.
+%
+% 주의할 점
+% - 본문에서 사용한 bibcode와 references.bib의 bibcode는 철자가 완전히 같아야 합니다.
+% - bibcode에는 공백을 넣지 않습니다. 필요하면 밑줄(_)을 사용합니다.
+% - 한국어 문헌에는 langid = {korean}, 영어 문헌에는 langid = {english}를 넣습니다.
+%   이 값은 참고문헌 정렬, 한국어 문헌 서식, 저자 구분 기호 처리에 사용됩니다.
+\addbibresource{./sub/references.bib}
+
+
+\begin{document}
+
+% PDF 문서 정보입니다. PDF 뷰어의 속성/검색 정보에 들어갑니다.
+% 제목, 저자, 학위명, 주요어는 sub/0-preamble.tex의 변수를 사용합니다.
+% PDF metadata shown in viewer properties and search information.
+% The title, author, degree, and keywords come from variables in sub/0-preamble.tex.
+\hypersetup{
+	pdftitle={\LangText{\thesistitleKor}{\thesistitleEng}},
+	pdfauthor={\LangText{\authorKor}{\authorEng}},
+	pdfsubject={\LangText{\degreeKor}{\degreeEng}},
+	pdfkeywords={\LangText{\thesiskeywordsKor}{\thesiskeywordsEng}}
+}
+
+% 표지는 쪽번호와 PDF page anchor를 숨깁니다.
+% Hide page numbers and PDF page anchors on the cover pages.
+\pagenumbering{gobble}
+\hypersetup{pageanchor=false}
+
+% 표지와 인준면을 불러옵니다.
+% Include the cover pages and approval page.
+\include{sub/coverpage-thesis}
+\pagestyle{plain}
+
+\cleardoublepage
+% 앞부분(목차, 표/그림 목차, 논문요약)은 로마자 소문자 페이지 번호를 사용합니다.
+% 목차부터 i쪽으로 다시 시작합니다.
+% Front matter after the cover pages uses lowercase Roman page numbers.
+% Numbering restarts at i from the table of contents.
+\hypersetup{pageanchor=true}
+\pagenumbering{roman} % 로마자 소문자 페이지 번호 (i, ii, iii, ...)
+\setcounter{page}{1}
+% 목차 줄간격을 조정합니다.
+% Adjust line spacing for the table of contents.
+\begingroup
+\setstretch{1.3}
+	\tableofcontents
+\endgroup
+\cleardoublepage
+
+% 표 목차/그림 목차에서 장 사이에 생기는 과도한 여백을 줄이기 위한 설정입니다.
+% Reduce excessive spacing between chapters in the lists of tables and figures.
+\let\origaddvspace\addvspace
+\renewcommand{\addvspace}[1]{}
+
+\phantomsection
+% 표 목차입니다. 목차에도 "표 목차" 항목을 추가합니다.
+% List of tables. Also add it to the table of contents.
+\begingroup
+\setstretch{1.3}
+	\addtocontents{toc}{\protect\vspace{-0.55em}}
+	\addcontentsline{toc}{section}{\LangText{표 목차}{List of Tables}}
+	\listoftables
+\endgroup
+\cleardoublepage
+
+\phantomsection
+% 그림 목차입니다. 목차에도 "그림 목차" 항목을 추가합니다.
+% List of figures. Also add it to the table of contents.
+\begingroup
+\setstretch{1.3}
+	\addtocontents{toc}{\protect\vspace{-0.55em}}
+	\addcontentsline{toc}{section}{\LangText{그림 목차}{List of Figures}}
+	\listoffigures
+\endgroup
+
+\newpage
+\cleardoublepage
+% 앞쪽 논문요약(국문요약)은 목차에 항목으로 표시하지 않습니다(SOURCE 논문과 동일).
+% 문서 끝의 반대 언어 논문요약(ABSTRACT)만 목차에 넣습니다.
+% The front abstract is intentionally NOT listed in the Table of Contents (matches
+% the working thesis); only the opposite-language abstract at the end is listed.
+% 선택한 문서 언어에 맞는 논문요약을 불러옵니다.
+% 영어 문서에서는 영문 논문요약만 앞에 두고, 국문 논문요약은 참고문헌 뒤에 배치합니다.
+% Include the abstract that matches the selected document language.
+% In English mode, only the English abstract appears here; the Korean abstract appears after References.
+\ifEnglishDocument
+	\include{sub/abstractEng}
+\else
+	\include{sub/abstractKor}
+\fi
+
+%\printglossary[type=acronym, title={\bf ~~~~~~~~~~~~~~~~~~LIST OF TERMS AND ABBREVIATIONS}]
+%\printglossary[title={\bf  LIST OF TERMS AND ABBREVIATIONS}]
+\renewcommand{\addvspace}[1]{\origaddvspace{#1}}
+
+\cleardoublepage
+% 본문부터는 아라비아 숫자 페이지 번호를 사용합니다.
+% Body pages use Arabic page numbers.
+\pagenumbering{arabic}
+
+% ---------- 본문 파일 ----------
+% ---------- Body Chapter Files ----------
+% 각 장의 실제 내용은 아래 파일들에 작성합니다.
+% 장을 추가하거나 순서를 바꾸려면 이 \include 목록을 조정합니다.
+% Write the actual chapter contents in the files below.
+% To add chapters or change their order, edit this \include list.
+%
+% [심사위원별 수정 표시 범례 / Per-examiner revision legend]
+% 검토본(review 모드)에서 어느 색이 어느 심사위원인지 보여 주는 범례입니다.
+% 아래 주석(%)을 풀면 본문 첫머리에 범례가 한 번 출력됩니다. 최종 제출본(submit)이나
+% 기본 빌드에서는 아무것도 출력되지 않으므로 켜 둔 채로 두어도 안전합니다.
+% Uncomment to print the color↔examiner legend once at the top of the body.
+% It is invisible in the default and submit builds, so it is safe to leave on.
+% \RevisionLegend
+\include{sub/1-Introduction}
+\include{sub/2-Theorical_background}
+\include{sub/3-Methods}
+\include{sub/4-Results}
+\include{sub/5-Conclusions}
+
+\newpage
+
+% 참고문헌입니다. sub/references.bib와 본문 인용 정보를 바탕으로 자동 생성됩니다.
+% Bibliography. It is generated automatically from sub/references.bib and citations in the text.
+\phantomsection
+\addcontentsline{toc}{section}{\LangText{참고문헌}{References}}
+\printbibliography[heading=bibliography]
+
+\ifEnglishDocument
+	\newpage
+	\cleardoublepage
+	\phantomsection
+	\addcontentsline{toc}{section}{논문요약}
+	% 영어 문서의 국문 논문요약은 참고문헌 뒤에 배치합니다.
+	% In English mode, the Korean abstract is placed after References.
+	\include{sub/abstractKor}
+\else
+	\newpage
+	\cleardoublepage
+	\phantomsection
+	\addcontentsline{toc}{section}{ABSTRACT}
+	% 영문 논문요약을 불러옵니다.
+	% Include the English abstract after References in Korean mode.
+	\include{sub/abstractEng}
+\fi
+
+\newpage
+\clearpage
+
+% ---------- 부록 ----------
+% ---------- Appendices ----------
+% 부록 페이지 번호는 본문에서 계속 이어집니다.
+% Appendix page numbers continue from the body.
+\begingroup
+% 부록 목차 깊이를 조정합니다. 2이면 subsection 수준까지 목차에 표시합니다.
+% Adjust appendix TOC depth. A value of 2 shows subsections in the TOC.
+\addtocontents{toc}{\protect\setcounter{tocdepth}{2}}
+
+\appendix
+% 부록 제목입니다. 목차에도 "부 록"으로 표시합니다.
+% Appendix title. Also add it to the table of contents.
+\phantomsection
+\section*{\centerline{\LangText{부 록}{Appendix}}}
+\addcontentsline{toc}{section}{\LangText{부 록}{Appendix}}
+% 부록 표/그림은 본문 앞 표 목차/그림 목차에 추가하지 않습니다.
+% Do not add appendix tables/figures to the front lists of tables/figures.
+\captionsetup{list=no}
+
+% 부록 표/그림 번호를 A1-1처럼 부록 번호 기준으로 새로 시작합니다.
+% Restart appendix table/figure numbers by appendix prefix, such as A1-1.
+\newcommand{\SetAppendixCaptionPrefix}[1]{%
+	\setcounter{figure}{0}%
+	\setcounter{table}{0}%
+	\renewcommand{\thefigure}{#1-\arabic{figure}}%
+	\renewcommand{\thetable}{#1-\arabic{table}}%
+}
+
+\SetAppendixCaptionPrefix{A1}
+\input{./sub/A4_Code_File_Example}
+\cleardoublepage
+
+% 목차 깊이를 원래대로 복원합니다.
+% Restore the original table-of-contents depth.
+\addtocontents{toc}{\protect\setcounter{tocdepth}{3}}
+\endgroup
+
+\end{document}
+
+% # 일반 빌드
+% # Normal build
+% ./KNUE_thesis_main_build.cmd
+
+% # 깨끗한 빌드
+% # Clean build
+% ./KNUE_thesis_main_build.cmd clean

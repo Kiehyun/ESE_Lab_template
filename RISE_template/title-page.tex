@@ -1,0 +1,79 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  title-page.tex  —  Separate, NON-anonymized title page.
+%  별도 표지(비익명). RISE(이중 익명 심사)는 본문과 분리된 저자 표지를 요구한다.
+%  익명 원고(RISE_main_anon.pdf)와 "함께" 제출하는 저자 신원 표지이다.
+%  Build / 빌드:  pdflatex title-page.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt,a4paper]{article}
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage[hidelinks]{hyperref}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+% 제목: 본문(RISE_main.tex)의 \title 과 동일하게 맞추세요.
+{\LARGE\bfseries Full Article Title Goes Here:\\[2pt]
+Subtitle If Any\par}
+
+\vspace{1.5em}
+
+{\large\bfseries Authors\par}
+\vspace{0.4em}
+First Author\textsuperscript{1}\quad ORCID: \href{https://orcid.org/0000-0000-0000-0000}{0000-0000-0000-0000}\\[4pt]
+Corresponding Author\textsuperscript{1,*}\quad ORCID: \href{https://orcid.org/0000-0000-0000-0000}{0000-0000-0000-0000}\\[4pt]
+Third Author\textsuperscript{2}\quad ORCID: \href{https://orcid.org/0000-0000-0000-0000}{0000-0000-0000-0000}
+
+\vspace{1.2em}
+
+{\large\bfseries Affiliations\par}
+\vspace{0.4em}
+\textsuperscript{1}Your Institution, City, Country\\
+\textsuperscript{2}Second Institution, City, Country
+
+\vspace{1.2em}
+
+{\large\bfseries Corresponding author\par}
+\vspace{0.4em}
+Corresponding Author (\textsuperscript{*})\\
+Your Institution, City, Country\\
+Email: \href{mailto:corresponding.author@example.edu}{corresponding.author@example.edu}
+
+\vspace{1.2em}
+
+{\large\bfseries Acknowledgements\par}
+\vspace{0.4em}
+State any acknowledgements here, or write ``Not applicable.''
+
+\vspace{1.5em}
+
+{\Large\bfseries Declarations\par}
+\vspace{0.6em}
+
+\textbf{Funding.} State funding sources, or that no external funding was received.
+
+\smallskip
+\textbf{Competing interests.} State any competing interests, or that the authors declare none.
+
+\smallskip
+\textbf{Ethics approval.} State IRB/ethics approval or exemption information.
+
+\smallskip
+\textbf{Consent to participate.} State that informed consent (and guardian consent for minors) was obtained.
+
+\smallskip
+\textbf{Consent for publication.} State consent for publication, or ``Not applicable.''
+
+\smallskip
+\textbf{Data availability.} State how the data can be accessed or requested.
+
+\smallskip
+\textbf{Code availability.} State how any analysis code can be accessed or requested.
+
+\smallskip
+\textbf{Generative AI use.} Disclose whether and how generative AI was used.
+
+\smallskip
+\textbf{Author contributions.} Summarize each author's contribution (e.g., conceptualization, data collection, analysis, drafting, revision, supervision). All authors read and approved the final manuscript.
+
+\end{document}

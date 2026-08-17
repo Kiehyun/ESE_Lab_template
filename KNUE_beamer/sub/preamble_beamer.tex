@@ -1,0 +1,404 @@
+% 한국교원대학교 Beamer 발표 템플릿의 공통 설정 파일입니다.
+% Shared settings for the KNUE Beamer presentation template.
+%
+% 제목, 저자, 참고문헌, 발표자 노트, 자주 쓰는 명령을 이 파일에서 관리합니다.
+% This file manages title metadata, bibliography, speaker notes, and reusable helper commands.
+
+% ========== Presentation Information / 발표 정보 ==========
+
+% 아래 명령의 중괄호 안만 자신의 발표 정보로 바꿉니다.
+% Replace only the text inside braces with your own presentation information.
+
+% 학위과정 구분입니다. 논문 템플릿처럼 석사 또는 박사 중 하나로 바꿉니다.
+% Degree program selector. As in the thesis template, choose either 석사 or 박사.
+\providecommand{\degreeProgramKor}{박사} % 석사 또는 박사
+
+% 발표 종류 구분입니다. proposal은 논문 프로포절, result는 논문 결과발표입니다.
+% Presentation-stage selector. Use proposal for proposal talks and result for result/defense talks.
+\providecommand{\presentationStage}{proposal} % proposal 또는 result
+
+% 선택값을 preamble에서 한 번만 판정합니다. 한글 선택값은 토큰을 문자열로 바꿔 비교해야 안정적입니다.
+% Evaluate selector values once in the preamble. Korean selector values are compared as strings for stability.
+\usepackage{pdftexcmds}
+\makeatletter
+\newif\ifKNUEMaster
+\newif\ifKNUEResult
+\edef\KNUE@mastervalue{\detokenize{석사}}
+\edef\KNUE@resultvalue{\detokenize{result}}
+\edef\KNUE@degreevalue{\detokenize\expandafter{\degreeProgramKor}}
+\edef\KNUE@stagevalue{\detokenize\expandafter{\presentationStage}}
+\ifnum\pdf@strcmp{\KNUE@degreevalue}{\KNUE@mastervalue}=0
+  \KNUEMastertrue
+\else
+  \KNUEMasterfalse
+\fi
+\ifnum\pdf@strcmp{\KNUE@stagevalue}{\KNUE@resultvalue}=0
+  \KNUEResulttrue
+\else
+  \KNUEResultfalse
+\fi
+\makeatother
+
+% 학위과정에 따라 국문 학위논문 문구를 만듭니다.
+% Build the Korean thesis/dissertation label from the degree program.
+\newcommand{\BeamerDegreeWorkKor}{\degreeProgramKor{}학위논문}
+
+% 학위과정에 따라 영문 학위논문 문구를 미리 정합니다.
+% Predefine the English thesis/dissertation label from the degree program.
+\ifKNUEMaster
+  \newcommand{\BeamerDegreeWorkEng}{Master's Thesis}%
+\else
+  \newcommand{\BeamerDegreeWorkEng}{Doctoral Dissertation}%
+\fi
+
+% 발표 종류에 따라 국문/영문 발표 문구를 미리 정합니다.
+% Predefine Korean/English presentation-stage labels from the stage selector.
+\ifKNUEResult
+  \newcommand{\BeamerStageKor}{결과발표}%
+  \newcommand{\BeamerStageEng}{Results Presentation}%
+\else
+  \newcommand{\BeamerStageKor}{연구계획 발표}%
+  \newcommand{\BeamerStageEng}{Proposal Presentation}%
+\fi
+
+% 발표 종류에 따라 두 가지 내용 중 하나를 골라 출력합니다.
+% Choose between two texts according to the selected presentation stage.
+\newcommand{\KNUEStageText}[2]{%
+  \ifKNUEResult #2\else #1\fi%
+}
+
+% 발표 종류에 따라 결과 섹션의 제목 문구를 미리 정합니다.
+% Predefine result-section labels according to the selected presentation stage.
+\ifKNUEResult
+  \newcommand{\BeamerResultsSectionTitle}{연구 결과}%
+  \newcommand{\BeamerResultsSectionTitleEng}{Research Results}%
+  \newcommand{\BeamerResultsFirstSubsection}{주요 결과}%
+  \newcommand{\BeamerResultsFirstFrame}{주요 연구 결과}%
+  \newcommand{\BeamerResultsFirstBlock}{연구를 통해 확인한 결과}%
+  \newcommand{\BeamerResultsSecondSubsection}{결과 해석}%
+  \newcommand{\BeamerResultsSecondFrame}{결과 해석}%
+  \newcommand{\BeamerResultsThirdSubsection}{논의와 시사점}%
+  \newcommand{\BeamerResultsThirdFrame}{논의와 시사점}%
+  \newcommand{\BeamerSummaryFrame}{연구 결과 요약}%
+  \newcommand{\BeamerQASubsection}{질의 및 논의}%
+  \newcommand{\BeamerQAFrame}{질의 및 논의 사항}%
+  \newcommand{\BeamerQABlock}{심사위원과 논의할 부분}%
+  \newcommand{\BeamerDefaultShortTitle}{Results}%
+\else
+  \newcommand{\BeamerResultsSectionTitle}{예상 결과}%
+  \newcommand{\BeamerResultsSectionTitleEng}{Expected Results}%
+  \newcommand{\BeamerResultsFirstSubsection}{예상 산출물}%
+  \newcommand{\BeamerResultsFirstFrame}{예상 산출물}%
+  \newcommand{\BeamerResultsFirstBlock}{연구를 통해 산출할 결과}%
+  \newcommand{\BeamerResultsSecondSubsection}{연구 일정}%
+  \newcommand{\BeamerResultsSecondFrame}{연구 일정}%
+  \newcommand{\BeamerResultsThirdSubsection}{기대 효과}%
+  \newcommand{\BeamerResultsThirdFrame}{기대 효과}%
+  \newcommand{\BeamerSummaryFrame}{연구계획 요약}%
+  \newcommand{\BeamerQASubsection}{검토 요청}%
+  \newcommand{\BeamerQAFrame}{검토 요청 사항}%
+  \newcommand{\BeamerQABlock}{심사위원께 검토를 요청할 부분}%
+  \newcommand{\BeamerDefaultShortTitle}{Proposal}%
+\fi
+
+% 국문 발표 제목입니다. 표지에서 가장 크게 출력됩니다.
+% Korean presentation title. This is shown most prominently on the title slide.
+\providecommand{\BeamerTitleKor}{학위논문 발표 제목}
+
+% 영문 발표 제목입니다. 국문 제목 아래에 작은 글씨로 출력됩니다.
+% English presentation title. This appears below the Korean title in smaller type.
+\providecommand{\BeamerTitleEng}{Thesis or Dissertation Presentation Title}
+
+% 발표의 성격을 짧게 설명하는 국문 부제입니다.
+% Korean subtitle that describes the presentation type.
+\providecommand{\BeamerSubtitleKor}{\BeamerDegreeWorkKor{} \BeamerStageKor}
+
+% 발표의 성격을 짧게 설명하는 영문 부제입니다.
+% English subtitle that describes the presentation type.
+\providecommand{\BeamerSubtitleEng}{\BeamerDegreeWorkEng{} \BeamerStageEng}
+
+% PDF 북마크와 사이드바에서 사용할 짧은 제목입니다.
+% Short title used in PDF bookmarks and the sidebar.
+\providecommand{\BeamerShortTitle}{\BeamerDefaultShortTitle}
+
+% 발표자 이름입니다.
+% Presenter name.
+\providecommand{\BeamerAuthor}{홍 길 동}
+
+% 지도교수 이름입니다. 필요하면 "지도교수:" 문구까지 함께 수정합니다.
+% Advisor name. Edit the "지도교수:" label too if needed.
+\providecommand{\BeamerAdvisor}{지도교수: 성 춘 향}
+
+% 소속 학과, 전공, 연구실 정보를 적습니다.
+% Department, major, lab, or institutional affiliation.
+\providecommand{\BeamerInstitute}{한국교원대학교 지구과학교육전공}
+
+% 발표일입니다. 기본값 \today는 빌드한 날짜를 자동으로 넣습니다.
+% Presentation date. The default \today inserts the build date automatically.
+\providecommand{\BeamerDate}{\today}
+
+% 이전 연구계획서 템플릿 명령을 계속 사용할 수 있게 남겨 둔 호환 별칭입니다.
+% Compatibility aliases for documents created from the earlier proposal template.
+\providecommand{\ProposalTitleKor}{\BeamerTitleKor}
+\providecommand{\ProposalTitleEng}{\BeamerTitleEng}
+\providecommand{\ProposalSubtitle}{\BeamerSubtitleKor}
+\providecommand{\ProposalAuthor}{\BeamerAuthor}
+\providecommand{\ProposalAdvisor}{\BeamerAdvisor}
+\providecommand{\ProposalInstitute}{\BeamerInstitute}
+\providecommand{\ProposalDate}{\BeamerDate}
+
+% ========== Packages / 패키지 ==========
+
+% multicol은 긴 목차를 두 단으로 나눌 때 사용합니다.
+% multicol is used to split long table-of-contents slides into two columns.
+\usepackage{multicol}
+
+% csquotes는 biblatex-apa와 함께 인용부호 처리를 안정적으로 해 줍니다.
+% csquotes works with biblatex-apa to handle quotation marks consistently.
+\usepackage{csquotes}
+
+% APA 7판 형식 참고문헌을 biber로 처리합니다.
+% Use biber to process APA 7th edition references.
+\usepackage[
+  backend=biber,
+  style=apa,
+  natbib=true,
+  maxbibnames=20,
+  minbibnames=20,
+  maxcitenames=2,
+  mincitenames=1,
+  uniquelist=false,
+  dashed=false,
+  date=year,
+  urldate=iso,
+  dateera=astronomical,
+  datezeros=true,
+  seconds=true
+]{biblatex}
+
+% 논문 템플릿과 동일하게 biblatex-apa의 APA 7판 지역화 규칙을 사용합니다.
+% Use the same APA 7 localization rules as the thesis template.
+\DeclareLanguageMapping{english}{english-apa}
+\DeclareLanguageMapping{korean}{english-apa}
+
+% 참고문헌 파일 경로입니다. 메인 파일에서 다른 경로를 지정하면 그 값을 우선 사용합니다.
+% Bibliography path. If the main file defines another path, that value takes precedence.
+\providecommand{\beamerbib}{sub/references.bib}
+\providecommand{\proposalbib}{\beamerbib}
+
+% 실제 참고문헌 데이터베이스를 biblatex에 등록합니다.
+% Register the bibliography databases with biblatex.
+\addbibresource{\beamerbib}
+
+% pgfpages는 발표자 노트를 두 번째 화면에 배치할 때 필요합니다.
+% pgfpages is needed when speaker notes are placed on a second screen.
+\usepackage{pgfpages}
+
+% ========== Bibliography and Citation Settings / 참고문헌과 인용 설정 ==========
+
+% references.bib의 langid=korean 문헌을 먼저, langid=english 문헌을 나중에 정렬합니다.
+% Sort langid=korean entries first and langid=english entries later.
+\DeclareSourcemap{
+  \maps[datatype=bibtex]{
+    \map{
+      \step[fieldsource=langid, match=\regexp{korean}, final]
+      \step[fieldset=presort, fieldvalue={a}]
+    }
+    \map{
+      \step[fieldsource=langid, match=\regexp{english}, final]
+      \step[fieldset=presort, fieldvalue={z}]
+    }
+  }
+}
+
+% 참고문헌 목록에서 한국어 문헌은 저자명을 가운데점으로 연결하고, 영어 문헌은 APA 7판 기본 연결 방식을 사용합니다.
+% Korean bibliography entries join author names with centered dots; English entries keep APA 7 delimiters.
+\DeclareDelimFormat[bib,biblist]{multinamedelim}{%
+  \iffieldequalstr{langid}{korean}
+  {\textperiodcentered}
+  {\addcomma\space}%
+}
+\DeclareDelimFormat[bib,biblist]{finalnamedelim}{%
+  \iffieldequalstr{langid}{korean}
+  {\textperiodcentered}
+  {\ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}\addspace\&\space}%
+}
+\DeclareDelimFormat[bib,biblist]{nameyeardelim}{%
+  \iffieldequalstr{langid}{korean}
+  {}
+  {\newunitpunct}%
+}
+\DeclareDelimAlias[bib,biblist]{nonameyeardelim}{nameyeardelim}
+
+% 한국어 학술지명과 권은 굵게, 영어 학술지명과 권은 APA 기본 기울임꼴로 표시합니다.
+% Korean journal titles and volumes are bold; English ones remain APA-style italics.
+\DeclareFieldFormat[article]{journaltitle}{%
+  \iffieldequalstr{langid}{korean}
+  {\mkbibbold{#1}}
+  {\mkbibemph{#1}}%
+}
+\DeclareFieldFormat[article]{volume}{%
+  \iffieldequalstr{langid}{korean}
+  {\mkbibbold{#1}}
+  {\mkbibemph{#1}}%
+}
+
+% DOI와 URL은 클릭 가능한 주소 형태로 표시합니다.
+% Display DOI and URL fields as clickable address-style links.
+\DeclareFieldFormat{doi}{%
+  \ifhyperref{\href{https://doi.org/#1}{\nolinkurl{https://doi.org/#1}}}{\nolinkurl{https://doi.org/#1}}%
+  \nopunct%
+}
+\DeclareFieldFormat{url}{\url{#1}}
+
+% 서술형 인용에서 저자명과 연도 사이 공백을 줄입니다.
+% Remove the space between author names and year in textual citations.
+\DeclareDelimFormat[textcite]{nameyeardelim}{}
+
+% Beamer 참고문헌은 본문보다 작지만 읽을 수 있도록 scriptsize로 설정합니다.
+% Use scriptsize for Beamer bibliography entries so they remain readable.
+\renewcommand*{\bibfont}{\scriptsize}
+
+% 참고문헌의 내어쓰기 폭을 줄여 좁은 슬라이드에서도 줄바꿈이 덜 부담스럽게 보이게 합니다.
+% Use a shorter hanging indent so wrapped bibliography lines fit Beamer slides better.
+\setlength{\bibhang}{0.8em}
+
+% 참고문헌 항목 사이의 간격을 줄여 한 슬라이드에 더 많이 들어가게 합니다.
+% Reduce spacing between bibliography entries so more items fit on slides.
+\setlength\bibitemsep{0pt}
+\setlength\bibnamesep{0pt}
+
+% 참고문헌 아이콘 대신 텍스트형 항목 표시를 사용합니다.
+% Use text-style bibliography items instead of icon bullets.
+\setbeamertemplate{bibliography item}[text]
+
+% 참고문헌 제목을 한국어로 보이게 합니다.
+% Display bibliography headings in Korean.
+\DefineBibliographyStrings{english}{
+  references = {참고문헌},
+  bibliography = {참고문헌},
+}
+
+% ---------- 한국어 문헌 본문 인용 명령 / Korean citation commands ----------
+% 한국어 문헌은 \ktextcite, \kparencite를 사용하고 영어 문헌은 \textcite, \parencite를 사용합니다.
+% Use \ktextcite and \kparencite for Korean sources; use \textcite and \parencite for English sources.
+% \kparencite와 \parencite는 괄호를 직접 출력하지 않습니다.
+% \kparencite and \parencite do not print outer parentheses; write them in the slide text when needed.
+
+\newcommand{\KoreanCiteAuthorDelim}{\textperiodcentered}
+\newcommand{\UseKoreanCiteDelims}{%
+  \DeclareDelimFormat{multinamedelim}{\KoreanCiteAuthorDelim}%
+  \DeclareDelimFormat[textcite]{multinamedelim}{\KoreanCiteAuthorDelim}%
+  \DeclareDelimFormat[parencite]{multinamedelim}{\KoreanCiteAuthorDelim}%
+  \DeclareDelimFormat{finalnamedelim}{\KoreanCiteAuthorDelim}%
+  \DeclareDelimFormat[textcite]{finalnamedelim}{\KoreanCiteAuthorDelim}%
+  \DeclareDelimFormat[parencite]{finalnamedelim}{\KoreanCiteAuthorDelim}%
+  \DeclareDelimFormat[textcite]{nameyeardelim}{}%
+  \DeclareDelimFormat{andothersdelim}{\addspace}%
+  \DeclareDelimFormat[textcite]{andothersdelim}{\addspace}%
+  \DeclareDelimFormat[parencite]{andothersdelim}{\addspace}%
+  \csdef{abx@lstr@andothers}{외}%
+  \csdef{abx@sstr@andothers}{외}%
+}
+\let\KNUEorigparencite\parencite
+\let\parencite\cite
+\NewDocumentCommand{\ktextcite}{o o m}{%
+  \begingroup
+  \UseKoreanCiteDelims
+  \IfNoValueTF{#1}{%
+    \textcite{#3}%
+  }{%
+    \IfNoValueTF{#2}{\textcite[#1]{#3}}{\textcite[#1][#2]{#3}}%
+  }%
+  \endgroup
+}
+\NewDocumentCommand{\kparencite}{o o m}{%
+  \begingroup
+  \UseKoreanCiteDelims
+  \IfNoValueTF{#1}{%
+    \cite{#3}%
+  }{%
+    \IfNoValueTF{#2}{\cite[#1]{#3}}{\cite[#1][#2]{#3}}%
+  }%
+  \endgroup
+}
+
+% ========== Table of Contents / 목차 설정 ==========
+
+% 목차에서 section과 subsection 앞에 붙일 점 표식입니다.
+% Bullet marker used before section and subsection entries in the table of contents.
+\newcommand{\knueTocBullet}{\raisebox{0.15ex}{\large\textbullet}}
+
+% 목차에서 section은 subsection보다 한 단계 크게 표시합니다.
+% Sections are displayed one size larger than subsections in ToC slides.
+\setbeamerfont{section in toc}{size=\small}
+\setbeamerfont{subsection in toc}{size=\scriptsize}
+
+% section 목차 항목의 줄바꿈과 들여쓰기를 안정화합니다.
+% Stabilize wrapping and indentation for section entries in the ToC.
+\setbeamertemplate{section in toc}{%
+  \vspace{0.35em}%
+  \usebeamerfont{section in toc}%
+  \usebeamercolor[fg]{section in toc}%
+  \leavevmode\parindent0pt%
+  \hangindent=1.4em\hangafter=1%
+  \makebox[1.2em][l]{\knueTocBullet}\inserttocsection\par%
+}
+
+% subsection 목차 항목은 section보다 안쪽에 들여쓰기합니다.
+% Subsection entries are indented relative to section entries.
+\setbeamertemplate{subsection in toc}{%
+  \vspace{0.15em}%
+  \usebeamerfont{subsection in toc}%
+  \usebeamercolor[fg]{subsection in toc}%
+  \leavevmode\parindent0pt%
+  \leftskip=1.4em%
+  \hangindent=1.4em\hangafter=1%
+  \makebox[1.2em][l]{\knueTocBullet}\inserttocsubsection\par%
+}
+
+% ========== Presenter Notes / 발표자 노트 ==========
+
+% overlay에서 아직 드러나지 않은 항목을 희미하게 보이도록 설정합니다.
+% Show not-yet-uncovered overlay items transparently.
+\setbeamercovered{transparent}
+
+% 노트 페이지의 기본 글자 크기입니다.
+% Default font size for note pages.
+\setbeamerfont{note page}{size=\footnotesize}
+
+% 발표자 노트를 두 번째 화면 오른쪽에 출력하는 명령입니다.
+% Command that shows speaker notes on the right side of a second screen.
+\newcommand{\enablenotes}{\setbeameroption{show notes on second screen=right}}
+
+% 발표자 노트를 PDF 출력에서 숨기는 명령입니다.
+% Command that hides speaker notes in the PDF output.
+\newcommand{\disablenotes}{\setbeameroption{hide notes}}
+
+% 각 슬라이드에 발표자 노트를 쉽게 추가하기 위한 짧은 명령입니다.
+% Convenience command for adding speaker notes to each slide.
+\newcommand{\slidenote}[1]{\note{\footnotesize #1}}
+
+% 기본값은 청중용 PDF입니다. 노트가 보이지 않습니다.
+% Default output is an audience PDF. Notes are hidden.
+\disablenotes
+
+% ========== Convenience Macros / 편의 명령 ==========
+
+% 그림, 표, 자료의 출처를 작은 글씨로 표시합니다.
+% Display source notes for figures, tables, or materials in tiny text.
+\newcommand{\source}[1]{%
+  \vspace{0.15em}%
+  {\tiny 출처: #1}%
+}
+
+% 짧은 직접 인용문과 문헌 인용을 함께 넣을 때 사용합니다.
+% Use this for a short quoted phrase followed by a citation.
+\newcommand{\qcite}[2]{\enquote{#1} (\parencite{#2})}
+
+% itemize/enumerate의 간격을 줄여 발표 슬라이드에 맞게 만듭니다.
+% Tighten itemize/enumerate spacing for presentation slides.
+\newcommand{\tightitems}{%
+  \setlength{\itemsep}{2pt}%
+  \setlength{\parskip}{0pt}%
+}

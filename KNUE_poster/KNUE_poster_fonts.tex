@@ -1,0 +1,217 @@
+% 한국교원대학교 포스터 템플릿의 공통 글꼴 설정입니다.
+% Shared font setup for the KNUE poster templates.
+%
+% 논문 템플릿과 같은 방식으로 운영체제별 한글 명조/고딕 글꼴을 찾습니다.
+% This follows the thesis template's OS-aware Korean serif/sans font lookup.
+
+\usepackage{ifxetex,ifluatex}
+
+\makeatletter
+
+% 한글 명조/serif 글꼴을 찾지 못했을 때 보여 줄 오류 메시지입니다.
+% Error shown when no Korean serif font is available.
+\newcommand{\KNUEPoster@missinghangulserif}{%
+  \PackageError{KNUE_poster}{No Korean serif font found}{Install one Korean serif font such as Batang, AppleMyungjo, NanumMyeongjo, Noto Serif CJK KR, or UnBatang. On Ubuntu, install fonts-nanum or fonts-noto-cjk.}%
+}
+
+% 한글 고딕/sans 글꼴을 찾지 못했을 때 보여 줄 오류 메시지입니다.
+% Error shown when no Korean sans font is available.
+\newcommand{\KNUEPoster@missinghangulsans}{%
+  \PackageError{KNUE_poster}{No Korean sans font found}{Install one Korean sans font such as Malgun Gothic, Apple SD Gothic Neo, NanumGothic, Noto Sans CJK KR, or UnDotum. On Ubuntu, install fonts-nanum or fonts-noto-cjk.}%
+}
+
+% 운영체제별 영문 serif/sans/mono 글꼴을 설정합니다.
+% Configure OS-specific Latin serif/sans/mono fonts.
+\newcommand{\KNUEPoster@setlatinfonts}{%
+  \ifwindows
+    \IfFontExistsTF{Times New Roman}{\setmainfont{Times New Roman}}{\setmainfont{Latin Modern Roman}}%
+    \IfFontExistsTF{Arial}{\setsansfont{Arial}}{\setsansfont{Latin Modern Sans}}%
+    \IfFontExistsTF{Consolas}{\setmonofont{Consolas}}{\setmonofont{Latin Modern Mono}}%
+  \else\ifmacosx
+    \IfFontExistsTF{Times New Roman}{\setmainfont{Times New Roman}}{\setmainfont{Latin Modern Roman}}%
+    \IfFontExistsTF{Helvetica}{\setsansfont{Helvetica}}{\setsansfont{Latin Modern Sans}}%
+    \IfFontExistsTF{Menlo}{\setmonofont{Menlo}}{\setmonofont{Latin Modern Mono}}%
+  \else\iflinux
+    \IfFontExistsTF{Liberation Serif}{\setmainfont{Liberation Serif}}{\setmainfont{Latin Modern Roman}}%
+    \IfFontExistsTF{Liberation Sans}{\setsansfont{Liberation Sans}}{\setsansfont{Latin Modern Sans}}%
+    \IfFontExistsTF{Liberation Mono}{\setmonofont{Liberation Mono}}{\setmonofont{Latin Modern Mono}}%
+  \else
+    \setmainfont{Latin Modern Roman}%
+    \setsansfont{Latin Modern Sans}%
+    \setmonofont{Latin Modern Mono}%
+  \fi\fi\fi
+  % 포스터 본문은 멀리서 읽기 쉬운 고딕/sans 계열을 기본으로 사용합니다.
+  % Use the Gothic/sans family as the default because posters are read from a distance.
+  \renewcommand{\familydefault}{\sfdefault}%
+}
+
+% 운영체제별 한글 명조 글꼴을 설정합니다.
+% Configure OS-specific Korean serif/Myeongjo fonts.
+\newcommand{\KNUEPoster@sethangulserif}{%
+  \ifwindows
+    \IfFontExistsTF{Batang}{%
+      \setmainhangulfont{Batang}[AutoFakeBold=2.0,AutoFakeSlant=0.2]%
+    }{%
+      \IfFontExistsTF{NanumMyeongjo}{%
+        \setmainhangulfont{NanumMyeongjo}[AutoFakeSlant=0.2]%
+      }{%
+        \IfFontExistsTF{Noto Serif CJK KR}{%
+          \setmainhangulfont{Noto Serif CJK KR}[AutoFakeSlant=0.2]%
+        }{%
+          \IfFontExistsTF{UnBatang}{\setmainhangulfont{UnBatang}[AutoFakeSlant=0.2]}{\KNUEPoster@missinghangulserif}%
+        }%
+      }%
+    }%
+  \else\ifmacosx
+    \IfFontExistsTF{AppleMyungjo}{%
+      \setmainhangulfont{AppleMyungjo}[AutoFakeBold=2.0,AutoFakeSlant=0.2]%
+    }{%
+      \IfFontExistsTF{NanumMyeongjo}{%
+        \setmainhangulfont{NanumMyeongjo}[AutoFakeSlant=0.2]%
+      }{%
+        \IfFontExistsTF{Noto Serif CJK KR}{%
+          \setmainhangulfont{Noto Serif CJK KR}[AutoFakeSlant=0.2]%
+        }{%
+          \IfFontExistsTF{UnBatang}{\setmainhangulfont{UnBatang}[AutoFakeSlant=0.2]}{\KNUEPoster@missinghangulserif}%
+        }%
+      }%
+    }%
+  \else\iflinux
+    \IfFontExistsTF{NanumMyeongjo}{%
+      \setmainhangulfont{NanumMyeongjo}[AutoFakeSlant=0.2]%
+    }{%
+      \IfFontExistsTF{UnBatang}{%
+        \setmainhangulfont{UnBatang}[AutoFakeSlant=0.2]%
+      }{%
+        \IfFontExistsTF{Noto Serif CJK KR}{%
+          \setmainhangulfont{Noto Serif CJK KR}[AutoFakeSlant=0.2]%
+        }{%
+          \KNUEPoster@missinghangulserif%
+        }%
+      }%
+    }%
+  \else
+    \IfFontExistsTF{NanumMyeongjo}{%
+      \setmainhangulfont{NanumMyeongjo}[AutoFakeSlant=0.2]%
+    }{%
+      \IfFontExistsTF{Noto Serif CJK KR}{%
+        \setmainhangulfont{Noto Serif CJK KR}[AutoFakeSlant=0.2]%
+      }{%
+        \IfFontExistsTF{UnBatang}{\setmainhangulfont{UnBatang}[AutoFakeSlant=0.2]}{\KNUEPoster@missinghangulserif}%
+      }%
+    }%
+  \fi\fi\fi
+}
+
+% 운영체제별 한글 고딕 글꼴을 설정합니다.
+% Configure OS-specific Korean sans/Gothic fonts.
+\newcommand{\KNUEPoster@sethangulsans}{%
+  \ifwindows
+    \IfFontExistsTF{Malgun Gothic}{%
+      \setsanshangulfont{Malgun Gothic}[AutoFakeSlant=0.2]%
+      \setmonohangulfont{Malgun Gothic}[AutoFakeSlant=0.2]%
+    }{%
+      \IfFontExistsTF{NanumGothic}{%
+        \setsanshangulfont{NanumGothic}[AutoFakeSlant=0.2]%
+        \setmonohangulfont{NanumGothic}[AutoFakeSlant=0.2]%
+      }{%
+        \IfFontExistsTF{Noto Sans CJK KR}{%
+          \setsanshangulfont{Noto Sans CJK KR}[AutoFakeSlant=0.2]%
+          \setmonohangulfont{Noto Sans CJK KR}[AutoFakeSlant=0.2]%
+        }{%
+          \IfFontExistsTF{UnDotum}{%
+            \setsanshangulfont{UnDotum}[AutoFakeSlant=0.2]%
+            \setmonohangulfont{UnDotum}[AutoFakeSlant=0.2]%
+          }{\KNUEPoster@missinghangulsans}%
+        }%
+      }%
+    }%
+  \else\ifmacosx
+    \IfFontExistsTF{Apple SD Gothic Neo}{%
+      \setsanshangulfont{Apple SD Gothic Neo}[AutoFakeSlant=0.2]%
+      \setmonohangulfont{Apple SD Gothic Neo}[AutoFakeSlant=0.2]%
+    }{%
+      \IfFontExistsTF{NanumGothic}{%
+        \setsanshangulfont{NanumGothic}[AutoFakeSlant=0.2]%
+        \setmonohangulfont{NanumGothic}[AutoFakeSlant=0.2]%
+      }{%
+        \IfFontExistsTF{Noto Sans CJK KR}{%
+          \setsanshangulfont{Noto Sans CJK KR}[AutoFakeSlant=0.2]%
+          \setmonohangulfont{Noto Sans CJK KR}[AutoFakeSlant=0.2]%
+        }{%
+          \IfFontExistsTF{UnDotum}{%
+            \setsanshangulfont{UnDotum}[AutoFakeSlant=0.2]%
+            \setmonohangulfont{UnDotum}[AutoFakeSlant=0.2]%
+          }{\KNUEPoster@missinghangulsans}%
+        }%
+      }%
+    }%
+  \else\iflinux
+    \IfFontExistsTF{NanumGothic}{%
+      \setsanshangulfont{NanumGothic}[AutoFakeSlant=0.2]%
+      \setmonohangulfont{NanumGothic}[AutoFakeSlant=0.2]%
+    }{%
+      \IfFontExistsTF{UnDotum}{%
+        \setsanshangulfont{UnDotum}[AutoFakeSlant=0.2]%
+        \setmonohangulfont{UnDotum}[AutoFakeSlant=0.2]%
+      }{%
+        \IfFontExistsTF{Noto Sans CJK KR}{%
+          \setsanshangulfont{Noto Sans CJK KR}[AutoFakeSlant=0.2]%
+          \setmonohangulfont{Noto Sans CJK KR}[AutoFakeSlant=0.2]%
+        }{%
+          \KNUEPoster@missinghangulsans%
+        }%
+      }%
+    }%
+  \else
+    \IfFontExistsTF{NanumGothic}{%
+      \setsanshangulfont{NanumGothic}[AutoFakeSlant=0.2]%
+      \setmonohangulfont{NanumGothic}[AutoFakeSlant=0.2]%
+    }{%
+      \IfFontExistsTF{Noto Sans CJK KR}{%
+        \setsanshangulfont{Noto Sans CJK KR}[AutoFakeSlant=0.2]%
+        \setmonohangulfont{Noto Sans CJK KR}[AutoFakeSlant=0.2]%
+      }{%
+        \IfFontExistsTF{UnDotum}{%
+          \setsanshangulfont{UnDotum}[AutoFakeSlant=0.2]%
+          \setmonohangulfont{UnDotum}[AutoFakeSlant=0.2]%
+        }{\KNUEPoster@missinghangulsans}%
+      }%
+    }%
+  \fi\fi\fi
+}
+
+\newcommand{\KNUEPoster@setupfonts}{%
+  \KNUEPoster@setlatinfonts
+  \KNUEPoster@sethangulserif
+  \KNUEPoster@sethangulsans
+}
+
+\ifxetex
+  \usepackage{fontspec}
+  \usepackage{ifplatform}
+  \usepackage{kotex}
+  \defaultfontfeatures{Ligatures=TeX}
+  \KNUEPoster@setupfonts
+\else\ifluatex
+  \usepackage{fontspec}
+  \usepackage{ifplatform}
+  \usepackage{kotex}
+  \defaultfontfeatures{Ligatures=TeX}
+  \KNUEPoster@setupfonts
+\else
+  % pdfLaTeX으로 직접 빌드할 때도 기존 방식으로 최소한 컴파일되게 둡니다.
+  % Keep a pdfLaTeX fallback so direct legacy builds still compile.
+  \usepackage{kotex}
+  \usepackage{helvet}
+  \renewcommand{\familydefault}{\sfdefault}
+  \usepackage[helvet]{sfmath}
+  \usepackage[T1]{fontenc}
+\fi\fi
+
+\makeatother
+
+% 포스터 안에서 명조/고딕 계열을 명시적으로 바꾸고 싶을 때 사용하는 편의 명령입니다.
+% Convenience switches for explicitly choosing Myeongjo/serif or Gothic/sans in the poster.
+\providecommand{\PosterMyeongjo}{\rmfamily}
+\providecommand{\PosterGothic}{\sffamily}

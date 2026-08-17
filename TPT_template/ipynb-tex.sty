@@ -1,0 +1,261 @@
+%% ipynb-tex.sty
+%% Copyright 2024 by the ipynb-tex authors
+%%
+%% This file provides basic support for including Jupyter notebook outputs in LaTeX
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{ipynb-tex}[2024/01/01 v1.0 Jupyter notebook support for LaTeX]
+
+% Required packages
+\RequirePackage{graphicx}
+\RequirePackage{xcolor}
+\RequirePackage{fancyvrb}
+\RequirePackage{hyperref}
+% \RequirePackage{enumerate}  % Commented out: enumitem (with shortlabels) is loaded in document class
+\RequirePackage{geometry}
+\RequirePackage{adjustbox}
+\RequirePackage{tcolorbox}
+\tcbuselibrary{skins,breakable,listings}
+
+% Scale images like Jupyter (fit to text width by default)
+\setkeys{Gin}{width=\linewidth, keepaspectratio}
+
+% Define adjustimage command for nbconvert compatibility
+% Images in appendix will be scaled to 0.6 textwidth
+\providecommand{\adjustimage}[2]{%
+  \includegraphics[width=0.6\textwidth,keepaspectratio]{#2}%
+}
+
+% Define colors for code highlighting
+\definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+\definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+\definecolor{cellbackground}{HTML}{F7F7F7}
+\definecolor{cellborder}{HTML}{CCCCCC}
+\definecolor{outerrorbackground}{HTML}{FFDFDF}
+
+% ANSI colors (needed by nbconvert)
+\definecolor{ansi-black}{HTML}{3E424D}
+\definecolor{ansi-black-intense}{HTML}{282C36}
+\definecolor{ansi-red}{HTML}{E75C58}
+\definecolor{ansi-red-intense}{HTML}{B22B31}
+\definecolor{ansi-green}{HTML}{00A250}
+\definecolor{ansi-green-intense}{HTML}{007427}
+\definecolor{ansi-yellow}{HTML}{DDB62B}
+\definecolor{ansi-yellow-intense}{HTML}{B27D12}
+\definecolor{ansi-blue}{HTML}{208FFB}
+\definecolor{ansi-blue-intense}{HTML}{0065CA}
+\definecolor{ansi-magenta}{HTML}{D160C4}
+\definecolor{ansi-magenta-intense}{HTML}{A03196}
+\definecolor{ansi-cyan}{HTML}{60C6C8}
+\definecolor{ansi-cyan-intense}{HTML}{258F8F}
+\definecolor{ansi-white}{HTML}{C5C1B4}
+\definecolor{ansi-white-intense}{HTML}{A1A6B2}
+\definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+\definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+% Define boxspacing command (used in prompt)
+\newcommand{\boxspacing}{\hspace{0.5em}}
+
+% Prompt colors
+\newcommand{\prompt}[4]{
+    {\ttfamily\llap{{\color{#2}[#3]: #4}}\vspace{-1.25em}}
+}
+
+% Notebook-like boxes
+\definecolor{nbgray}{RGB}{240,240,240}
+\definecolor{nbframe}{RGB}{208,208,208}
+
+% Markdown cell style
+\newtcolorbox{nbmarkdown}{
+  breakable,
+  enhanced,
+  colback=white,
+  colframe=nbframe,
+  boxrule=0.4pt,
+  left=8pt,right=8pt,top=6pt,bottom=6pt,
+  overlay={}
+}
+
+% Code cell style
+\newtcolorbox{nbcode}{
+  breakable,
+  enhanced,
+  colback=nbgray,
+  colframe=nbframe,
+  boxrule=0.4pt,
+  left=8pt,right=8pt,top=6pt,bottom=6pt,
+}
+
+% Output cell style
+\newtcolorbox{nboutput}{
+  breakable,
+  enhanced,
+  colback=white,
+  colframe=nbframe,
+  boxrule=0.4pt,
+  left=8pt,right=8pt,top=6pt,bottom=6pt,
+}
+
+% Convenience environments
+\newenvironment{ipynbcode}{\begin{nbcode}}{\end{nbcode}}
+\newenvironment{ipynboutput}{\begin{nboutput}}{\end{nboutput}}
+
+% Additional commands that might be needed
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% Basic fallback environments commonly used by nbconvert
+\RequirePackage{fvextra}
+
+% Configure Verbatim environment with line spacing and font style
+\fvset{
+  fontsize=\scriptsize,      % code font size; about 7--8 pt depending on class
+  baselinestretch=1.2,       % 120% line spacing
+  formatcom=\ttfamily,       % monospaced typewriter style
+  fontfamily=tt,             % teletype font family
+  xleftmargin=0pt,
+  xrightmargin=0pt
+}
+
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{
+  commandchars=\\\{\},
+  baselinestretch=1.2,
+  fontsize=\scriptsize,
+  formatcom=\ttfamily
+}
+\newenvironment{Shaded}{}{}
+
+% Pygments syntax highlighting commands (used by nbconvert); enable colors.
+\providecommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+\providecommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+\providecommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+\providecommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+\providecommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+\providecommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+\providecommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+\providecommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+\providecommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+\providecommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+\providecommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+\providecommand{\RegionMarkerTok}[1]{{#1}}
+\providecommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+\providecommand{\NormalTok}[1]{{#1}}
+\providecommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+\providecommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+\providecommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+\providecommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+\providecommand{\ImportTok}[1]{{#1}}
+\providecommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+\providecommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+\providecommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+\providecommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+\providecommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+\providecommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+\providecommand{\BuiltInTok}[1]{{#1}}
+\providecommand{\ExtensionTok}[1]{{#1}}
+\providecommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+\providecommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+\providecommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+\providecommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+
+% Define PYG commands if not already defined (Pygments output)
+% Redefine PY commands with color mappings.
+\makeatletter
+
+% Reset the base style.
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax \let\PY@tc=\@firstofone}
+\def\PY@tok{\PY@reset}
+
+% Define colors by Pygments token type.
+% Keywords (if, for, def, class, import, etc.): bold green.
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+
+% Names and variables.
+\expandafter\def\csname PY@tok@n\endcsname{\def\PY@tc##1{##1}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+
+% Strings: red.
+\expandafter\def\csname PY@tok@l+s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@l+s+s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@l+s+s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@l+s+sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@l+s+sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@l+s+sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@l+s+sd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@l+s+se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.41}{##1}}}
+\expandafter\def\csname PY@tok@l+s+si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@l+s+sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+
+% Numbers: gray.
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@l+m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@l+m+mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@l+m+mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@l+m+mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@l+m+mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@l+m+mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+
+% Comments: blue-gray italic.
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c+c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c+ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c+cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c+cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c+cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c+cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+% Operators: gray.
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+
+% Brackets and punctuation.
+\expandafter\def\csname PY@tok@p\endcsname{\def\PY@tc##1{##1}}
+
+% Plain text.
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@x\endcsname{\def\PY@tc##1{##1}}
+
+% Define PY command with color applied.
+\providecommand{\PY}[2]{#2}
+\renewcommand{\PY}[2]{%
+  \PY@reset%
+  \csname PY@tok@#1\endcsname%
+  \PY@it{\PY@bf{\PY@tc{#2}}}%
+}
+\makeatother
+
+% Define special characters used by Pygments output.
+\providecommand{\PYZbs}{\char`\\}
+\providecommand{\PYZus}{\char`\_}
+\providecommand{\PYZob}{\char`\{}
+\providecommand{\PYZcb}{\char`\}}
+\providecommand{\PYZca}{\char`\^}
+\providecommand{\PYZam}{\char`\&}
+\providecommand{\PYZlt}{\char`\<}
+\providecommand{\PYZgt}{\char`\>}
+\providecommand{\PYZsh}{\char`\#}
+\providecommand{\PYZpc}{\char`\%}
+\providecommand{\PYZdl}{\char`\$}
+\providecommand{\PYZhy}{\char`\-}
+\providecommand{\PYZsq}{\char`\'}
+\providecommand{\PYZdq}{\char`\"}
+\providecommand{\PYZti}{\char`\~}
+
+\endinput

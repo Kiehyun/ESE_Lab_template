@@ -1,0 +1,319 @@
+\section{서론}
+
+% --------------------------------------------------------------------
+% 이 파일의 역할
+% Purpose of this file
+% --------------------------------------------------------------------
+% 1-Introduction.tex에는 논문의 서론을 작성합니다.
+% 연구의 필요성, 연구 목적, 연구 문제, 용어 정의를 쓰는 곳입니다.
+% Write the introduction of the thesis in this file.
+% This chapter usually includes the research background, purpose,
+% research questions, and definitions of key terms.
+
+\subsection{템플릿 사용 안내}
+
+\subsubsection{이 문서를 읽는 방법}
+
+이 문서는 일반적인 학위논문 작성법과 \LaTeX을 이용한 템플릿 사용법을 함께 설명한다.
+학위논문을 실제로 작성할 때는 각 장의 안내문을 자신의 연구 내용으로 바꾸고, 필요한 예시만 남겨 참고하면 된다.
+학교 지침 변경, 양식 오류, 표지ㆍ인준면ㆍ표ㆍ그림 배치 개선처럼 템플릿에 반영하면 좋을 사항을 발견하면 GitHub issue로 등록한다.
+issue는 \url{https://github.com/Kiehyun/ESE_Lab_template/issues}에서 작성할 수 있다.
+
+\subsubsection{\LaTeX과 템플릿 기본 사용 방법}
+
+\LaTeX은 장 제목, 절 제목, 표 번호, 그림 번호, 목차, 참고문헌처럼 반복해서 관리해야 하는 요소를 자동으로 처리할 수 있는 문서 작성 도구이다.
+이 템플릿에서는 문서 전체 구조를 \path{KNUE_thesis_main.tex}에서 관리한다.
+실제 본문은 \path{sub} 폴더의 장별 파일에 나누어 작성한다.
+
+처음 사용할 때는 \path{sub/0-preamble.tex}에서 논문 기본 정보를 먼저 수정하고, 그 다음 장별 파일을 차례로 작성한다.
+파일명을 바꾸면 메인 파일의 \verb|\include| 또는 \verb|\input| 명령도 함께 수정해야 한다.
+
+\subsubsection{TeX Live와 VS Code로 로컬에서 사용하는 방법}
+
+자신의 컴퓨터에서 논문을 작성하려면 \TeX\ 배포판, 편집기, 편집기 확장을 설치한다.
+이 양식은 일반적인 \LaTeX\ 파일로 구성되어 있으므로 Windows, Ubuntu, macOS에서 모두 사용할 수 있다.
+Windows에서는 TeX Live, Ubuntu에서는 패키지 관리자를 통한 TeX Live, macOS에서는 MacTeX를 설치하는 방법이 일반적이다.
+편집기는 Visual Studio Code를 사용하고, VS Code 확장으로 LaTeX Workshop을 설치하면 운영체제와 관계없이 비슷한 방식으로 문서를 작성하고 빌드할 수 있다.
+로컬 환경은 처음 설치 시간이 길지만, 인터넷 연결이 불안정해도 작업할 수 있고 논문 파일을 자신의 컴퓨터에서 직접 관리할 수 있다는 장점이 있다.
+VS Code에서는 그림 \ref{fig:vscode-codex-chat}과 같이 논문 폴더를 열고, 오른쪽 패널의 \textit{Chat} 또는 \textit{Codex} 탭을 눌러 채팅창에 원하는 수정 요청을 입력할 수 있다.
+\textit{Chat}은 GitHub Copilot에서 제공하는 채팅 기능이고, \textit{Codex}는 ChatGPT에서 제공하는 코딩 지원 서비스이다.
+이 밖에 Anthropic의 \textit{Claude Code}도 VS Code 확장(또는 터미널)으로 설치해 같은 방식으로 사용할 수 있으며, 채팅창에서 논문 수정과 분석 코드 작성을 자연어로 요청할 수 있다.
+예를 들어 표 열 너비 조정, 그림 삽입, 문장 다듬기, 빌드 오류 확인과 같은 작업을 자연어로 요청할 수 있다.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzpicture}
+        \node[anchor=south west,inner sep=0] (img) at (0,0) {\includegraphics[width=\linewidth]{images/vscode.png}};
+        \begin{scope}[x={(img.south east)},y={(img.north west)}]
+            \draw[red,ultra thick,rounded corners] (0.748,0.934) rectangle (0.776,0.969);
+            \draw[red,ultra thick,rounded corners] (0.778,0.934) rectangle (0.817,0.969);
+            \draw[blue,ultra thick,rounded corners] (0.747,0.055) rectangle (0.981,0.173);
+            \node[fill=white,fill opacity=0.90,text opacity=1,draw=red,rounded corners,align=center,font=\small] (tabs) at (0.800,0.83) {Chat 또는 Codex 탭을 누른다};
+            \draw[red,thick,->] (tabs.north west) -- (0.762,0.952);
+            \draw[red,thick,->] (tabs.north) -- (0.798,0.952);
+            \node[fill=white,fill opacity=0.90,text opacity=1,draw=blue,rounded corners,align=center,font=\small] (request) at (0.750,0.325) {채팅창에 원하는 요청을 입력한다};
+            \draw[blue,thick,->] (request.south) -- (0.865,0.173);
+        \end{scope}
+    \end{tikzpicture}
+    \caption{VS Code에서 Chat 또는 Codex를 선택하고 요청을 입력하는 예}
+    \label{fig:vscode-codex-chat}
+\end{figure}
+
+Windows용 TeX Live 공식 설치 문서는 \url{https://tug.org/texlive/windows.html}이다.
+TeX Live 공식 설치 안내에서는 인터넷 설치 프로그램과 DVD 또는 ISO 이미지에서 설치하는 방법을 함께 제공한다.
+인터넷 설치 프로그램은 작은 설치 파일을 내려받은 뒤 필요한 패키지를 설치 과정에서 다시 내려받는 방식이고, ISO 이미지는 약 6GB 크기의 설치용 DVD 이미지를 먼저 받은 뒤 그 안에 포함된 파일로 설치하는 방식이다.
+Windows에서는 TeX Live 설치 프로그램 또는 ISO 이미지의 \verb|install-tl-windows.bat|를 사용할 수 있다.
+Ubuntu에서는 \verb|sudo apt install texlive-full latexmk biber fonts-nanum|처럼 패키지 관리자로 필요한 프로그램과 한글 글꼴을 설치할 수 있다.
+macOS에서는 MacTeX를 설치하면 TeX Live, LuaLaTeX, latexmk, biber가 함께 설치된다.
+한글 글꼴은 운영체제별 기본 글꼴을 먼저 사용하도록 설정되어 있다.
+Windows에서는 \verb|Batang|과 \verb|Malgun Gothic|, macOS에서는 \verb|AppleMyungjo|와 \verb|Apple SD Gothic Neo|, Ubuntu에서는 \verb|NanumMyeongjo|와 \verb|NanumGothic|을 우선 사용한다.
+해당 글꼴이 없으면 Noto CJK 또는 Un 계열 글꼴을 순서대로 찾고, 그래도 없으면 설치해야 할 한글 글꼴을 오류 메시지로 안내한다.
+이 템플릿은 논문 작성에 필요한 패키지가 많을 수 있으므로 가능한 경우 전체 설치를 사용하는 것이 가장 안전하다.
+
+이 템플릿용 TeX Live 2026 ISO 이미지는 다음 NAS 링크에서도 받을 수 있다.
+
+\url{https://gofile.me/6VcYy/fiPUGdUIz}
+
+ISO 파일을 내려받은 뒤 Windows 파일 탐색기에서 ISO 파일을 마우스 오른쪽 버튼으로 클릭하고 \textit{탑재}를 선택하면 새 DVD 드라이브가 생긴다.
+그 드라이브 안으로 들어가 \verb|install-tl-windows.bat|를 실행해 설치를 완료한다.
+설치는 매우 오래 걸릴 수 있으며, TeX Live 2026 전체 설치에는 약 9.62GB의 디스크 공간이 필요하다.
+
+TeX 배포판과 VS Code 설치 순서는 운영체제에 따라 다음과 같이 진행한다.
+
+\begin{enumerate}
+    \item Windows에서는 위 NAS 링크나 TeX Live 공식 사이트에서 TeX Live ISO 이미지 또는 설치 프로그램을 내려받는다. ISO 파일을 사용할 경우 파일 탐색기에서 마우스 오른쪽 버튼을 눌러 \textit{탑재}한 뒤, 새로 생긴 DVD 드라이브의 \verb|install-tl-windows.bat|를 실행한다.
+    \item Ubuntu에서는 터미널에서 \texttt{sudo apt update}를 실행한 뒤 TeX Live, latexmk, biber, 한글 글꼴을 설치한다.
+    \item macOS에서는 MacTeX 설치 파일을 내려받아 설치한다. 설치가 끝난 뒤 새 터미널을 열어 TeX 관련 명령을 확인한다.
+    \item 각 운영체제에서 LuaLaTeX, latexmk, biber의 버전 확인 명령을 실행해 설치를 확인한다.
+    \item Visual Studio Code를 설치한다.
+    \item VS Code의 Extensions 창에서 \textit{LaTeX Workshop}을 검색하여 설치한다.
+    \item VS Code에서 \verb|KNUE_thesis| 폴더를 연다.
+    \item \path{KNUE_thesis_main.tex}를 열고 LaTeX Workshop의 빌드 명령을 실행한다. 터미널에서는 운영체제에 맞는 빌드 스크립트를 실행한다.
+\end{enumerate}
+
+이 템플릿은 LuaLaTeX을 사용해 빌드하는 것을 기준으로 한다.
+따라서 VS Code에서 자동 빌드가 되지 않거나 pdfLaTeX으로 빌드되어 오류가 나면 LaTeX Workshop의 빌드 레시피가 LuaLaTeX 또는 latexmk 기반인지 확인한다.
+pdfLaTeX, XeLaTeX, LuaLaTeX은 모두 \LaTeX\ 문서를 PDF로 만드는 엔진이지만, 한글과 시스템 글꼴을 처리하는 방식이 다르다.
+pdfLaTeX은 오래된 표준 엔진으로 속도가 빠르지만 유니코드 한글과 Windows 시스템 글꼴 처리에 불리하므로 이 양식에는 적합하지 않다.
+XeLaTeX은 유니코드와 시스템 글꼴을 비교적 잘 처리하지만, 이 템플릿의 한글 처리와 글꼴 설정, 줄바꿈, 표지 간격은 LuaLaTeX 기준으로 맞추어져 있으므로 출력이 미묘하게 달라질 수 있다.
+LuaLaTeX은 유니코드, 시스템 글꼴, 현대 \LaTeX\ 패키지와의 호환성이 좋아 이 양식의 권장 빌드 엔진이다.
+
+\begin{table}[htbp]
+\caption{\LaTeX\ 엔진별 특징과 이 양식에서의 사용 권장}
+\label{tab:latex-engine-differences}
+\centering
+\ThesisTableStyle
+\begin{tabularx}{\linewidth}{@{}L{0.15\linewidth}Y Y@{}}
+\toprule
+엔진 & 주요 특징 & 이 양식에서의 권장 여부 \\
+\midrule
+pdfLaTeX & 오래된 표준 엔진이며 빠르지만 유니코드, 한글, 시스템 글꼴 처리에 불리하다. & 권장하지 않는다. 오류가 나거나 한글 글꼴이 제대로 나오지 않을 수 있다. \\
+\midrule
+XeLaTeX & 유니코드와 시스템 글꼴 처리가 가능하여 한글 문서에도 사용할 수 있다. & 가능하더라도 권장하지 않는다. 줄바꿈, 글꼴, 표지 위치가 LuaLaTeX과 다를 수 있다. \\
+\midrule
+LuaLaTeX & 유니코드, 시스템 글꼴, 현대 패키지와의 호환성이 좋다. & 권장한다. 이 템플릿과 빌드 스크립트의 기준 엔진이다. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsubsection{GitHub에서 내려받아 Overleaf에서 사용하는 방법}
+
+Overleaf에서 사용할 때도 이 템플릿은 LuaLaTeX으로 빌드해야 한다.
+GitHub에서 받은 저장소 ZIP을 그대로 올리면 \path{ESE_Lab_template-main/KNUE_thesis/}처럼 한 단계 안쪽에 논문 파일이 들어갈 수 있으므로, 다음 순서처럼 \path{KNUE_thesis} 폴더 안쪽 내용만 새 ZIP 파일로 묶어 올리는 것이 안전하다.
+
+\begin{enumerate}
+    \item GitHub 저장소 \url{https://github.com/Kiehyun/ESE_Lab_template}에서 \textit{Code} 버튼을 누르고 \textit{Download ZIP}을 선택한다.
+    \item 내려받은 ZIP 파일의 압축을 풀고 \path{KNUE_thesis} 폴더로 들어간다.
+    \item \path{KNUE_thesis} 폴더 자체가 아니라 그 안의 파일과 하위 폴더 전체를 선택해 새 ZIP 파일로 압축한다.
+    \item Overleaf에서 \textit{New Project}를 누르고 \textit{Upload Project}를 선택해 새 ZIP 파일을 업로드한다.
+    \item 프로젝트의 메인 파일을 \path{KNUE_thesis_main.tex}로 설정한다.
+    \item \textit{Menu} 또는 \textit{Settings}에서 \textit{Compiler}를 \textit{LuaLaTeX}로 바꾼 뒤 \textit{Recompile}을 실행한다.
+\end{enumerate}
+
+Overleaf 프로젝트의 최상위에는 \path{KNUE_thesis_main.tex}, \path{KNUE_thesis.cls}, \path{sub}, \path{images}, \path{logo}가 바로 보여야 한다.
+컴파일러가 pdfLaTeX이나 XeLaTeX으로 되어 있으면 표지의 한글 이름 자간을 처리하는 \verb|\directlua| 코드가 PDF 첫 장에 그대로 보이거나, 글꼴과 표지 간격이 의도와 다르게 출력될 수 있다.
+
+Overleaf의 회원 정책과 요금제 제한은 바뀔 수 있으므로, 제출 전에는 공식 문서를 확인해야 한다.
+2026년 5월 6일 공식 문서 기준으로 무료 계정은 프로젝트 수 제한 없이 시작할 수 있지만, 컴파일 제한 시간이 10초이고 프로젝트당 공동 작업자는 1명이다.
+유료 요금제는 컴파일 제한 시간이 240초로 늘어나며, 공동 작업자 수, 변경 추적, GitHub 연동, 참고문헌 관리 도구 연동 같은 기능이 확장된다.
+이 템플릿을 혼자 작성하고 그림 파일이 크지 않다면 무료 계정으로도 시작할 수 있지만, 컴파일 시간이 자주 초과되거나 여러 명이 동시에 검토해야 한다면 유료 요금제 또는 로컬 빌드를 함께 고려한다.
+Overleaf 프로젝트 업로드와 요금제 제한에 대한 공식 안내는 각각 \href{https://docs.overleaf.com/managing-projects-and-files/uploading-a-project}{Overleaf 프로젝트 업로드 공식 안내}와 \href{https://docs.overleaf.com/getting-started/free-and-premium-plans/plan-limits}{Overleaf 요금제 제한 공식 안내}에서 확인할 수 있다.
+
+\subsubsection{로컬 빌드 스크립트로 PDF 생성하기}
+
+가장 간단한 방법은 VS Code 터미널에서 운영체제에 맞는 빌드 스크립트를 직접 실행하는 것이다.
+Windows에서는 다음 명령을 사용한다.
+
+\begin{verbatim}
+.\KNUE_thesis_main_build.cmd
+\end{verbatim}
+
+Ubuntu와 macOS에서는 다음 명령을 사용한다.
+
+\begin{verbatim}
+./KNUE_thesis_main_build.sh
+\end{verbatim}
+
+빌드가 성공하면 같은 폴더에 \verb|KNUE_thesis_main.pdf|가 생성된다.
+수정한 내용을 PDF에서 확인하려면 \verb|KNUE_thesis_main.tex| 또는 장별 파일을 저장한 뒤 다시 빌드한다.
+참고문헌을 추가하거나 목차, 표 목차, 그림 목차가 바뀌는 경우에는 한 번의 컴파일로 충분하지 않을 수 있으므로, 제공된 빌드 스크립트처럼 \verb|latexmk|를 사용하면 필요한 횟수만큼 자동으로 다시 빌드된다.
+
+문제가 생기면 먼저 다음 항목을 확인한다.
+
+\begin{enumerate}
+    \item \verb|KNUE_thesis_main.tex|와 \verb|KNUE_thesis.cls|가 같은 폴더에 있는가?
+    \item \verb|sub|, \verb|images|, \verb|logo| 폴더가 빠지지 않았는가?
+    \item \verb|sub/0-preamble.tex|에서 중괄호가 빠지거나 명령 이름을 잘못 지우지 않았는가?
+    \item 파일명을 바꾼 뒤 \verb|KNUE_thesis_main.tex|의 \verb|\include| 또는 \verb|\input| 경로도 함께 바꾸었는가?
+    \item LuaLaTeX으로 빌드하고 있는가?
+    \item 참고문헌을 수정한 뒤 biber가 함께 실행되었는가?
+\end{enumerate}
+
+\subsubsection{한국어 논문과 영어 논문 작성 방법}
+
+이 템플릿은 한국어 학위논문과 영어 학위논문 두 가지 경우를 지원한다.
+두 경우 모두 같은 장별 파일을 사용한다.
+차이는 논문 정보 파일에서 선택하는 문서 언어 값과 각 파일에 작성하는 본문 언어이다.
+문서 언어는 \verb|sub/0-preamble.tex|의 \verb|\documentLanguage| 값으로 정한다.
+
+한국어로 논문을 작성할 때는 다음 값을 사용한다.
+
+\begin{verbatim}
+\newcommand{\documentLanguage}{korean}
+\end{verbatim}
+
+한국어 모드에서는 국문 논문요약이 앞쪽에 나오고, 영문 논문요약은 참고문헌 뒤에 나온다.
+표와 그림 표기는 본문과 표 목차, 그림 목차에서 한국어 형식인 ``표'', ``그림''으로 출력된다.
+본문은 \verb|sub/1-Introduction.tex|부터 \verb|sub/5-Conclusions.tex|까지의 장별 파일에 한국어로 작성한다.
+
+영어로 논문을 작성할 때는 다음 값으로 바꾼다.
+
+\begin{verbatim}
+\newcommand{\documentLanguage}{english}
+\end{verbatim}
+
+영어 모드에서는 영문 제목이 위에, 한글 제목이 아래에 나오고, 영문 논문요약이 앞쪽에 배치된다.
+국문 논문요약은 참고문헌 뒤에 배치된다.
+표와 그림 표기는 본문과 표 목차, 그림 목차에서 각각 ``Table'', ``Fig.'' 형식으로 출력된다.
+본문은 한국어 논문과 같은 장별 파일에 영어로 작성한다.
+
+\subsubsection{템플릿 파일별 작성 영역}
+
+각 장의 실제 본문은 \path{sub} 폴더의 파일에 나누어 작성한다.
+앞의 다섯 장 파일에는 서론, 이론적 배경, 연구 방법, 연구 결과, 결론 및 제언을 쓴다.
+국문 논문요약과 영문 논문요약은 각각 논문요약 파일에서 수정한다.
+
+\begin{table}[htbp]
+\caption{템플릿 파일별 작성 영역}
+\label{tab:template-file-roles}
+\centering
+\ThesisTableStyle
+\begin{tabularx}{\linewidth}{@{}P{0.34\linewidth}Y@{}}
+\toprule
+구분 & 작성하거나 수정하는 내용 \\
+\midrule
+메인 파일\par
+(\texttt{KNUE\_thesis\_main.tex}) & 논문 전체의 순서를 정한다. 표지, 논문요약, 장별 파일, 참고문헌, 부록을 어떤 순서로 불러올지 관리한다. \\
+\midrule
+논문 정보\par
+(\texttt{sub/0-preamble.tex}) & 문서 언어, 논문 제목, 저자명, 지도교수명, 심사위원명, 학위 구분, 학교명, 전공명, 주요어를 입력한다. \\
+\midrule
+논문요약\par
+(\texttt{sub/abstractKor.tex},\par
+\texttt{sub/abstractEng.tex}) & 국문 논문요약과 영문 논문요약을 작성한다. 한국어 모드와 영어 모드에 따라 앞쪽에 배치되는 논문요약이 달라진다. \\
+\midrule
+본문\par
+(\texttt{sub/1-Introduction.tex}--\par
+\texttt{sub/5-Conclusions.tex}) & 한국어 논문이면 한국어로, 영어 논문이면 영어로 같은 장별 파일에 본문을 작성한다. \\
+\midrule
+참고문헌\par
+(\texttt{sub/references.bib}) & BibTeX 정보를 입력한다. 본문에서 실제로 인용한 항목만 참고문헌 목록에 출력된다. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsubsection{워터마크 추가 방법}
+
+워터마크는 각 페이지 배경 중앙에 한국교원대학교 로고를 연하게 넣는 기능이다.
+최종 제출용 PDF에 워터마크가 필요한지는 학교 또는 학과 지침을 먼저 확인한다.
+
+워터마크는 \verb|KNUE_thesis_main.tex| 맨 위의 \verb|\documentclass| 옵션으로 켜거나 끈다.
+워터마크를 사용하려면 다음 줄을 활성화한다.
+
+\begin{verbatim}
+\documentclass[watermark]{KNUE_thesis}
+\end{verbatim}
+
+워터마크를 사용하지 않으려면 다음 줄을 사용한다.
+
+\begin{verbatim}
+\documentclass[nowatermark]{KNUE_thesis}
+\end{verbatim}
+
+\verb|watermark| 줄과 \verb|nowatermark| 줄을 동시에 활성화하면 안 된다.
+한 줄만 남기고 다른 한 줄은 앞에 \verb|%|를 붙여 주석 처리한다.
+
+워터마크에 사용하는 로고 파일은 \verb|logo/Knue_logo.png|이다.
+다른 그림을 워터마크로 쓰려면 그림 파일을 \verb|logo| 폴더에 넣고, \verb|KNUE_thesis.cls|의 워터마크 설정 부분에서 파일명을 바꾼다.
+
+\begin{verbatim}
+\includegraphics[width=88mm]{logo/Knue_logo.png}
+\end{verbatim}
+
+워터마크 크기는 \verb|width=88mm| 값을 조정해 바꿀 수 있다.
+숫자를 키우면 로고가 커지고, 줄이면 작아진다.
+워터마크의 진하기는 같은 블록의 \verb|opacity=0.35| 값을 조정한다.
+값이 \verb|1|에 가까울수록 진하고, \verb|0|에 가까울수록 옅다.
+
+\begin{verbatim}
+\node[opacity=0.35] at (current page.center)
+\end{verbatim}
+
+워터마크 옵션, 로고 파일, 크기, 투명도를 바꾼 뒤에는 다시 빌드하여 PDF에서 배경 로고가 원하는 위치와 진하기로 보이는지 확인한다.
+
+\subsubsection{표지 사각형 테두리 제거 방법}
+
+표지와 인준면에 보이는 190 mm x 260 mm 사각형 테두리는 양식 검토용 재단 영역 표시이다.
+최종 제출용 PDF에서 이 테두리가 필요 없으면 \verb|KNUE_thesis_main.tex| 맨 위의 \verb|\documentclass| 옵션에 \verb|notrimbox|를 넣는다.
+
+\begin{verbatim}
+\documentclass[nowatermark,notrimbox]{KNUE_thesis}
+\end{verbatim}
+
+테두리를 다시 표시하려면 \verb|trimbox| 옵션을 사용한다.
+
+\begin{verbatim}
+\documentclass[nowatermark,trimbox]{KNUE_thesis}
+\end{verbatim}
+
+\verb|trimbox|와 \verb|notrimbox|는 동시에 사용하지 않는다.
+워터마크 옵션과 함께 사용할 때는 예시처럼 쉼표로 구분한다.
+
+\subsection{서론 작성 예시}
+
+\subsubsection{연구의 필요성}
+
+과학교육 분야의 학위논문에서 연구의 필요성은 독자에게 왜 이 과학 교수ㆍ학습 문제를 연구해야 하는지 설득하는 부분이다.
+교육과정 변화, 과학 개념 학습의 어려움, 탐구 역량과 과학적 소양에 대한 요구, 학교 현장에서 관찰되는 수업 문제처럼 연구 주제가 등장한 교육적 맥락을 제시한다.
+그다음 선행 연구가 무엇을 밝혀 왔고, 아직 충분히 설명되지 않은 지점이 무엇인지 정리한다.
+
+\subsubsection{연구 목적}
+
+연구 목적은 연구의 필요성에서 제기한 문제에 대해 이 논문이 무엇을 밝히려는지 선언하는 부분이다.
+연구 대상, 과학 개념이나 탐구 기능, 교수ㆍ학습 처치, 학습자 특성, 분석 방향이 드러나도록 구체적으로 쓴다.
+
+\subsubsection{연구 문제}
+
+연구 문제는 연구 목적을 실제 자료로 답할 수 있는 질문으로 나눈 것이다.
+보통 2--4개 정도로 제시하고, 각 연구 문제는 연구 방법의 분석 절차와 연구 결과 장의 하위 절에 대응되도록 구성한다.
+
+\begin{enumerate}
+    \item \LaTeX으로 학위논문을 작성하기 위해 필요한 기본 절차는 무엇인가?
+    \item 학위논문 템플릿에서 제목, 저자, 학위 구분, 참고문헌, 부록은 어떻게 관리할 수 있는가?
+    \item 표, 그림, 코드 파일 등 학위논문에 포함되는 자료는 어떤 방식으로 제시할 수 있는가?
+\end{enumerate}
+
+\subsubsection{용어 정의}
+
+본 템플릿에서 ``메인 파일''은 논문 전체를 조립하는 \path{KNUE_thesis_main.tex}를 의미한다.
+``하위 파일''은 각 장과 논문요약, 부록처럼 메인 파일에서 불러오는 파일을 의미한다.

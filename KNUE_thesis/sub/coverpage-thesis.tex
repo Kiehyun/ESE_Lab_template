@@ -1,0 +1,387 @@
+%\onehalfspacing
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 논문 표지 파일입니다.
+% 이 파일의 역할: 학위논문의 속표지, 제출 표지, 인준면을 구성합니다.
+% 현재 출력은 1쪽 속표지, 2쪽 제출 표지, 3쪽 인준면 순서입니다.
+% 제목, 저자명, 학교명, 지도교수명 등 실제 내용은 대부분 sub/0-preamble.tex의
+% 변수(\thesistitleKor, \authorKor 등)를 가져와서 출력합니다.
+% 따라서 이름이나 제목을 바꿀 때는 먼저 sub/0-preamble.tex를 수정합니다.
+% 표지의 배치나 고정 문구 자체를 바꿔야 할 때만 이 파일을 수정합니다.
+% Thesis cover file.
+% Purpose: Builds the clean front cover, submission cover, and approval page.
+% The current output creates page 1 (clean front cover), page 2 (submission cover), and page 3 (approval page).
+% Most content such as title, author, university, and advisor is imported from variables in sub/0-preamble.tex
+% such as \thesistitleKor and \authorKor.
+% Therefore, edit sub/0-preamble.tex first when changing names or titles.
+% Edit this file only when you need to change cover layout or fixed cover text.
+
+\thispagestyle{empty}
+% Hide page numbers only on cover pages; keep the global page style available
+% for the table of contents and body after this file is included.
+
+% 표지 제목 행간(둘째 인자)으로 한글/영문 제목의 줄간격을 조절합니다.
+% 한글 제목과 영문 제목의 줄간격 비율을 동일하게(글자 크기의 133% = 4/3) 맞춥니다.
+%   한글: 21pt × 4/3 = 28pt,  영문: 14pt × 4/3 = 18.6667pt
+% 두 제목이 여러 줄일 때 줄 간격 밀도가 같아 보이도록 하기 위함입니다.
+% Korean and English cover titles use the same leading ratio (133% = 4/3 of the
+% font size), so multi-line titles look consistent.
+\newcommand{\CoverMainTitleFont}{\setstretch{1}\fontsize{21pt}{28pt}\selectfont}
+\newcommand{\CoverEnglishTitleFont}{\setstretch{1}\fontsize{14pt}{18.6667pt}\selectfont}
+% 한글 제목: \spaceskip으로 가운데 정렬 시 어절 사이 간격을 살짝 벌립니다.
+\newcommand{\CoverMainTitleText}[1]{{\CoverMainTitleFont\spaceskip=0.45em\relax #1\par}}
+% 영문 제목: 하이픈 분철을 막아(\hyphenpenalty) 줄바꿈이 어절 단위로만 일어나게 합니다.
+\newcommand{\CoverEnglishTitleText}[1]{{\CoverEnglishTitleFont\hyphenpenalty=10000\exhyphenpenalty=10000\relax #1\par}}
+\newcommand{\CoverNodeMainTitleText}[1]{{\CoverOuterFont\CoverMainTitleFont\spaceskip=0.45em\relax #1\par}}
+\newcommand{\CoverNodeEnglishTitleText}[1]{{\CoverOuterFont\CoverEnglishTitleFont\hyphenpenalty=10000\exhyphenpenalty=10000\relax #1\par}}
+
+\newcommand{\DoctorOnlyEnglishTitleBlock}{%
+    \ifdefstring{\degreeProgramKor}{박사}{%
+        \vskip 0.5cm
+        \begin{center}
+            % 영문 논문 제목입니다. 내용은 \thesistitleEng에서 수정합니다.
+            % English thesis title. Edit the content in \thesistitleEng.
+            \CoverEnglishTitleText{\thesistitleEng}
+        \end{center}
+        \vskip 1cm
+    }{%
+        % 석사학위논문 표지에는 영문 제목을 표시하지 않습니다.
+        % The master's thesis cover does not show the English title here.
+        \vskip 1.5cm
+    }%
+}
+
+\newcommand{\CoverTitleBlock}{%
+    \begin{center}
+        \ifEnglishDocument
+            % 영어 문서에서는 영문 제목을 위에, 국문 제목을 아래에 함께 표시합니다.
+            % In English mode, show the English title above and the Korean title below.
+            \CoverMainTitleText{\thesistitleEng}
+            \vskip 0.5cm
+            \CoverEnglishTitleText{\thesistitleKor}
+            \vskip 1cm
+        \else
+            % 국문 문서에서는 국문 제목을 먼저 표시하고, 박사학위논문일 때만 영문 제목을 덧붙입니다.
+            % In Korean mode, show the Korean title first; add the English title only for doctoral theses.
+            \CoverMainTitleText{\thesistitleKor}
+        \fi
+    \end{center}
+    \ifEnglishDocument\else
+        \DoctorOnlyEnglishTitleBlock
+    \fi
+}
+
+\newcommand{\CoverHiddenInfo}{%
+    \begin{center}
+        % 아래 두 줄은 겉표지에서 보이지 않도록 흰색으로 처리한 정보입니다.
+        % 2쪽 제출 표지의 지도교수/제출 문구 블록과 같은 세로 공간을 차지하도록 둡니다.
+        % The two lines below are hidden in white on the outer cover.
+        % Keep this block the same height as the advisor/submission block on page 2.
+        {\color{white}\fontsize{16pt}{19.2pt}\selectfont {\LangText{지도교수\hspace{1.5em}\SpacedAuthorName{\advisorKor}}{Advisor\hspace{1.5em}\advisorEng}}}
+        \vskip 1cm
+        {\color{white}\fontsize{16pt}{19.2pt}\selectfont {\LangText{\degreeSubmissionKor}{\degreeSubmissionEng}}}
+    \end{center}
+    \vfill
+}
+
+\newcommand{\CoverDate}{%
+    \ifEnglishDocument
+        \ThesisConferralDateEng
+    \else
+        \ThesisConferralDateKor
+    \fi
+}
+
+\newcommand{\ApprovalBottomSkip}{%
+    \ifdefstring{\degreeProgramKor}{석사}{\vskip 4cm}{\vskip 2.5cm}%
+}
+
+\newlength{\CoverTrimWidth}
+\newlength{\CoverTrimHeight}
+\newlength{\CoverTrimLeft}
+\newlength{\CoverTrimTop}
+\newlength{\CoverSpineWidth}
+\newlength{\CoverSpineCenterX}
+
+% Trim-box display options.
+% Class option: \documentclass[trimbox]{KNUE_thesis} or \documentclass[notrimbox]{KNUE_thesis}
+% Local toggle: \CoverShowTrimBoxtrue or \CoverShowTrimBoxfalse
+% Size/style can be adjusted after \documentclass:
+%   \renewcommand{\CoverTrimDefaultWidth}{190mm}
+%   \renewcommand{\CoverTrimDefaultHeight}{260mm}
+%   \tikzset{cover trim box/.style={line width=0.25pt,dashed}}
+\providecommand{\CoverTrimDefaultWidth}{190mm}
+\providecommand{\CoverTrimDefaultHeight}{260mm}
+\providecommand{\CoverTrimBoxStyle}{cover trim box}
+\makeatletter
+\@ifundefined{ifCoverShowTrimBox}{%
+    \newif\ifCoverShowTrimBox
+    \CoverShowTrimBoxtrue
+}{}
+\makeatother
+\newcommand{\SetCoverTrimSize}[2]{%
+    \setlength{\CoverTrimWidth}{#1}%
+    \setlength{\CoverTrimHeight}{#2}%
+    \setlength{\CoverTrimLeft}{\dimexpr(\paperwidth-\CoverTrimWidth)/2\relax}%
+    \setlength{\CoverTrimTop}{\dimexpr(\paperheight-\CoverTrimHeight)/2\relax}%
+}
+\newcommand{\DrawCoverTrimBox}{%
+    \ifCoverShowTrimBox
+        \draw[\CoverTrimBoxStyle]
+            (coverNW) rectangle ++(\CoverTrimWidth,-\CoverTrimHeight);
+    \fi
+}
+\SetCoverTrimSize{\CoverTrimDefaultWidth}{\CoverTrimDefaultHeight}
+\setlength{\CoverSpineWidth}{20mm}
+\setlength{\CoverSpineCenterX}{\dimexpr\CoverSpineWidth/2\relax}
+
+\newcommand{\CoverDegreeKor}{\degreeProgramKor{}학위논문}
+% The outer cover has a 20 mm spine column; center the front area separately.
+\newcommand{\CoverFrontCenterX}{105mm}
+\newcommand{\CoverCleanFrontCenterX}{95mm}
+\newcommand{\CoverYearStack}{%
+    \StrChar{\ThesisConferralYear}{1}\\[-0.1em]%
+    \StrChar{\ThesisConferralYear}{2}\\[-0.1em]%
+    \StrChar{\ThesisConferralYear}{3}\\[-0.1em]%
+    \StrChar{\ThesisConferralYear}{4}%
+}
+\newcommand{\CoverSpineText}[2]{%
+    \parbox[t][#2][t]{14mm}{\centering #1}%
+}
+\newcommand{\CoverOuterFont}{\normalfont\rmfamily}
+\newcommand{\CoverOuterPage}{%
+    \begin{tikzpicture}[remember picture,overlay]
+        \coordinate (coverNW) at ([xshift=\CoverTrimLeft,yshift=-\CoverTrimTop]current page.north west);
+
+        % A4 중앙의 190 mm x 260 mm 재단 영역을 기준으로 배치합니다.
+        % 1쪽 겉표지는 좌측 20 mm 세로 컬럼을 등표지 영역으로 사용합니다.
+        % Place the outer cover inside the centered 190 mm x 260 mm trim area on A4.
+        \DrawCoverTrimBox
+        \draw[line width=0.25pt]
+            ([xshift=\CoverSpineWidth]coverNW) -- ([xshift=\CoverSpineWidth,yshift=-\CoverTrimHeight]coverNW);
+
+        \node[anchor=north,inner sep=0pt]
+            at ([xshift=\CoverSpineCenterX,yshift=-20mm]coverNW)
+            {\CoverSpineText{\CoverOuterFont\fontsize{9pt}{10.8pt}\selectfont \LangText{\thesistitleKor}{\thesistitleEng}}{136mm}};
+        \node[anchor=north,inner sep=0pt]
+            at ([xshift=\CoverSpineCenterX,yshift=-169mm]coverNW)
+            {\CoverSpineText{\CoverOuterFont\fontsize{16pt}{19.2pt}\selectfont \LangText{\SpacedAuthorName{\authorKor}}{\authorEng}}{24mm}};
+        \node[anchor=north,inner sep=0pt]
+            at ([xshift=\CoverSpineCenterX,yshift=-205mm]coverNW)
+            {\CoverSpineText{\CoverOuterFont\fontsize{14pt}{16.8pt}\selectfont \LangText{\CoverYearStack}{\ThesisConferralYear}}{36mm}};
+
+        \node[anchor=west,inner sep=0pt]
+            at ([xshift=50mm,yshift=-30mm]coverNW)
+            {\CoverOuterFont\fontsize{14pt}{16.8pt}\selectfont \LangText{\CoverDegreeKor}{\degreeEng{} Thesis}};
+
+        \node[anchor=center,inner sep=0pt,text width=135mm,align=center]
+            at ([xshift=\CoverFrontCenterX,yshift=-78mm]coverNW)
+            {\CoverNodeMainTitleText{\LangText{\thesistitleKor}{\thesistitleEng}}};
+        \node[anchor=center,inner sep=0pt]
+            at ([xshift=\CoverFrontCenterX,yshift=-183.2mm]coverNW)
+            {\CoverOuterFont\fontsize{16pt}{19.2pt}\selectfont \LangText{\universityKor}{\universityEng}};
+        \node[anchor=center,inner sep=0pt]
+            at ([xshift=\CoverFrontCenterX,yshift=-198.4mm]coverNW)
+            {\CoverOuterFont\fontsize{14pt}{16.8pt}\selectfont \LangText{\SpacedHalf{\majorKor}}{\majorEng}};
+        \node[anchor=center,inner sep=0pt]
+            at ([xshift=\CoverFrontCenterX,yshift=-212.9mm]coverNW)
+            {\CoverOuterFont\fontsize{16pt}{19.2pt}\selectfont \LangText{\SpacedAuthorName{\authorKor}}{\authorEng}};
+        \node[anchor=center,inner sep=0pt]
+            at ([xshift=\CoverFrontCenterX,yshift=-229.3mm]coverNW)
+            {\CoverOuterFont\fontsize{14pt}{16.8pt}\selectfont \CoverDate};
+    \end{tikzpicture}%
+}
+\newcommand{\CoverCleanFrontPage}{%
+    \begin{tikzpicture}[remember picture,overlay]
+        \coordinate (coverNW) at ([xshift=\CoverTrimLeft,yshift=-\CoverTrimTop]current page.north west);
+
+        % Optional 190 mm x 260 mm trim-box display.
+        \DrawCoverTrimBox
+
+        \node[anchor=west,inner sep=0pt]
+            at ([xshift=30mm,yshift=-30mm]coverNW)
+            {\CoverOuterFont\fontsize{14pt}{16.8pt}\selectfont \LangText{\CoverDegreeKor}{\degreeEng{} Thesis}};
+
+        \node[anchor=center,inner sep=0pt,text width=135mm,align=center]
+            (covTitleKorClean)
+            at ([xshift=\CoverCleanFrontCenterX,yshift=-78mm]coverNW)
+            {\CoverNodeMainTitleText{\LangText{\thesistitleKor}{\thesistitleEng}}};
+        \ifEnglishDocument
+            % 부제(여기서는 국문 제목): 주 제목 바로 아래 정확히 1cm 간격(제목 높이와 무관하게 고정).
+            \node[inner sep=0pt,text width=135mm,align=center,
+                  below=1cm of covTitleKorClean]
+                {\CoverNodeEnglishTitleText{\thesistitleKor}};
+        \else
+            \ifdefstring{\degreeProgramKor}{박사}{%
+                % 영문 제목: 국문 제목 바로 아래 정확히 1cm 간격(제목 높이와 무관하게 고정).
+                \node[inner sep=0pt,text width=135mm,align=center,
+                      below=1cm of covTitleKorClean]
+                    {\CoverNodeEnglishTitleText{\thesistitleEng}};
+            }{}%
+        \fi
+
+        \node[anchor=center,inner sep=0pt]
+            at ([xshift=\CoverCleanFrontCenterX,yshift=-183.2mm]coverNW)
+            {\CoverOuterFont\fontsize{16pt}{19.2pt}\selectfont \LangText{\universityKor}{\universityEng}};
+        \node[anchor=center,inner sep=0pt]
+            at ([xshift=\CoverCleanFrontCenterX,yshift=-198.4mm]coverNW)
+            {\CoverOuterFont\fontsize{14pt}{16.8pt}\selectfont \LangText{\SpacedHalf{\majorKor}}{\majorEng}};
+        \node[anchor=center,inner sep=0pt]
+            at ([xshift=\CoverCleanFrontCenterX,yshift=-212.9mm]coverNW)
+            {\CoverOuterFont\fontsize{16pt}{19.2pt}\selectfont \LangText{\SpacedAuthorName{\authorKor}}{\authorEng}};
+        \node[anchor=center,inner sep=0pt]
+            at ([xshift=\CoverCleanFrontCenterX,yshift=-229.3mm]coverNW)
+            {\CoverOuterFont\fontsize{14pt}{16.8pt}\selectfont \CoverDate};
+    \end{tikzpicture}%
+}
+
+\newcommand{\CoverSubmissionPage}{%
+    \begin{tikzpicture}[remember picture,overlay]
+        \coordinate (coverNW) at ([xshift=\CoverTrimLeft,yshift=-\CoverTrimTop]current page.north west);
+
+        % A4 중앙의 재단 영역을 기준으로 3쪽 제출 표지를 배치합니다.
+        \DrawCoverTrimBox
+
+        \node[anchor=center,inner sep=0pt,text width=145mm,align=center]
+            (covTitleKorSub)
+            at ([xshift=\CoverCleanFrontCenterX,yshift=-78mm]coverNW)
+            {\CoverNodeMainTitleText{\LangText{\thesistitleKor}{\thesistitleEng}}};
+        \ifEnglishDocument
+            % 부제(여기서는 국문 제목): 주 제목 바로 아래 정확히 1cm 간격.
+            \node[inner sep=0pt,text width=145mm,align=center,
+                  below=1cm of covTitleKorSub]
+                {\CoverNodeEnglishTitleText{\thesistitleKor}};
+            \node[anchor=center,inner sep=0pt]
+                at ([xshift=\CoverCleanFrontCenterX,yshift=-135mm]coverNW)
+                {\CoverOuterFont\fontsize{16pt}{19.2pt}\selectfont \LangText{지도교수\hspace{1.5em}\SpacedAuthorName{\advisorKor}}{Advisor\hspace{1.5em}\advisorEng}};
+            \node[anchor=center,inner sep=0pt]
+                at ([xshift=\CoverCleanFrontCenterX,yshift=-159.1mm]coverNW)
+                {\CoverOuterFont\fontsize{16pt}{19.2pt}\selectfont \LangText{\degreeSubmissionKor}{\degreeSubmissionEng}};
+        \else
+            \ifdefstring{\degreeProgramKor}{박사}{%
+                % 영문 제목: 국문 제목 바로 아래 정확히 1cm 간격.
+                \node[inner sep=0pt,text width=145mm,align=center,
+                      below=1cm of covTitleKorSub]
+                    {\CoverNodeEnglishTitleText{\thesistitleEng}};
+                \node[anchor=center,inner sep=0pt]
+                    at ([xshift=\CoverCleanFrontCenterX,yshift=-135mm]coverNW)
+                    {\CoverOuterFont\fontsize{16pt}{19.2pt}\selectfont \LangText{지도교수\hspace{1.5em}\SpacedAuthorName{\advisorKor}}{Advisor\hspace{1.5em}\advisorEng}};
+                \node[anchor=center,inner sep=0pt]
+                    at ([xshift=\CoverCleanFrontCenterX,yshift=-159.1mm]coverNW)
+                    {\CoverOuterFont\fontsize{16pt}{19.2pt}\selectfont \LangText{\degreeSubmissionKor}{\degreeSubmissionEng}};
+            }{%
+                \node[anchor=center,inner sep=0pt]
+                    at ([xshift=\CoverCleanFrontCenterX,yshift=-110mm]coverNW)
+                    {\CoverOuterFont\fontsize{16pt}{19.2pt}\selectfont \LangText{지도교수\hspace{1.5em}\SpacedAuthorName{\advisorKor}}{Advisor\hspace{1.5em}\advisorEng}};
+                \node[anchor=center,inner sep=0pt]
+                    at ([xshift=\CoverCleanFrontCenterX,yshift=-135mm]coverNW)
+                    {\CoverOuterFont\fontsize{16pt}{19.2pt}\selectfont \LangText{\degreeSubmissionKor}{\degreeSubmissionEng}};
+            }%
+        \fi
+
+        \node[anchor=center,inner sep=0pt]
+            at ([xshift=\CoverCleanFrontCenterX,yshift=-183.2mm]coverNW)
+            {\CoverOuterFont\fontsize{16pt}{19.2pt}\selectfont \LangText{\universityKor}{\universityEng}};
+        \node[anchor=center,inner sep=0pt]
+            at ([xshift=\CoverCleanFrontCenterX,yshift=-198.4mm]coverNW)
+            {\CoverOuterFont\fontsize{14pt}{16.8pt}\selectfont \LangText{\SpacedHalf{\majorKor}}{\majorEng}};
+        \node[anchor=center,inner sep=0pt]
+            at ([xshift=\CoverCleanFrontCenterX,yshift=-212.9mm]coverNW)
+            {\CoverOuterFont\fontsize{16pt}{19.2pt}\selectfont \LangText{\SpacedAuthorName{\authorKor}}{\authorEng}};
+        \node[anchor=center,inner sep=0pt]
+            at ([xshift=\CoverCleanFrontCenterX,yshift=-229.3mm]coverNW)
+            {\CoverOuterFont\fontsize{14pt}{16.8pt}\selectfont \CoverDate};
+    \end{tikzpicture}%
+}
+\newlength{\CommitteeNameWidth}
+\setlength{\CommitteeNameWidth}{36mm}
+\newcommand{\CommitteeNameText}[2]{%
+    \LangText{\makebox[\CommitteeNameWidth][c]{\SpacedCommitteeName{#1}}}{#2}%
+}
+
+\newcommand{\ApprovalSignatureLineAt}[4]{%
+    \node[anchor=base west,inner sep=0pt]
+        at ([xshift=60mm,yshift=-#4]coverNW)
+        {\CoverOuterFont\fontsize{16pt}{19.2pt}\selectfont #1};
+    \draw[line width=0.25pt]
+        ([xshift=89mm,yshift=\dimexpr-#4-1mm\relax]coverNW) -- ([xshift=149mm,yshift=\dimexpr-#4-1mm\relax]coverNW);
+    \node[anchor=base,inner sep=0pt]
+        at ([xshift=119mm,yshift=-#4]coverNW)
+        {\CoverOuterFont\fontsize{16pt}{19.2pt}\selectfont \CommitteeNameText{#2}{#3}};
+    \node[anchor=base,inner sep=0pt]
+        at ([xshift=153mm,yshift=-#4]coverNW)
+        {\CoverOuterFont\fontsize{16pt}{19.2pt}\selectfont \SignatureMark};
+}
+
+\newcommand{\CoverApprovalPage}{%
+    \begin{tikzpicture}[remember picture,overlay]
+        \coordinate (coverNW) at ([xshift=\CoverTrimLeft,yshift=-\CoverTrimTop]current page.north west);
+        \coordinate (coverSW) at ([yshift=-\CoverTrimHeight]coverNW);
+
+        % A4 중앙의 재단 영역을 기준으로 4쪽 인준면을 배치합니다.
+        \DrawCoverTrimBox
+
+        \node[anchor=west,inner sep=0pt]
+            at ([xshift=43mm,yshift=-53.6mm]coverNW)
+            {\CoverOuterFont\fontsize{21pt}{33.6pt}\selectfont \LangText{\authorKor의}{\authorEng}};
+        \node[anchor=west,inner sep=0pt]
+            at ([xshift=43mm,yshift=-70.2mm]coverNW)
+            {\CoverOuterFont\fontsize{21pt}{33.6pt}\selectfont \LangText{\degreeApprovalKor}{\degreeApprovalEng}};
+
+        \ifdefstring{\degreeProgramKor}{석사}{%
+            \ApprovalSignatureLineAt{\CommitteeChairLabel}{\committeeChairKor}{\committeeChairEng}{106mm}
+            \ApprovalSignatureLineAt{\CommitteeMemberLabel}{\committeeMemberOneKor}{\committeeMemberOneEng}{120mm}
+            \ApprovalSignatureLineAt{\CommitteeMemberLabel}{\committeeMemberTwoKor}{\committeeMemberTwoEng}{134mm}
+        }{%
+            \ApprovalSignatureLineAt{\CommitteeChairLabel}{\committeeChairKor}{\committeeChairEng}{123.2mm}
+            \ApprovalSignatureLineAt{\CommitteeMemberLabel}{\committeeMemberOneKor}{\committeeMemberOneEng}{138.8mm}
+            \ApprovalSignatureLineAt{\CommitteeMemberLabel}{\committeeMemberTwoKor}{\committeeMemberTwoEng}{153.9mm}
+            \ApprovalSignatureLineAt{\CommitteeMemberLabel}{\committeeMemberThreeKor}{\committeeMemberThreeEng}{169.4mm}
+            \ApprovalSignatureLineAt{\CommitteeMemberLabel}{\committeeMemberFourKor}{\committeeMemberFourEng}{184.3mm}
+        }%
+
+        % 예시 2-3의 하단 치수를 기준으로 대학원명과 날짜 위치를 고정합니다.
+        \node[anchor=center,inner sep=0pt]
+            at ([xshift=\CoverCleanFrontCenterX,yshift=47mm]coverSW)
+            {\CoverOuterFont\fontsize{16pt}{19.2pt}\selectfont \LangText{\universityKor}{\universityEng}};
+        \node[anchor=center,inner sep=0pt]
+            at ([xshift=\CoverCleanFrontCenterX,yshift=30.7mm]coverSW)
+            {\CoverOuterFont\fontsize{14pt}{16.8pt}\selectfont \CoverDate};
+    \end{tikzpicture}%
+}
+% ---------- 1쪽: 속표지 ----------
+% ---------- Page 1: Clean Front Cover ----------
+% 190 mm x 260 mm 재단 영역을 표시하고, 그 기준으로 속표지를 배치합니다.
+\null
+\CoverCleanFrontPage
+\vfill
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\cleardoublepage
+\thispagestyle{empty}
+
+% ---------- 2쪽: 제출 표지 ----------
+% ---------- Page 2: Submission Cover ----------
+% 예시 2-2의 190 mm x 260 mm 박스 기준으로 제목, 지도교수, 제출 문구를 배치합니다.
+% The submission cover is positioned against the same 190 mm x 260 mm trim box.
+\null
+\CoverSubmissionPage
+\vfill
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\cleardoublepage
+\thispagestyle{empty}
+
+% ---------- 3쪽: 인준면 ----------
+% 심사위원 서명/날인란이 들어가는 페이지입니다.
+% SignatureMark: 오른쪽 끝의 "인" 표시
+\newcommand{\CommitteeChairLabel}{\LangText{심사위원장}{Chair}}
+\newcommand{\CommitteeMemberLabel}{\LangText{심사위원}{Committee Member}}
+\newcommand{\SignatureMark}{\LangText{인}{Signature}}
+
+% 예시 2-3의 190 mm x 260 mm 박스 기준으로 인준 문구와 심사위원 날인란을 배치합니다.
+\null
+\CoverApprovalPage
+\vfill
+\clearpage
+
+

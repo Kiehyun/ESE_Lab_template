@@ -1,0 +1,109 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  RISE_main_kr.tex  —  Korean 번역본 (한글본, standalone)
+%  RISE_main.tex(영문본)의 한글 번역본. 영문본이 바뀌면 이 파일도 함께 갱신한다.
+%
+%  Springer sn-jnl 템플릿은 한글을 렌더링하지 못하므로(pdflatex 는 CJK 미지원,
+%  클래스가 LuaLaTeX 비호환) 한글본은 article 클래스 + LuaLaTeX + BibTeX 로
+%  독립 구성한다. 참고문헌은 영문본과 "동일한" sub/references-sn.bib 를 사용한다.
+%  The Springer sn-jnl class cannot render Korean, so the Korean version is a
+%  standalone article-class file built with LuaLaTeX + BibTeX (same .bib database).
+%
+%  Build / 빌드:  lualatex -> bibtex -> lualatex x2
+%  (제공된 RISE_main_build.sh / .cmd 의 `kr` 명령이 자동 처리)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage{setspace}\onehalfspacing
+
+%% Korean fonts (LuaLaTeX/fontspec). Fall back to fonts guaranteed on Windows.
+%% 한글 글꼴(LuaLaTeX/fontspec). 윈도우 기본 글꼴로 안전하게 대체한다.
+\usepackage{fontspec}
+\defaultfontfeatures{Ligatures=TeX}
+\IfFontExistsTF{Noto Serif KR}{\setmainfont{Noto Serif KR}}{%
+  \IfFontExistsTF{NanumMyeongjo}{\setmainfont{NanumMyeongjo}}{%
+    \IfFontExistsTF{Batang}{\setmainfont{Batang}}{\setmainfont{Malgun Gothic}}}}
+\IfFontExistsTF{Malgun Gothic}{\setsansfont{Malgun Gothic}}{%
+  \IfFontExistsTF{Noto Sans KR}{\setsansfont{Noto Sans KR}}{\setsansfont{Gulim}}}
+\IfFontExistsTF{Consolas}{\setmonofont{Consolas}}{}
+
+%% Packages used by the body / 본문이 사용하는 패키지
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{threeparttable}
+\usepackage{multirow}
+\usepackage{amsmath,amssymb}
+\usepackage{xcolor}
+\usepackage{tikz}\usetikzlibrary{arrows.meta}
+\usepackage{caption}
+\usepackage[round]{natbib}% author-year (APA), matching the English manuscript
+\usepackage[unicode,hidelinks]{hyperref}
+\usepackage{etoolbox}
+
+%% Float labels in Korean / 플로트 이름 한글화
+\renewcommand{\figurename}{그림}
+\renewcommand{\tablename}{표}
+\renewcommand{\refname}{참고문헌}
+
+%% Table helpers mirrored from the English template / 영문본의 표 헬퍼 이식
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcommand{\TableNote}[1]{\par\vspace{2pt}\noindent\parbox{\linewidth}{\footnotesize\raggedright\textit{주.}\ #1}}
+
+%% Unnumbered section heads, matching the English manuscript style.
+%% 영문본과 동일하게 절 제목 번호를 제거한다.
+\setcounter{secnumdepth}{0}
+
+% =========================================================================
+% Front matter — 제목/저자/초록/키워드를 새 원고에 맞게 수정 (일반 placeholder)
+% =========================================================================
+\title{\textbf{논문 전체 제목을 여기에:\\
+부제가 있다면 여기에}}
+\author{제1저자\textsuperscript{1} \and 교신저자\textsuperscript{1,$*$} \and 제3저자\textsuperscript{2}}
+\date{\normalsize \textsuperscript{1}소속 기관 \quad \textsuperscript{2}제2 소속 기관 \quad
+  \textsuperscript{$*$}교신저자: corresponding.author@example.edu}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent
+초록을 하나의 단락으로 작성합니다. 연구가 다루는 문제와 배경, 연구 목적과 연구
+문제, 연구 대상과 방법, 핵심 결과, 그리고 과학교육 연구와 실천에 대한 함의를
+압축하여 기술합니다. 분량 제한은 저널의 최신 저자 안내에서 확인합니다. 이 한글본은
+영문본(RISE\_main.tex)의 번역본이므로, 영문본이 수정되면 이 초록도 함께 갱신합니다.
+\par\smallskip
+\noindent\textbf{주제어:} 주제어1; 주제어2; 주제어3; 주제어4
+\end{abstract}
+
+% =========================================================================
+% 본문 — 각 절 파일은 sub/ 폴더에 있습니다(한글 안내만 포함).
+% =========================================================================
+\input{./sub/kr-1-introduction.tex}   % 1. 서론
+\input{./sub/kr-2-framework.tex}      % 2. 이론적 배경
+\input{./sub/kr-3-methods.tex}        % 3. 연구 방법
+\input{./sub/kr-4-results.tex}        % 4. 연구 결과
+\input{./sub/kr-5-discussion.tex}     % 5. 논의 및 결론
+
+% =========================================================================
+% 연구 윤리 선언 (Declarations) — 원고에 맞게 작성
+% =========================================================================
+\section{연구 윤리 선언}
+\begin{itemize}
+  \item \textbf{연구비.} 연구비 출처를 밝히거나, 외부 연구비를 받지 않았음을 기술합니다.
+  \item \textbf{이해상충.} 이해상충이 있으면 밝히고, 없으면 없음을 기술합니다.
+  \item \textbf{연구윤리 승인.} IRB/연구윤리 승인 또는 면제 정보를 기술합니다.
+  \item \textbf{연구참여 동의.} 연구참여 동의(미성년자는 보호자 동의 포함) 취득을 기술합니다.
+  \item \textbf{데이터 공개.} 데이터 접근 또는 요청 방법을 기술합니다.
+  \item \textbf{생성형 AI 사용.} 생성형 AI의 사용 여부와 범위를 밝힙니다.
+\end{itemize}
+
+%% References / 참고문헌 (영문본과 동일한 데이터베이스 사용).
+\bibliographystyle{apalike}% author-year (APA-style), matching the English manuscript
+\bibliography{sub/references-sn}
+
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  END RISE_main_kr.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

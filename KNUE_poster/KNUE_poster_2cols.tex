@@ -1,0 +1,847 @@
+%  The AAU Poster Theme.
+%  2013-05-08 v. 1.1.0
+%  Copyright 2013 by Jesper Kjær Nielsen <jkn@es.aau.dk>
+%
+%  This is free software: you can redistribute it and/or modify
+%  it under the terms of the GNU General Public License as published by
+%  the Free Software Foundation, either version 3 of the License, or
+%  (at your option) any later version.
+%
+%  This is distributed in the hope that it will be useful,
+%  but WITHOUT ANY WARRANTY; without even the implied warranty of
+%  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+%  GNU General Public License for more details.
+%
+%  You can find the GNU General Public License at <http://www.gnu.org/licenses/>.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% KNUE Two-Column Poster Template Guide
+% 한국교원대학교 2단 포스터 템플릿 안내
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Korean:
+% 이 파일은 A0 세로형 2단 포스터를 만드는 메인 템플릿입니다.
+% 처음 사용하는 경우에는 아래 순서로 수정하면 됩니다.
+% 1. "Template Fields" 영역에서 포스터 제목, 저자, 소속, 프로젝트 URL을 바꿉니다.
+% 2. "Poster Content Template" 영역의 각 posterbox 안에 본문을 작성합니다.
+% 3. 그림은 images/ 폴더에 넣고 \includegraphics 명령으로 연결합니다.
+% 4. 참고문헌은 sub/references.bib에 langid와 함께 추가합니다.
+%    한국어 문헌은 \ktextcite/\kparencite, 영어 문헌은 \textcite/\parencite를 사용합니다.
+%    References 박스의 예시 cite key를 실제 문헌의 cite key로 바꿉니다.
+% 5. 박스의 위치를 바꿀 때는 name=..., below=..., column=... 값을 함께 확인합니다.
+%
+% English:
+% This file is the main template for an A0 portrait two-column poster.
+% For first-time editing, follow this order.
+% 1. Edit poster title, authors, affiliations, and project URL in "Template Fields".
+% 2. Write your poster text inside each posterbox in "Poster Content Template".
+% 3. Put figures in the images/ folder and include them with \includegraphics.
+% 4. Add references to sub/references.bib with langid.
+%    Use \ktextcite/\kparencite for Korean sources and \textcite/\parencite for English sources.
+%    Replace the sample cite keys in the References box with your actual cite keys.
+% 5. When moving boxes, check name=..., below=..., and column=... together.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Document Class and Core Packages
+% 문서 클래스와 핵심 패키지
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Korean:
+% baposter 클래스는 대형 학술 포스터를 만들기 위한 클래스입니다.
+% 이 템플릿은 KNUE_poster/.latexmkrc에 맞춰 LuaLaTeX로 빌드합니다.
+% 명령줄에서는 KNUE_poster 폴더에서 `latexmk -pdf -lualatex KNUE_poster_2cols.tex`를 실행합니다.
+%
+% English:
+% The baposter class is designed for large academic posters.
+% This template is built with LuaLaTeX according to KNUE_poster/.latexmkrc.
+% From the command line, run `latexmk -pdf -lualatex KNUE_poster_2cols.tex` in KNUE_poster.
+\documentclass[a0paper,portrait]{KNUE_baposter}
+
+% Korean:
+% KNUE_poster_fonts.tex는 논문 템플릿과 같은 OS별 명조/고딕 글꼴 탐색을 설정합니다.
+% babel은 biblatex-apa의 영어권 참고문헌 양식과 캡션 처리를 안정화합니다.
+%
+% English:
+% KNUE_poster_fonts.tex configures thesis-style OS-aware Myeongjo/Gothic font lookup.
+% babel keeps English bibliography localization and captions stable for biblatex-apa.
+\input{KNUE_poster_fonts.tex}
+\usepackage[english]{babel}
+
+% Korean:
+% 포스터 본문은 멀리서 읽기 쉬운 고딕/sans 계열을 기본으로 사용합니다.
+% 필요한 경우 \PosterMyeongjo, \PosterGothic 명령으로 명조/고딕을 명시적으로 바꿀 수 있습니다.
+%
+% English:
+% The poster body defaults to a Gothic/sans family for readability from a distance.
+% Use \PosterMyeongjo and \PosterGothic when an explicit serif/sans switch is needed.
+
+% Korean:
+% graphicx는 그림 삽입, wrapfig는 필요한 경우 글과 그림을 감싸 배치할 때 사용합니다.
+%
+% English:
+% graphicx inserts figures; wrapfig can wrap text around figures when needed.
+\usepackage{graphicx, wrapfig}
+
+% Korean:
+% caption 설정은 그림/표 설명을 포스터 크기에 맞게 작고 굵은 라벨로 정리합니다.
+%
+% English:
+% Caption settings keep figure/table captions compact with bold labels.
+\usepackage{caption}
+\captionsetup{
+  skip=2pt,
+  font=scriptsize,
+  labelfont=bf
+}
+
+% Korean:
+% array와 booktabs는 표를 깔끔하게 만들고, pgfplots와 TikZ는 그래프/도식에 사용합니다.
+%
+% English:
+% array and booktabs improve tables; pgfplots and TikZ support plots and diagrams.
+\usepackage{array,booktabs}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usetikzlibrary{shapes.geometric}
+
+% Korean:
+% 수식 기호와 정렬이 필요할 때 쓰는 기본 AMS 패키지입니다.
+%
+% English:
+% AMS packages provide standard math symbols and environments.
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Korean:
+% biblatex-apa와 biber를 사용해 APA 7판 형식 참고문헌을 처리합니다.
+% 참고문헌을 실제로 출력하려면 아래쪽 References 박스의 \printbibliography 주석을 해제합니다.
+%
+% English:
+% biblatex-apa with biber formats references in APA 7 style.
+% To print references, uncomment \printbibliography in the References box below.
+\usepackage{csquotes}
+\usepackage[
+  backend=biber,
+  style=apa,
+  natbib=true,
+  maxbibnames=20,
+  minbibnames=20,
+  maxcitenames=2,
+  mincitenames=1,
+  uniquelist=false,
+  dashed=false,
+  date=year,
+  urldate=iso,
+  dateera=astronomical,
+  datezeros=true,
+  seconds=true
+]{biblatex}
+\DeclareLanguageMapping{english}{english-apa}
+\DeclareLanguageMapping{korean}{english-apa}
+
+% Korean:
+% sub/references.bib의 langid 값을 기준으로 한국어 문헌을 먼저, 영어 문헌을 나중에 정렬합니다.
+% 한국어 문헌은 \ktextcite, \kparencite를 사용하고 영어 문헌은 \textcite, \parencite를 사용합니다.
+% 괄호형 인용 명령은 논문 템플릿과 같이 바깥 괄호를 직접 출력하지 않습니다.
+%
+% English:
+% Sort entries by langid: Korean references first, then English references.
+% Use \ktextcite and \kparencite for Korean sources; use \textcite and \parencite for English sources.
+% Parenthetical citation commands do not print outer parentheses, matching the thesis template.
+\DeclareSourcemap{
+  \maps[datatype=bibtex]{
+    \map{
+      \step[fieldsource=langid, match=\regexp{korean}, final]
+      \step[fieldset=presort, fieldvalue={a}]
+    }
+    \map{
+      \step[fieldsource=langid, match=\regexp{english}, final]
+      \step[fieldset=presort, fieldvalue={z}]
+    }
+  }
+}
+\DeclareDelimFormat[bib,biblist]{multinamedelim}{%
+  \iffieldequalstr{langid}{korean}
+  {\textperiodcentered}
+  {\addcomma\space}%
+}
+\DeclareDelimFormat[bib,biblist]{finalnamedelim}{%
+  \iffieldequalstr{langid}{korean}
+  {\textperiodcentered}
+  {\ifnumgreater{\value{liststop}}{2}{\finalandcomma}{}\addspace\&\space}%
+}
+\DeclareDelimFormat[bib,biblist]{nameyeardelim}{%
+  \iffieldequalstr{langid}{korean}
+  {}
+  {\newunitpunct}%
+}
+\DeclareDelimAlias[bib,biblist]{nonameyeardelim}{nameyeardelim}
+\DeclareFieldFormat[article]{journaltitle}{%
+  \iffieldequalstr{langid}{korean}
+  {\mkbibbold{#1}}
+  {\mkbibemph{#1}}%
+}
+\DeclareFieldFormat[article]{volume}{%
+  \iffieldequalstr{langid}{korean}
+  {\mkbibbold{#1}}
+  {\mkbibemph{#1}}%
+}
+\DeclareFieldFormat{doi}{%
+  \ifhyperref{\href{https://doi.org/#1}{\nolinkurl{https://doi.org/#1}}}{\nolinkurl{https://doi.org/#1}}%
+  \nopunct%
+}
+\DeclareFieldFormat{url}{\url{#1}}
+\DeclareDelimFormat[textcite]{nameyeardelim}{}
+
+\renewcommand*{\bibfont}{\tiny\linespread{0.92}\selectfont}
+\setlength{\bibhang}{0.1in}
+\setlength{\bibitemsep}{0.1pt}
+\setlength{\bibparsep}{0.1pt}
+
+\newcommand{\KoreanCiteAuthorDelim}{\textperiodcentered}
+\newcommand{\UseKoreanCiteDelims}{%
+  \DeclareDelimFormat{multinamedelim}{\KoreanCiteAuthorDelim}%
+  \DeclareDelimFormat[textcite]{multinamedelim}{\KoreanCiteAuthorDelim}%
+  \DeclareDelimFormat[parencite]{multinamedelim}{\KoreanCiteAuthorDelim}%
+  \DeclareDelimFormat{finalnamedelim}{\KoreanCiteAuthorDelim}%
+  \DeclareDelimFormat[textcite]{finalnamedelim}{\KoreanCiteAuthorDelim}%
+  \DeclareDelimFormat[parencite]{finalnamedelim}{\KoreanCiteAuthorDelim}%
+  \DeclareDelimFormat[textcite]{nameyeardelim}{}%
+  \DeclareDelimFormat{andothersdelim}{\addspace}%
+  \DeclareDelimFormat[textcite]{andothersdelim}{\addspace}%
+  \DeclareDelimFormat[parencite]{andothersdelim}{\addspace}%
+  \csdef{abx@lstr@andothers}{외}%
+  \csdef{abx@sstr@andothers}{외}%
+}
+\let\KNUEorigparencite\parencite
+\let\parencite\cite
+\NewDocumentCommand{\ktextcite}{o o m}{%
+  \begingroup
+  \UseKoreanCiteDelims
+  \IfNoValueTF{#1}{%
+    \textcite{#3}%
+  }{%
+    \IfNoValueTF{#2}{\textcite[#1]{#3}}{\textcite[#1][#2]{#3}}%
+  }%
+  \endgroup
+}
+\NewDocumentCommand{\kparencite}{o o m}{%
+  \begingroup
+  \UseKoreanCiteDelims
+  \IfNoValueTF{#1}{%
+    \cite{#3}%
+  }{%
+    \IfNoValueTF{#2}{\cite[#1]{#3}}{\cite[#1][#2]{#3}}%
+  }%
+  \endgroup
+}
+
+\addbibresource{sub/references.bib}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Colours
+% 색상
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Korean:
+% 아래 색상은 포스터의 테두리, 헤더, 배경에 사용됩니다.
+% 학교/학회 색상에 맞추려면 RGB 값만 바꾸면 전체 분위기가 함께 바뀝니다.
+%
+% English:
+% These colors are used for borders, headers, and the page background.
+% To match a school or conference palette, change only the RGB values.
+\selectcolormodel{RGB}
+\definecolor{aaublue1}{RGB}{33,26,82}
+\definecolor{aaublue2}{RGB}{113,109,143}
+\definecolor{aaublue3}{RGB}{217,233,243}
+\definecolor{knueblue}{RGB}{0,111,177}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lists
+% 목록
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Korean:
+% 포스터는 공간이 좁기 때문에 목록의 위아래 간격을 줄이고,
+% 파란 삼각형 표식을 사용해 핵심 항목이 빠르게 보이도록 했습니다.
+%
+% English:
+% Posters have limited space, so list spacing is tightened and blue triangle
+% markers help readers scan key points quickly.
+\usepackage{enumitem}
+\setlist{%
+  topsep=0pt,
+  noitemsep,
+  labelindent=\parindent,
+  leftmargin=*,
+  font=\color{aaublue1}\normalfont,
+}
+\setitemize[1]{label={\raise1.25pt\hbox{$\blacktriangleright$}}}
+\setitemize[2]{label={\scriptsize\raise1.25pt\hbox{$\blacktriangleright$}}}
+\setitemize[3]{label={\raise1.25pt\hbox{$\star$}}}
+\setitemize[4]{label={-}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Misc
+% 기타 설정
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Korean:
+% URL은 줄바꿈이 어렵기 때문에 xurl과 UrlBreaks로 긴 링크가 박스 밖으로
+% 튀어나가지 않도록 합니다. hyperref는 링크 색상과 PDF 링크를 관리합니다.
+%
+% English:
+% Long URLs can overflow narrow poster boxes. xurl and UrlBreaks allow better
+% line breaks, while hyperref manages link colors and PDF links.
+\addto{\captionsenglish}{
+  \renewcommand{\refname}{\vspace{-0.7em}}
+  \renewcommand{\figurename}{Fig.}
+}
+\usepackage{url}
+\Urlmuskip=0mu plus 1mu
+\def\UrlBreaks{\do\/\do-\do_}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{colorlinks=true,linkcolor=black,citecolor=black,urlcolor=knueblue,breaklinks=true}
+\urlstyle{same}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Template Fields
+% 템플릿 기본 정보
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Korean:
+% 이 영역은 사용자가 가장 먼저 수정하는 곳입니다.
+% 포스터 상단 헤더와 연락처 박스에서 반복해서 쓰는 정보를 한 번만 정의합니다.
+% 중괄호 { } 안의 내용만 바꾸고 명령 이름(\PosterTitle 등)은 그대로 두는 것이 안전합니다.
+%
+% English:
+% This is the first area most users should edit.
+% It defines repeated information used in the poster header and contact box.
+% Change only the contents inside braces { }; keep command names such as \PosterTitle.
+\newcommand{\alert}[1]{{\color{aaublue1}#1}}
+
+% Korean:
+% 포스터 제목입니다. 제목이 길면 자동 줄바꿈되지만, 너무 길면 헤더 높이를 늘리거나
+% 제목을 두 줄 구조로 다듬는 것이 좋습니다.
+%
+% English:
+% Poster title. Long titles wrap automatically, but if the header becomes crowded,
+% increase headerheight or rewrite the title into a clearer two-line form.
+\newcommand{\PosterTitle}{%
+  포스터 제목을 입력하세요%
+}
+
+% Korean:
+% 저자 목록입니다. \textsuperscript{1}처럼 소속 번호를 붙일 수 있습니다.
+%
+% English:
+% Author list. Use markers such as \textsuperscript{1} for affiliations.
+\newcommand{\PosterAuthors}{%
+  홍길동\textsuperscript{1}, 김연구\textsuperscript{2}%
+}
+
+% Korean:
+% 저자 소속입니다. 저자 번호와 같은 순서로 기관 또는 연구실명을 입력합니다.
+%
+% English:
+% Author affiliations. Match the order of the superscript markers in the author list.
+\newcommand{\PosterAffiliations}{%
+  \textsuperscript{1}한국교원대학교,
+  \textsuperscript{2}한국교원대학교%
+}
+
+% Korean:
+% 프로젝트, 데이터, 코드, 연구실 홈페이지 링크를 넣습니다.
+% 실제 링크가 없다면 Poster Info 박스의 Project Link 영역을 삭제해도 됩니다.
+%
+% English:
+% Link to project, data, code, or lab website.
+% If there is no public link, remove the Project Link block in Poster Info.
+\newcommand{\ProjectURL}{https://example.com/project}
+
+% Korean:
+% TemplateText는 아직 채워야 할 예시 문장을 회색/파란색 이탤릭으로 표시합니다.
+% 최종 제출 전에는 TemplateText 안의 예시 문장을 실제 문장으로 바꾸는 것을 권장합니다.
+%
+% English:
+% TemplateText marks placeholder text in muted italic blue-gray.
+% Before final submission, replace placeholder text with your own content.
+\newcommand{\TemplateText}[1]{{\color{aaublue2}\itshape #1}}
+
+% Korean:
+% TemplateFigure는 실제 그림을 넣기 전 자리 표시자입니다.
+% 실제 이미지를 넣을 때는 이 명령 대신 \includegraphics[width=\linewidth]{images/파일명}을 사용합니다.
+%
+% English:
+% TemplateFigure is a placeholder before a real figure is inserted.
+% For actual images, replace it with \includegraphics[width=\linewidth]{images/filename}.
+\newcommand{\TemplateFigure}[1]{%
+  \fbox{%
+    \begin{minipage}[c][0.12\textheight][c]{0.88\linewidth}
+      \centering
+      {\Large\bfseries\color{aaublue2}Figure / Table}\\[0.4em]
+      {\scriptsize\color{aaublue2}#1}
+    \end{minipage}%
+  }%
+}
+
+% Korean:
+% 포스터 헤더는 제목, 저자, 소속을 하나의 minipage에 모아 중앙 정렬합니다.
+% 제목과 소속 사이 여백을 바꾸려면 \vspace 값을 조금씩 조정합니다.
+%
+% English:
+% The poster header centers title, authors, and affiliations in one minipage.
+% Adjust the nearby \vspace values if the header needs more or less spacing.
+\newcommand{\PosterHeaderMinipage}{%
+  \begin{minipage}[t]{0.9\linewidth}
+    \centering
+    \vspace{1.8em}
+    {\LARGE\bfseries
+      \linespread{0.92}\selectfont
+      \PosterTitle\par
+    }
+    \vspace{0.20em}
+    {\footnotesize \PosterAuthors\par}
+    \vspace{0.15em}
+    {\footnotesize \PosterAffiliations\par}
+  \end{minipage}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Document Start
+% 문서 시작
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+% Korean:
+% 배경색은 아래 poster 옵션의 bgColorOne에서 정합니다.
+% 복잡한 배경 이미지는 본문 가독성을 떨어뜨릴 수 있으므로 단색 배경을 권장합니다.
+%
+% English:
+% The background color is set by bgColorOne in the poster options below.
+% A plain background is recommended because busy images reduce readability.
+
+% Korean:
+% 아래 poster 옵션은 전체 레이아웃을 정합니다.
+% columns=2는 2단 구성, headerheight는 상단 제목 영역 높이입니다.
+% headerColorOne, borderColor, boxColorOne 등을 바꾸면 전체 디자인이 바뀝니다.
+%
+% English:
+% The poster options below control the overall layout.
+% columns=2 creates a two-column poster; headerheight controls the title area.
+% Change headerColorOne, borderColor, and boxColorOne to adjust the visual design.
+\begin{poster}{
+  grid=false,
+  columns=2,
+  headerheight=0.1\textheight,
+  background=plain,
+  bgColorOne=aaublue3,
+  bgColorTwo=aaublue3,
+  eyecatcher=true,
+  headerborder=closed,
+  borderColor=aaublue1,
+  headershape=rectangle,
+  headershade=plain,
+  headerColorOne=knueblue,
+  textborder=rectangle,
+  boxshade=plain,
+  boxColorOne=white,
+  headerFontColor=white,
+  headerfont=\Large\sf\bf,
+  linewidth=1pt
+}
+% Korean:
+% 첫 번째 중괄호는 왼쪽 로고 또는 eyecatcher 자리입니다.
+% 필요하면 \relax 대신 \includegraphics[height=...]{...}를 넣습니다.
+%
+% English:
+% The first argument is the left logo or eyecatcher area.
+% Replace \relax with \includegraphics[height=...]{...} if needed.
+{\relax}
+% Korean:
+% 두 번째 중괄호는 중앙 제목 블록입니다. 위에서 정의한 \PosterHeaderMinipage를 사용합니다.
+%
+% English:
+% The second argument is the centered title block using \PosterHeaderMinipage.
+{\color{black}\PosterHeaderMinipage}
+% Korean:
+% baposter는 별도 author 인자를 요구하지만, 이 템플릿에서는 저자 정보를 제목 블록에 넣었으므로 비워 둡니다.
+%
+% English:
+% baposter expects a separate author argument, but this template keeps authors in the title block.
+{\relax}
+% Korean:
+% 네 번째 중괄호는 오른쪽 로고 자리입니다. 학교 로고 파일을 바꾸려면 경로만 수정합니다.
+%
+% English:
+% The fourth argument is the right logo area. Change only the file path to use another logo.
+{\includegraphics[height=0.75\headerheight]{./logo/Knue_logo.png}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Poster Content Template
+% 포스터 본문 템플릿
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Korean:
+% posterbox는 포스터의 각 섹션 박스입니다.
+% name=은 다른 박스가 위치를 참조할 때 쓰는 내부 이름입니다.
+% column=은 0, 1 중 어느 단에 놓을지 정합니다.
+% row=0은 해당 박스를 맨 위에서 시작하게 하고, below=다른name은 다른 박스 아래에 놓습니다.
+% span=2는 두 개의 열을 가로질러 배치한다는 뜻입니다.
+% above=bottom은 박스 아래쪽을 포스터 하단에 맞추는 데 사용합니다.
+%
+% 현재 2단 배치 구조:
+%   column 0: Abstract 왼쪽 부분 -> Introduction -> Methods -> Discussion & Conclusions
+%   column 1: Abstract 오른쪽 부분 -> Poster Info -> Layout Guide -> Results -> Figures / Tables -> References
+%
+% 배치 옵션을 읽는 방법:
+%   [name=abstract,column=0,row=0,span=2]
+%     abstract라는 이름의 박스를 0번 열 맨 위에 놓고, 2개 열 너비로 펼칩니다.
+%   [name=introduction,column=0,below=abstract]
+%     introduction 박스를 0번 열에서 abstract 박스 아래에 놓습니다.
+%   [name=discussionconclusions,column=0,below=methods,above=bottom]
+%     discussionconclusions 박스를 methods 아래에서 시작해 포스터 하단까지 늘립니다.
+%
+% 새 박스를 추가할 때:
+%   1. 중복되지 않는 name을 정합니다. 예: name=teachingimplications
+%   2. 들어갈 열을 column=0 또는 column=1 중에서 고릅니다.
+%   3. 맨 위 박스면 row=0을 쓰고, 기존 박스 아래라면 below=기존name을 씁니다.
+%   4. 아래쪽까지 채우고 싶으면 above=bottom을 추가합니다.
+%   5. 어떤 박스의 name을 바꾸면 그 이름을 참조하는 below=도 함께 바꿉니다.
+%
+% English:
+% Each posterbox is a visible section of the poster.
+% name= is an internal anchor used by other boxes.
+% column= selects column 0 or 1.
+% row=0 places a box at the top; below=othername places it below another box.
+% span=2 means the box stretches across two columns.
+% above=bottom lets a box extend down toward the poster bottom.
+%
+% Current two-column layout:
+%   column 0: left part of Abstract -> Introduction -> Methods -> Discussion & Conclusions
+%   column 1: right part of Abstract -> Poster Info -> Layout Guide -> Results -> Figures / Tables -> References
+%
+% How to read layout options:
+%   [name=abstract,column=0,row=0,span=2]
+%     Put a box named abstract at the top of column 0 and stretch it across two columns.
+%   [name=introduction,column=0,below=abstract]
+%     Put introduction in column 0 below the abstract box.
+%   [name=discussionconclusions,column=0,below=methods,above=bottom]
+%     Start discussionconclusions below methods and extend it toward the bottom.
+%
+% When adding a new box:
+%   1. Choose a unique name, such as name=teachingimplications.
+%   2. Choose the target column with column=0 or column=1.
+%   3. Use row=0 for a top box, or below=existingname to place it under another box.
+%   4. Add above=bottom if the box should fill the remaining vertical space.
+%   5. If you rename a box, update every below= reference that points to it.
+
+% Korean:
+% Abstract는 포스터 전체를 빠르게 이해시키는 가장 중요한 박스입니다.
+% 목적, 방법, 결과, 의의를 짧게 제시하고 너무 긴 문단은 피합니다.
+% 배치: column=0,row=0,span=2이므로 0번 열과 1번 열의 맨 위를 함께 차지합니다.
+% 이 박스 아래에는 Introduction(column 0)과 Poster Info(column 1)가 각각 이어집니다.
+%
+% English:
+% The Abstract is the fastest entry point for readers.
+% Summarize purpose, methods, findings, and significance without long paragraphs.
+% Layout: column=0,row=0,span=2 places this box across the top of columns 0 and 1.
+% Introduction and Poster Info are then placed below it in columns 0 and 1.
+\begin{posterbox}[name=abstract,column=0,row=0,span=2]{Abstract}
+\footnotesize
+\TemplateText{연구의 목적, 대상, 방법, 핵심 결과, 의의를 4--6문장으로 요약하세요.}
+
+\vspace{0.7em}
+\scriptsize
+\begin{itemize}
+\item \textbf{Purpose:} \TemplateText{무엇을 밝히고자 했는지 작성}
+\item \textbf{Methods:} \TemplateText{연구 설계, 자료, 분석 방법 작성}
+\item \textbf{Findings:} \TemplateText{가장 중요한 결과 1--2개 작성}
+\item \textbf{Keywords:} \TemplateText{keyword 1; keyword 2; keyword 3}
+\end{itemize}
+\end{posterbox}
+
+% Korean:
+% Poster Info에는 학회명, 연락처, 프로젝트 링크처럼 본문 흐름 밖의 메타 정보를 둡니다.
+% QR 코드를 넣고 싶다면 이 박스 안에 작은 \includegraphics를 추가하면 됩니다.
+% 배치: column=1,below=abstract이므로 오른쪽 열에서 Abstract 아래에 놓입니다.
+% Layout Guide가 below=posterinfo로 이 박스 바로 아래에 이어집니다.
+%
+% English:
+% Poster Info stores metadata outside the main research narrative:
+% conference name, contact, project link, or a small QR code.
+% Layout: column=1,below=abstract places this box below Abstract in the right column.
+% The Layout Guide follows it with below=posterinfo.
+\begin{posterbox}[name=posterinfo,column=1,below=abstract]{Poster Info}
+\footnotesize
+\textbf{Conference / Event}
+
+\scriptsize
+\TemplateText{학회명 또는 행사명을 입력하세요.}
+
+\vspace{0.6em}
+\footnotesize
+\textbf{Contact}
+
+\scriptsize
+\TemplateText{이메일, ORCID, 연구실 홈페이지 등을 입력하세요.}
+
+\vspace{0.6em}
+\footnotesize
+\textbf{Project Link}
+
+\scriptsize
+\href{\ProjectURL}{\nolinkurl{\ProjectURL}}
+\end{posterbox}
+
+% Korean:
+% Template Quick Start는 초보 사용자가 PDF만 보고도 수정 순서를 알 수 있도록 보여 주는 안내 박스입니다.
+% 최종 연구 포스터를 만들 때 공간이 부족하면 이 박스를 삭제하고,
+% Results 박스의 below=boxlayoutguide를 below=posterinfo로 되돌리면 됩니다.
+% 배치: column=1,below=posterinfo이므로 오른쪽 열에서 Poster Info 아래에 놓입니다.
+%
+% English:
+% Template Quick Start visibly explains the editing workflow inside the generated PDF.
+% For a final research poster, you may delete this box and change the Results box
+% from below=boxlayoutguide back to below=posterinfo.
+% Layout: column=1,below=posterinfo places this box below Poster Info in the right column.
+\begin{posterbox}[name=boxlayoutguide,column=1,below=posterinfo]{Template Quick Start}
+\tiny
+\textbf{처음 수정할 순서 / First Editing Steps}
+
+\begin{itemize}
+\item \textbf{1. 기본 정보}: \texttt{\textbackslash PosterTitle}, \texttt{\textbackslash PosterAuthors}, \texttt{\textbackslash PosterAffiliations}, \texttt{\textbackslash ProjectURL}을 바꿉니다.
+\item \textbf{2. 본문}: Abstract, Introduction, Methods, Results, Discussion 박스의 예시 문장을 실제 연구 내용으로 바꿉니다.
+\item \textbf{3. 그림}: 그림 파일은 \texttt{images/}에 넣고 \texttt{\textbackslash includegraphics}로 연결합니다.
+\item \textbf{4. 참고문헌}: \texttt{sub/references.bib}에 \texttt{langid}를 넣고, 한국어는 \texttt{\textbackslash kparencite}, 영어는 \texttt{\textbackslash parencite}로 인용합니다.
+\item \textbf{5. 빌드}: \texttt{latexmk -pdf KNUE\_poster\_2cols.tex}
+\end{itemize}
+
+\vspace{0.25em}
+\textbf{배치 읽는 법 / Layout Hints}
+
+\begin{itemize}
+\item \texttt{column=0,1}: 왼쪽 또는 오른쪽 열
+\item \texttt{below=posterinfo}: 지정한 박스 아래에 배치
+\item \texttt{span=2}: 두 열을 가로지르는 박스
+\item \texttt{above=bottom}: 남은 높이를 아래까지 채움
+\end{itemize}
+
+\vspace{0.25em}
+\textbf{마무리 / Before Submission}
+
+최종 포스터에서는 이 안내 박스를 삭제하고, Results 박스의 \texttt{below=boxlayoutguide}를 \texttt{below=posterinfo}로 바꿉니다.
+\end{posterbox}
+
+% Korean:
+% Introduction은 연구 배경, 연구 질문, 목표를 연결합니다.
+% 포스터에서는 문헌 검토를 길게 쓰기보다 연구 필요성이 바로 보이도록 정리합니다.
+% 배치: column=0,below=abstract이므로 왼쪽 열에서 Abstract 아래에 놓입니다.
+% 이 박스 아래에는 Methods가 below=introduction으로 이어집니다.
+%
+% English:
+% Introduction connects background, research questions, and objectives.
+% For a poster, keep the literature background brief and emphasize the research need.
+% Layout: column=0,below=abstract places it in the left column below Abstract.
+% Methods follows this box with below=introduction.
+\begin{posterbox}[name=introduction,column=0,below=abstract]{Introduction}
+\footnotesize
+\textbf{Background}
+
+\scriptsize
+\TemplateText{연구 배경과 문제 상황을 간결하게 설명하세요.}
+
+\vspace{0.6em}
+\footnotesize
+\textbf{Research Questions}
+
+\scriptsize
+\begin{enumerate}
+\item \TemplateText{연구 질문 1}
+\item \TemplateText{연구 질문 2}
+\item \TemplateText{연구 질문 3}
+\end{enumerate}
+
+\vspace{0.6em}
+\footnotesize
+\textbf{Objectives}
+
+\scriptsize
+\begin{itemize}
+\item \TemplateText{목표 또는 가설 1}
+\item \TemplateText{목표 또는 가설 2}
+\item \TemplateText{기대되는 기여}
+\end{itemize}
+\end{posterbox}
+
+% Korean:
+% Methods는 독자가 연구의 신뢰성을 판단하는 데 필요한 정보를 담습니다.
+% 연구 설계, 참여자/자료, 분석 절차를 가능하면 병렬 구조로 작성합니다.
+% 배치: column=0,below=introduction이므로 왼쪽 열에서 Introduction 아래에 놓입니다.
+% Discussion & Conclusions가 below=methods로 이 박스 아래에 이어집니다.
+%
+% English:
+% Methods gives readers enough information to judge the study's credibility.
+% Present design, participants/data, and analysis in a parallel structure when possible.
+% Layout: column=0,below=introduction places it in the left column below Introduction.
+% Discussion & Conclusions follows it with below=methods.
+\begin{posterbox}[name=methods,column=0,below=introduction]{Methods}
+\footnotesize
+\textbf{Study Design}
+
+\scriptsize
+\TemplateText{연구 유형, 절차, 기간, 맥락을 작성하세요.}
+
+\vspace{0.6em}
+\footnotesize
+\textbf{Participants / Data}
+
+\scriptsize
+\begin{itemize}
+\item \textbf{Participants:} \TemplateText{대상, 표본 수, 선정 기준}
+\item \textbf{Materials:} \TemplateText{자료, 도구, 설문, 실험 장치}
+\item \textbf{Variables:} \TemplateText{주요 변인 또는 측정 지표}
+\end{itemize}
+
+\vspace{0.6em}
+\footnotesize
+\textbf{Analysis}
+
+\scriptsize
+\TemplateText{통계 분석, 질적 분석, 계산 절차, 검증 방법 등을 작성하세요.}
+\end{posterbox}
+
+% Korean:
+% Results는 가장 중요한 결과를 먼저 보여주는 박스입니다.
+% 수치, 표, 효과 크기, 대표 인용문 등 근거가 함께 보이도록 작성합니다.
+% 배치: column=1,below=boxlayoutguide이므로 오른쪽 열에서 Layout Guide 아래에 놓입니다.
+% Figures / Tables가 below=results로 이 박스 아래에 이어집니다.
+%
+% English:
+% Results should show the most important findings first.
+% Pair each claim with evidence such as values, tables, effect sizes, or representative quotes.
+% Layout: column=1,below=boxlayoutguide places it in the right column below Layout Guide.
+% Figures / Tables follows it with below=results.
+\begin{posterbox}[name=results,column=1,below=boxlayoutguide]{Results}
+\footnotesize
+\textbf{Key Findings}
+
+\scriptsize
+\begin{itemize}
+\item \TemplateText{핵심 결과 1을 수치나 근거와 함께 작성}
+\item \TemplateText{핵심 결과 2를 수치나 근거와 함께 작성}
+\item \TemplateText{핵심 결과 3을 수치나 근거와 함께 작성}
+\end{itemize}
+
+\vspace{0.6em}
+\footnotesize
+\textbf{Result Summary}
+
+\scriptsize
+\begin{center}
+\begin{tabular}{p{0.28\linewidth}p{0.20\linewidth}p{0.28\linewidth}}
+\toprule
+\textbf{Measure} & \textbf{Value} & \textbf{Interpretation} \\
+\midrule
+\TemplateText{지표 1} & \TemplateText{값} & \TemplateText{의미} \\
+\TemplateText{지표 2} & \TemplateText{값} & \TemplateText{의미} \\
+\TemplateText{지표 3} & \TemplateText{값} & \TemplateText{의미} \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{posterbox}
+
+% Korean:
+% Figures / Tables에는 포스터에서 가장 눈에 띄는 그림이나 표를 배치합니다.
+% 실제 그림을 넣을 때는 \TemplateFigure 줄을 \includegraphics로 바꾸고,
+% 그림 파일은 images/ 폴더에 두는 것을 권장합니다.
+% 배치: column=1,below=results이므로 오른쪽 열에서 Results 아래에 놓입니다.
+% References가 below=figurestables로 이 박스 아래에 이어집니다.
+%
+% English:
+% Figures / Tables should contain the most visually important figure or table.
+% Replace \TemplateFigure with \includegraphics for real images, preferably stored in images/.
+% Layout: column=1,below=results places it below Results in the right column.
+% References follows it with below=figurestables.
+\begin{posterbox}[name=figurestables,column=1,below=results]{Figures / Tables}
+\footnotesize
+\textbf{Main Figure}
+
+\vspace{0.4em}
+\begin{center}
+\TemplateFigure{대표 그림, 표, 흐름도 또는 분석 결과 이미지를 배치하세요.}
+\captionof{figure}{\TemplateText{그림 설명을 입력하세요.}}
+\end{center}
+
+\vspace{0.6em}
+\scriptsize
+\TemplateText{필요하면 \texttt{\textbackslash includegraphics} 명령으로 실제 그림 파일을 연결하세요. 예: \texttt{images/figure01.pdf}}
+\end{posterbox}
+
+% Korean:
+% Discussion & Conclusions는 결과의 의미, 적용 가능성, 한계를 묶어 정리합니다.
+% 단순 반복보다 "그래서 무엇이 중요한가"가 드러나도록 작성합니다.
+% 배치: column=0,below=methods,above=bottom이므로 왼쪽 열에서
+% Methods 아래부터 포스터 하단까지 남은 공간을 채웁니다.
+%
+% English:
+% Discussion & Conclusions brings together meaning, implications, and limitations.
+% Focus on why the findings matter rather than repeating the Results section.
+% Layout: column=0,below=methods,above=bottom fills the remaining left-column
+% space from below Methods down to the poster bottom.
+\begin{posterbox}[name=discussionconclusions,column=0,below=methods,above=bottom]{Discussion \& Conclusions}
+\footnotesize
+\textbf{Interpretation}
+
+\scriptsize
+\TemplateText{결과가 연구 질문에 대해 무엇을 의미하는지 설명하세요.}
+
+\vspace{0.6em}
+\footnotesize
+\textbf{Implications}
+
+\scriptsize
+\begin{itemize}
+\item \TemplateText{학문적 또는 교육적 시사점}
+\item \TemplateText{현장 적용 가능성}
+\item \TemplateText{후속 연구 방향}
+\end{itemize}
+
+\vspace{0.6em}
+\footnotesize
+\textbf{Limitations}
+
+\scriptsize
+\TemplateText{표본, 자료, 방법, 일반화 가능성의 한계를 간단히 작성하세요.}
+\end{posterbox}
+
+% Korean:
+% References에는 참고문헌, 연구비, 자료/코드 공개 정보를 넣습니다.
+% 참고문헌이 너무 많으면 핵심 문헌만 고르고 글꼴 크기와 줄간격을 유지합니다.
+% 배치: column=1,below=figurestables,above=bottom이므로 오른쪽 열에서
+% Figures / Tables 아래부터 포스터 하단까지 남은 공간을 채웁니다.
+%
+% English:
+% References contains references, funding/support, and data/code availability.
+% If references are too long, select only key sources and keep the compact font settings.
+% Layout: column=1,below=figurestables,above=bottom fills the remaining right-column
+% space from below Figures / Tables down to the poster bottom.
+\begin{posterbox}[name=referencesacknowledgements,column=1,below=figurestables,above=bottom]{References}
+\tiny
+\textbf{References}
+
+\vspace{0.2em}
+\TemplateText{APA 7판/APA 7 기본입니다. \texttt{sub/references.bib}에 \texttt{langid}를 넣고 한국어는 \texttt{\textbackslash kparencite}, 영어는 \texttt{\textbackslash parencite}로 인용합니다. 예: (\kparencite{kor_sample_reference}; \parencite{eng_sample_reference}). 아래 목록은 예시이므로 실제 문헌으로 교체하세요.}
+
+\nocite{kor_sample_reference,eng_sample_reference}
+\printbibliography[heading=none]
+
+\vspace{0.8em}
+\textbf{Acknowledgements}
+
+\vspace{0.2em}
+\TemplateText{연구비, 공동 연구자, 기관 지원, 데이터 제공처 등을 입력하세요.}
+
+\vspace{0.8em}
+\textbf{Data / Code Availability}
+
+\vspace{0.2em}
+\TemplateText{자료와 코드 공개 링크 또는 문의 방법을 입력하세요.}
+\end{posterbox}
+
+\end{poster}
+\end{document}

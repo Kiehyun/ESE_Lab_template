@@ -1,0 +1,150 @@
+% --------------------------------------------------------------------
+% 연구 방법 섹션입니다.
+% Research methods section.
+%
+% 이 파일에서는 연구 설계, 연구 대상과 자료 수집, 분석 방법을 제시합니다.
+% This file presents the research design, participants/data, and analysis methods.
+% --------------------------------------------------------------------
+
+% 연구 방법은 연구 문제에 실제로 답하는 절차를 설명하는 섹션입니다.
+% The methods section explains the procedures that answer the research questions.
+\section{연구 방법}
+
+% 연구 설계 하위 섹션입니다.
+% Research design subsection.
+\subsection{연구 설계}
+
+% 연구 설계 슬라이드에서는 방법론 이름과 선택 이유를 함께 말합니다.
+% In the research design slide, state both the methodology and why it fits.
+\begin{frame}[t]{연구 설계}
+\small
+
+% 연구 유형을 소개하는 기본 설명 상자입니다.
+% Basic explanation box for introducing the research type.
+\begin{block}{연구 유형}
+\begin{itemize}
+\tightitems
+
+% 아래 예시는 자신의 논문 방법론에 맞게 바꿉니다.
+% Replace the examples below with the methodology of your own thesis.
+\item 예: 설계 기반 연구, 사례 연구, 혼합 연구, 실험 연구, 문헌 연구
+\item 연구 유형을 선택한 이유를 연구 문제와 연결해 설명합니다.
+\item 설계 기반 연구를 사용할 경우 설계, 실행, 분석, 재설계의 순환 구조를 제시할 수 있습니다(\parencite{eng_dbrc2003design,eng_brown1992design}).
+\end{itemize}
+\end{block}
+
+% 연구 절차를 시각화하는 간단한 TikZ 흐름도입니다.
+% A simple TikZ flow chart visualizing the research procedure.
+\begin{center}
+\begin{tikzpicture}[node distance=1.0cm, every node/.style={font=\scriptsize}]
+
+% 각 node는 연구 절차의 한 단계를 의미합니다.
+% Each node represents one stage of the research procedure.
+\node[draw, rounded corners, fill=KNUEPrimaryLight, minimum width=2.1cm] (a) {문제 분석};
+\node[draw, rounded corners, fill=KNUEPrimaryLight, minimum width=2.1cm, right=of a] (b) {설계};
+\node[draw, rounded corners, fill=KNUEPrimaryLight, minimum width=2.1cm, right=of b] (c) {실행};
+\node[draw, rounded corners, fill=KNUEPrimaryLight, minimum width=2.1cm, right=of c] (d) {분석};
+
+% 화살표는 절차의 진행 방향을 나타냅니다.
+% Arrows show the direction of the procedure.
+\draw[->, thick] (a) -- (b);
+\draw[->, thick] (b) -- (c);
+\draw[->, thick] (c) -- (d);
+
+% 되돌아가는 화살표는 분석 결과가 재설계로 이어진다는 뜻입니다.
+% The returning arrow means analysis results feed into redesign.
+\draw[->, thick, bend left=18] (d.north) to (b.north);
+\end{tikzpicture}
+\end{center}
+
+\slidenote{
+방법론 이름만 말하지 말고, 왜 이 연구 문제에 적합한지 설명합니다. 연구 설계 그림은 심사자가 전체 절차를 빠르게 이해하는 데 도움을 줍니다.
+}
+\end{frame}
+
+% 연구 대상과 자료 수집은 논문 발표에서 구체성을 많이 확인하는 부분입니다.
+% Participants and data collection are often checked closely in thesis or dissertation presentations.
+\subsection{연구 대상과 자료}
+\begin{frame}[t]{연구 대상과 자료 수집}
+\small
+
+% 두 열로 나누어 연구 대상과 자료 수집 방법을 구분합니다.
+% Use two columns to separate participants/materials from data collection.
+\begin{columns}[T]
+
+% 왼쪽 열: 연구 대상 또는 자료 원천입니다.
+% Left column: participants or data sources.
+\begin{column}{0.48\textwidth}
+\begin{block}{연구 대상}
+\begin{itemize}
+\tightitems
+
+% 참여자 연구라면 표집, 동의, 익명화 계획을 반드시 확인합니다.
+% For participant research, check sampling, consent, and anonymization plans.
+\item 대상: 학생, 교사, 수업, 문서, 데이터셋 등
+\item 표집 기준과 참여자 수
+\item 연구 윤리와 동의 절차
+\end{itemize}
+\end{block}
+\end{column}
+
+% 오른쪽 열: 자료를 어떻게 모을지 설명합니다.
+% Right column: explain how data will be collected.
+\begin{column}{0.48\textwidth}
+\begin{block}{자료 수집}
+\begin{itemize}
+\tightitems
+
+% 연구 문제별로 필요한 자료가 빠지지 않도록 항목을 조정합니다.
+% Adjust the items so each research question has the data it needs.
+\item 사전/사후 검사 또는 설문
+\item 수업 관찰, 산출물, 인터뷰
+\item 로그 데이터, 문헌, 공개 데이터
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+\vspace{0.25cm}
+
+% alertblock은 연구윤리나 누락 위험처럼 주의해야 할 내용을 강조할 때 사용합니다.
+% Use alertblock to emphasize cautions such as ethics or missing data.
+\begin{alertblock}{주의}
+자료 수집 계획은 연구 문제별로 필요한 증거가 빠지지 않도록 구성합니다.
+\end{alertblock}
+
+\slidenote{
+대상과 자료를 말할 때는 익명화, 동의, 보관 방법 등 윤리적 고려도 함께 언급합니다.
+}
+\end{frame}
+
+% 분석 방법은 연구 문제, 자료, 분석 절차가 서로 대응되는지 보여 줍니다.
+% The analysis slide shows how research questions, data, and methods correspond.
+\subsection{분석 방법}
+\begin{frame}[t]{분석 방법}
+\small
+
+% 표는 연구 문제별 분석 계획을 한눈에 보여 주기 좋습니다.
+% A table is useful for showing the analysis plan for each research question.
+\begin{block}{연구 문제별 분석 계획}
+\begin{tabular}{p{0.28\textwidth}p{0.30\textwidth}p{0.28\textwidth}}
+
+% booktabs의 \toprule, \midrule, \bottomrule은 발표용 표를 깔끔하게 만듭니다.
+% booktabs rules make presentation tables cleaner.
+\toprule
+연구 문제 & 자료 & 분석 방법 \\
+\midrule
+
+% 아래 행들은 예시입니다. 실제 연구 문제와 자료명으로 바꿉니다.
+% The rows below are examples. Replace them with actual research questions and data.
+연구 문제 1 & 설문, 문헌, 사전 자료 & 기술통계, 범주화, 요구 분석 \\
+연구 문제 2 & 설계 문서, 전문가 검토 & 내용 타당도, 질적 검토 \\
+연구 문제 3 & 산출물, 인터뷰, 검사 결과 & 질적 코딩, 비교 분석, 통계 검정 \\
+\bottomrule
+\end{tabular}
+\end{block}
+
+\slidenote{
+이 표는 예시입니다. 실제 연구에서는 각 연구 문제에 답하기 위한 자료와 분석 방법을 구체적으로 바꾸어 작성합니다.
+}
+\end{frame}

@@ -1,0 +1,154 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  RISE_main.tex
+%  Research in Science Education (Springer) 투고용 LaTeX 템플릿
+%  ── 공식 Springer Nature 템플릿(sn-jnl.cls, v3.x) 기반 ──
+%
+%  ▶ 이 템플릿은 무엇인가
+%    - Springer 공식 LaTeX 클래스 sn-jnl.cls 를 사용합니다(폴더에 함께 넣어 둔
+%      sn-jnl.cls / sn-apacite.bst 사용). 게재 확정 후 production 단계와 가장 잘
+%      맞습니다.
+%    - 본문은 sub/en-1..5-*.tex 섹션 파일로 분리되어 있으며, 예시 내용 없이 각
+%      절에 무엇을 쓰는지 안내만 넣어 두었습니다. 새 원고는 이 파일들을 채워
+%      작성하면 됩니다.
+%    - biblatex 인용 명령(\parencite/\textcite)을 그대로 쓸 수 있도록 아래에
+%      natbib 호환 shim 을 넣어 두었습니다(sn-jnl 은 natbib 기반).
+%
+%  ▶ 참고문헌: sn-apa 옵션 → sn-apacite.bst(APA) 자동 지정. BibTeX 사용.
+%  ▶ 컴파일(pdfLaTeX + BibTeX):
+%      pdflatex RISE_main → bibtex RISE_main → pdflatex RISE_main → pdflatex RISE_main
+%      (또는 제공된 RISE_main_build.cmd / RISE_main_build.sh 사용)
+%
+%  ▶ 클래스 옵션
+%      pdflatex : pdfLaTeX 엔진      / sn-apa  : APA 참고문헌
+%      referee  : 2줄 간격(심사 투고용, 기본값) / lineno : 줄번호(필요 시 추가)
+%      게재 확정본(최종본)을 조판할 때는 referee 를 빼면 1줄 간격 저널 레이아웃이
+%      됩니다.
+%      ※ 이중 익명(double-blind) 투고 시에는 아래 \author*/\affil* 블록의 식별
+%        정보를 제거한 익명본을 별도로 만드세요(sn-jnl 은 자동 익명화하지 않음).
+%
+%  ▶ 투고 전 확인: Research in Science Education(Springer) 공식 Instructions for
+%    Authors 에서 원고 유형, 초록/키워드 요구사항, 그림/표 규격, 윤리·이해상충
+%    선언 항목을 반드시 최신본으로 확인하세요.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[pdflatex,sn-apa,referee]{sn-jnl}
+
+% --- sn-jnl.cls 호환 패치 -------------------------------------------------
+% 공식 sn-jnl.cls 는 begindocument 단계에서 \SetFootnoteHook /
+% \DeclareNewFootnote(= manyfoot 명령)를 사용하는데, 최신 TeX Live 의 footmisc 가
+% manyfoot 를 자동으로 끌어오지 않아 미정의가 될 수 있습니다. manyfoot 를 직접
+% 로드하여 해결합니다. (향후 Springer 가 이 의존성을 cls 내부에서 처리하면 제거 가능)
+\usepackage{manyfoot}
+
+% --- 본문(en-*.tex)에서 흔히 쓰는 패키지 (중복 로드는 무해) ---------------
+\usepackage{graphicx}
+\usepackage{tikz}\usetikzlibrary{arrows.meta}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{amsmath,amssymb}
+% sn-jnl.cls 는 자체 \orcidlogo(Orcidlogo.eps + shell-escape 필요)를 정의하므로
+% orcidlink 와 충돌합니다. \orcidlogo 를 풀어 orcidlink(tikz 기반, eps 불필요)가
+% 쓰이게 합니다. 이후 \orcidlink{0000-...} 로 ORCID 아이콘+링크를 출력합니다.
+\let\orcidlogo\relax
+\usepackage{orcidlink}   % 저자 ORCID 링크(아이콘, eps 불필요)
+
+% --- biblatex → natbib 인용 명령 호환 shim --------------------------------
+% 본문에서 \parencite/\textcite(biblatex 문법)를 써도 되도록 natbib 의
+% \citep/\citet 로 매핑합니다. (sn-jnl 은 natbib 기반)
+\newcommand{\parencite}[1]{\citep{#1}}
+\newcommand{\textcite}[1]{\citet{#1}}
+
+% --- 표 헬퍼 --------------------------------------------------------------
+% \TableNote{...} : 표 아래 Note. 주석 / L 열 : 좌측 정렬 가변폭(tabularx)
+\newcommand{\TableNote}[1]{\par\vspace{2pt}\noindent\parbox{\linewidth}{\footnotesize\raggedright\textit{Note.}\ #1}}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+
+% 게재본은 절 제목에 번호를 달지 않습니다(sn-jnl 제공 명령, secnumdepth=0).
+% 번호를 달고 싶으면 아래 줄을 주석 처리하세요.
+\unnumbered
+
+% 참고문헌은 단일 간격으로 조판합니다(referee 더블스페이싱이 항목 간격을
+% 들쭉날쭉하게 만드는 것을 방지 — 본문은 referee 시 더블 간격 유지).
+\usepackage{etoolbox}
+\AtBeginEnvironment{thebibliography}{\singlespacing}
+
+% --- 이중 익명(double-blind) 토글 -----------------------------------------
+% RISE(Research in Science Education)는 이중 익명 심사입니다. 익명본을 만들 때는
+% 빌드에서  \def\ANON{}\input{RISE_main.tex}  로 컴파일합니다(제공된 빌드 스크립트의
+% `anon` 명령이 자동 처리하여 RISE_main_anon.pdf 를 만듭니다). \ANON 이 정의되면
+% 저자·소속·이메일·ORCID·사사(Funding)가 익명화됩니다. 저자 식별 정보는 익명 원고와
+% 별도로 title-page.tex(투고용 표지)로 제출합니다.
+\newif\ifRISEanon
+\ifdefined\ANON\RISEanontrue\fi
+
+% =========================================================================
+% Front matter (sn-jnl 양식) — 아래 제목/저자/초록/키워드를 새 원고에 맞게 수정
+% =========================================================================
+\title[Short Running Title]{Full Article Title Goes Here:
+Subtitle If Any}
+
+% 저자 순서대로 \author 로 나열하고, 교신저자는 \author* 로 표시합니다.
+% \ifRISEanon 이 참이면(익명본) 저자·소속·이메일이 익명 처리됩니다.
+\ifRISEanon
+  \author*[1]{\fnm{}\sur{Author name withheld for double-blind review}}
+  \affil[1]{\orgname{Affiliation withheld for double-blind review}}
+\else
+  \author[1]{\fnm{First} \sur{Author}\,\orcidlink{0000-0000-0000-0000}}
+  \author*[1]{\fnm{Corresponding} \sur{Author}\,\orcidlink{0000-0000-0000-0000}}\email{corresponding.author@example.edu}
+  \author[2]{\fnm{Third} \sur{Author}}
+  \affil[1]{\orgname{Your Institution}, \orgaddress{\city{City}, \country{Country}}}
+  \affil[2]{\orgname{Second Institution}, \orgaddress{\city{City}, \country{Country}}}
+\fi
+
+% 초록: Research in Science Education 은 보통 구조화되지 않은(unstructured) 단일
+% 문단 초록을 사용합니다. 배경/문제의식 → 목적·연구질문 → 대상·방법 → 핵심 결과
+% → 과학교육 연구·실천에의 함의를 한 문단으로 압축합니다. 최신 저자 안내에서 분량
+% 제한을 확인하세요. (이 클래스는 pdfLaTeX 로 컴파일되므로 본문은 영문으로 작성합니다.)
+\abstract{Write the abstract here as a single unstructured paragraph. State the
+background and problem, the purpose and research questions, the participants and
+methods, the key findings, and the implications for science-education research
+and practice. Check the journal's current author guidelines for length limits.}
+
+\keywords{keyword one, keyword two, keyword three, keyword four}
+
+\begin{document}
+
+\maketitle
+
+% =========================================================================
+% 본문 — 각 절 파일은 sub/ 폴더에 있습니다(예시 내용 없이 안내만 포함).
+% =========================================================================
+\input{./sub/en-1-introduction.tex}   % 1. Introduction
+\input{./sub/en-2-framework.tex}      % 2. Theoretical Framework
+\input{./sub/en-3-methods.tex}        % 3. Methods
+\input{./sub/en-4-results.tex}        % 4. Results
+\input{./sub/en-5-discussion.tex}     % 5. Discussion and Conclusion
+
+% =========================================================================
+% Back matter
+% =========================================================================
+\backmatter
+
+% Declarations: 아래 각 항목을 원고에 맞게 영문으로 작성합니다.
+%   Funding(연구비) / Competing interests(이해상충) / Ethics approval(IRB 승인) /
+%   Informed consent(연구참여 동의, 미성년자는 보호자 동의) /
+%   Data availability(데이터 공개) / Generative AI use(생성형 AI 사용 범위)
+\bmhead{Declarations}
+\begin{itemize}
+  \item \textbf{Funding.} State funding sources, or that no funding was received.
+  \item \textbf{Competing interests.} State any competing interests.
+  \item \textbf{Ethics approval.} State IRB/ethics approval information.
+  \item \textbf{Informed consent.} State that informed consent (and guardian
+        consent for minors) was obtained.
+  \item \textbf{Data availability.} State how the data can be accessed or requested.
+  \item \textbf{Generative AI use.} Disclose whether and how generative AI was used.
+\end{itemize}
+
+% 참고문헌(BibTeX, APA via sn-apacite). \bibliographystyle 은 sn-jnl 이 자동 지정.
+\bibliography{sub/references-sn}
+
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  END RISE_main.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

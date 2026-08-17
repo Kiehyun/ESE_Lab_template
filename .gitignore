@@ -1,0 +1,33 @@
+# Obsidian — personal window layout/cache는 제외, 공유 설정(app/core-plugins/appearance)은 커밋
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/cache
+.obsidian/.trash/
+
+# LaTeX 빌드 산출물
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.xdv
+
+# Python
+__pycache__/
+*.pyc
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Synology 등 동기화 충돌 사본
+*_Conflict.*
+*_9900x-ubuntu_*

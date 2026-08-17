@@ -1,0 +1,205 @@
+% !TEX program = lualatex
+% 한국교원대학교 학위논문 Beamer 발표 템플릿의 메인 파일입니다.
+% Main file for the KNUE thesis/dissertation Beamer presentation template.
+%
+% 이 파일은 발표 전체의 순서와 공통 설정을 조립합니다.
+% This file assembles the presentation order and shared settings.
+%
+% 실제 발표 내용은 sub/ 폴더의 장별 파일에서 수정합니다.
+% Edit the actual presentation content in the section files under sub/.
+%
+% 빌드 명령:
+% Build command:
+%   latexmk -pdf -lualatex KNUE_beamer_main.tex
+
+% hyperref가 Beamer 발표자 노트나 중복 페이지에서 같은 링크 이름을 만들지 않게 합니다.
+% Prevent hyperref from creating duplicate hyperlink destinations in Beamer notes or repeated pages.
+\PassOptionsToPackage{hypertexnames=false}{hyperref}
+
+% 왼쪽 사이드바 목차에는 현재 섹션의 하위 항목만 자세히 보이도록 설정합니다.
+% Show detailed sidebar subsections only for the current section.
+\PassOptionsToPackage{hideothersubsections}{beamerouterthemesidebar}
+
+% KNUE 발표용으로 만든 Beamer 클래스 파일을 불러옵니다.
+% Load the custom Beamer class for KNUE presentations.
+\documentclass{KNUE_beamer_class}
+
+% 그림 검색 경로입니다. figures/images는 images/에, 로고는 logo/에 넣는 것을 권장합니다.
+% Graphic search paths. Put figures/images in images/ and logos in logo/.
+\graphicspath{{images/}{logo/}}
+
+% 참고문헌 파일 경로입니다. 한국어/영어 문헌을 sub/references.bib 하나에서 관리합니다.
+% Bibliography file path. Korean and English references are managed together in sub/references.bib.
+\providecommand{\beamerbib}{sub/references.bib}
+
+% 제목, 저자, 참고문헌, 발표자 노트, 편의 명령을 모아 둔 공통 설정 파일입니다.
+% Shared settings for title metadata, bibliography, speaker notes, and helper commands.
+\input{sub/preamble_beamer.tex}
+
+% 테마 색상 선택: blue, green, red 중 하나를 사용합니다.
+% Theme color options: choose one of blue, green, or red.
+\themecolor{blue}
+
+% 수식 글꼴 선택: rm은 기본 LaTeX 수식 글꼴, sf는 산세리프 계열입니다.
+% Equation font option: rm uses the default LaTeX math style; sf uses a sans-serif style.
+\equationfont{rm}
+
+% 발표자 노트를 두 번째 화면에 띄우려면 아래 줄의 주석을 해제합니다.
+% Uncomment the next line to show speaker notes on a second screen, for example with Pympress.
+% \enablenotes
+
+% 새 section이 시작될 때마다 현재 section 중심의 목차 슬라이드를 자동으로 추가합니다.
+% Automatically insert a current-section outline slide at the beginning of each section.
+\AtBeginSection[]
+{
+  \begin{frame}{발표 흐름}
+  \scriptsize
+  % 목차가 길어질 수 있으므로 두 단으로 나누어 표시합니다.
+  % Use two columns so long outlines fit on one slide.
+  \begin{multicols}{2}
+    \tableofcontents[
+      currentsection,
+      sectionstyle=show/shaded,
+      subsectionstyle=show/show/hide
+    ]
+  \end{multicols}
+  \end{frame}
+}
+
+% 표지에 들어갈 정보입니다. 실제 값은 sub/preamble_beamer.tex에서 수정합니다.
+% Title-page metadata. Edit the actual values in sub/preamble_beamer.tex.
+% 대괄호와 texorpdfstring의 두 번째 값은 PDF 메타데이터와 북마크에 사용됩니다.
+% The bracketed value and the second texorpdfstring value are used for PDF metadata and bookmarks.
+\title[\BeamerShortTitle]{\texorpdfstring{%
+  \begin{minipage}{0.92\linewidth}
+  \centering
+  \BeamerTitleKor\\[0.18cm]
+  {\footnotesize\linespread{0.86}\selectfont(\BeamerTitleEng)\par}
+  \end{minipage}%
+}{\BeamerTitleKor}}
+\subtitle{\texorpdfstring{\BeamerSubtitleKor\\{\scriptsize\BeamerSubtitleEng}}{\BeamerSubtitleKor / \BeamerSubtitleEng}}
+\author[\BeamerAuthor]{\texorpdfstring{\BeamerAdvisor\\[0.2cm]\BeamerAuthor}{\BeamerAuthor}}
+\institute{\BeamerInstitute}
+\date{\BeamerDate}
+
+% 실제 PDF 본문이 시작됩니다.
+% Start the actual PDF content.
+\begin{document}
+
+% 표지 슬라이드입니다.
+% Title slide.
+\begin{frame}[plain]
+  \titlepage
+  % 발표자 노트입니다. 기본 설정에서는 PDF에 보이지 않습니다.
+  % Speaker note. It is hidden in the PDF by default.
+  \slidenote{
+    발표 시작 인사와 연구 주제의 핵심 문제를 1분 안에 소개합니다.
+    발표 종류, 연구 질문, 방법, 결과 또는 예상 결과가 서로 어떻게 이어지는지 안내합니다.
+  }
+\end{frame}
+
+% 템플릿을 처음 여는 사용자가 PDF만 읽어도 수정 흐름을 알 수 있도록 넣은 안내 슬라이드입니다.
+% This guide slide helps first-time users understand the editing workflow from the generated PDF itself.
+\begin{frame}[t]{템플릿 사용 순서}
+\scriptsize
+
+\begin{alertblock}{가장 먼저 수정할 곳}
+\texttt{sub/preamble\_beamer.tex}에서 아래 값을 바꿉니다.
+
+\texttt{\textbackslash degreeProgramKor}: 석사 또는 박사 \quad
+\texttt{\textbackslash presentationStage}: proposal 또는 result
+
+\texttt{\textbackslash BeamerTitleKor}, \texttt{\textbackslash BeamerTitleEng}, \texttt{\textbackslash BeamerAuthor}, \texttt{\textbackslash BeamerAdvisor}
+\end{alertblock}
+
+\begin{block}{작성 순서}
+\begin{enumerate}
+\tightitems
+\item 표지 정보와 발표 종류를 정합니다.
+\item \texttt{sub/1-Intro\_beamer.tex}부터 \texttt{sub/5-Conclusion\_beamer.tex}까지 예시 문장을 바꿉니다.
+\item 그림은 \texttt{images/} 폴더에 넣고 \texttt{\textbackslash includegraphics}로 연결합니다.
+\item 참고문헌은 \texttt{sub/references.bib}에 넣습니다.
+\item 한국어 문헌은 \texttt{\textbackslash ktextcite}, \texttt{\textbackslash kparencite}; 영어 문헌은 \texttt{\textbackslash textcite}, \texttt{\textbackslash parencite}로 인용합니다.
+\item \texttt{latexmk -pdf -lualatex KNUE\_beamer\_main.tex}로 빌드합니다.
+\end{enumerate}
+\end{block}
+
+\begin{exampleblock}{마무리}
+실제 발표 PDF에서는 이 안내 슬라이드와 다음 파일 안내 슬라이드를 삭제하거나 주석 처리합니다.
+\end{exampleblock}
+\end{frame}
+
+% 파일별 수정 위치를 한 장에 요약합니다.
+% Summarize the main editable files in one slide.
+\begin{frame}[t]{파일별 수정 위치}
+\tiny
+
+\begin{columns}[T]
+\begin{column}{0.45\textwidth}
+\begin{block}{공통 설정}
+\begin{tabular}{@{}p{0.38\linewidth}p{0.54\linewidth}@{}}
+\toprule
+\textbf{파일} & \textbf{수정 내용} \\
+\midrule
+\texttt{preamble\_beamer} & 석사/박사, 발표 종류, 제목, 저자, 지도교수, 소속 \\
+\texttt{references.bib} & 참고문헌 항목 (한글·영문 공통) \\
+\texttt{main.tex} & 발표 순서, 테마 색상, 노트 출력 여부 \\
+\bottomrule
+\end{tabular}
+\end{block}
+
+\begin{alertblock}{변수 선택}
+\texttt{\textbackslash degreeProgramKor}, \texttt{\textbackslash presentationStage} 같은 명령 이름은 그대로 두고, 중괄호 안의 값만 바꾸는 방식으로 수정합니다.
+\end{alertblock}
+\end{column}
+
+\begin{column}{0.45\textwidth}
+\begin{block}{본문 슬라이드}
+\begin{tabular}{@{}p{0.42\linewidth}p{0.50\linewidth}@{}}
+\toprule
+\textbf{파일} & \textbf{역할} \\
+\midrule
+\texttt{1-Intro} & 배경, 필요성, 연구 문제 \\
+\texttt{2-Theoretical} & 이론적 배경, 분석틀 \\
+\texttt{3-Methods} & 연구 설계, 자료, 분석 방법 \\
+\texttt{4-Results} & 예상 결과 또는 연구 결과 \\
+\texttt{5-Conclusion} & 요약, 검토 요청 또는 질의응답 \\
+\bottomrule
+\end{tabular}
+\end{block}
+
+\begin{exampleblock}{Tip}
+\texttt{proposal} 모드에서는 일정과 예상 산출물을, \texttt{result} 모드에서는 연구 결과와 해석을 중심으로 보여 줍니다.
+\end{exampleblock}
+\end{column}
+\end{columns}
+\end{frame}
+
+% 전체 목차 슬라이드입니다.
+% Full table-of-contents slide.
+\begin{frame}{전체 목차}
+  \small
+  \tableofcontents[
+    sectionstyle=show,
+    subsectionstyle=show/show/hide
+  ]
+  \slidenote{목차는 5개 영역으로 구성합니다. 각 영역은 논문 발표에서 자주 확인하는 질문에 답하도록 배치합니다.}
+\end{frame}
+
+% 장별 발표 파일을 불러옵니다. 파일명을 바꾸면 아래 \include 경로도 함께 바꿔야 합니다.
+% Include section files. If you rename a file, update the matching \include path below.
+\include{sub/1-Intro_beamer}
+\include{sub/2-Theoretical_background_beamer}
+\include{sub/3-Methods_beamer}
+\include{sub/4-Results_beamer}
+\include{sub/5-Conclusion_beamer}
+
+% 참고문헌 슬라이드입니다. allowframebreaks는 문헌이 많을 때 여러 장으로 자동 분할합니다.
+% References slide. allowframebreaks splits long bibliographies across multiple slides.
+\begin{frame}[allowframebreaks]{참고문헌}
+  \printbibliography
+\end{frame}
+
+% 문서 끝입니다.
+% End of document.
+\end{document}

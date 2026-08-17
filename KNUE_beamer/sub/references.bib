@@ -1,0 +1,101 @@
+% 한국교원대학교 Beamer 발표 템플릿의 참고문헌 파일입니다.
+% Bibliography file for the KNUE Beamer presentation template.
+%
+% 한국어 문헌은 cite key 앞에 kor_ 접두어와 langid = {korean}을 사용합니다.
+% 영어 문헌은 cite key 앞에 eng_ 접두어와 langid = {english}를 사용합니다.
+% Prefix Korean cite keys with kor_ and add langid = {korean}.
+% Prefix English cite keys with eng_ and add langid = {english}.
+%
+% 본문 인용:
+%   \ktextcite{kor_seo2009science}
+%   (\kparencite{kor_seo2009science})
+%   \textcite{eng_nrc2012framework}
+%   (\parencite{eng_nrc2012framework})
+%
+% 혼합 인용:
+%   (\kparencite{kor_seo2009science}; \parencite{eng_nrc2012framework})
+%
+% \kparencite와 \parencite는 바깥 괄호를 직접 출력하지 않으므로 필요한 괄호는 슬라이드 본문에 직접 씁니다.
+% \kparencite and \parencite do not print outer parentheses; write them in slide text when needed.
+
+@article{kor_cite_example_one_author,
+  langid  = {korean},
+  author  = {홍길동},
+  title   = {인용 예시용 한국어 논문: 저자 1명},
+  journal = {한국논문작성교육연구},
+  year    = {2026},
+  volume  = {1},
+  number  = {1},
+  pages   = {1--10}
+}
+
+@article{kor_cite_example_two_authors,
+  langid  = {korean},
+  author  = {홍길동 and 임꺽정},
+  title   = {인용 예시용 한국어 논문: 저자 2명},
+  journal = {한국논문작성교육연구},
+  year    = {2026},
+  volume  = {1},
+  number  = {2},
+  pages   = {11--20}
+}
+
+@article{kor_seo2009science,
+  langid   = {korean},
+  author   = {서혜애},
+  title    = {과학영재 교육과정의 특성 및 연구의 방향},
+  journal  = {영재교육연구},
+  year     = {2009},
+  volume   = {19},
+  number   = {1},
+  pages    = {171--194},
+  language = {korean}
+}
+
+@book{eng_nrc2012framework,
+  langid    = {english},
+  author    = {{National Research Council}},
+  title     = {A Framework for K-12 Science Education},
+  subtitle  = {Practices, Crosscutting Concepts, and Core Ideas},
+  year      = {2012},
+  publisher = {National Academies Press},
+  address   = {Washington, DC},
+  doi       = {10.17226/13165},
+  url       = {https://doi.org/10.17226/13165}
+}
+
+@book{eng_ngss2013standards,
+  langid    = {english},
+  author    = {{NGSS Lead States}},
+  title     = {Next Generation Science Standards},
+  subtitle  = {For States, by States},
+  year      = {2013},
+  publisher = {National Academies Press},
+  address   = {Washington, DC},
+  doi       = {10.17226/18290},
+  url       = {https://doi.org/10.17226/18290}
+}
+
+@article{eng_brown1992design,
+  langid  = {english},
+  author  = {Brown, Ann L.},
+  title   = {Design Experiments: Theoretical and Methodological Challenges in Creating Complex Interventions in Classroom Settings},
+  journal = {The Journal of the Learning Sciences},
+  year    = {1992},
+  volume  = {2},
+  number  = {2},
+  pages   = {141--178},
+  doi     = {10.1207/s15327809jls0202_2}
+}
+
+@article{eng_dbrc2003design,
+  langid  = {english},
+  author  = {{The Design-Based Research Collective}},
+  title   = {Design-Based Research: An Emerging Paradigm for Educational Inquiry},
+  journal = {Educational Researcher},
+  year    = {2003},
+  volume  = {32},
+  number  = {1},
+  pages   = {5--8},
+  doi     = {10.3102/0013189X032001005}
+}

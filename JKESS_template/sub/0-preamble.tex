@@ -1,0 +1,314 @@
+% -----------------------------------------------------------------------------
+% 메타데이터 안내: 제목/저자/초록/주제어/머리글 정보는 메인 .tex 파일에서 관리합니다.
+% Metadata note: Title, authors, abstracts, keywords, and running headers are
+% managed centrally in the main .tex file.
+% -----------------------------------------------------------------------------
+
+% -----------------------------------------------------------------------------
+% 글꼴 설정: LuaLaTeX/XeLaTeX에서 한글과 영문 글꼴을 안정적으로 선택합니다.
+% Font setup: Select Korean and Latin fonts robustly for LuaLaTeX/XeLaTeX.
+% -----------------------------------------------------------------------------
+% fontspec은 시스템 글꼴을 직접 사용할 수 있게 합니다.
+% fontspec allows LaTeX to use system fonts directly.
+\usepackage{fontspec}
+\usepackage{ifplatform}
+% 운영체제별 글꼴 선택: Windows/macOS/Linux에서 사용 가능한 한글 명조 계열을 탐색합니다.
+% OS-aware font setup: Look for available Korean serif families across platforms.
+% 기본 후보가 없으면 대체 CJK/TeX 글꼴로 내려갑니다.
+% If the preferred font is unavailable, fall back to CJK or TeX families.
+\defaultfontfeatures{Ligatures=TeX,Renderer=Harfbuzz}
+
+% 본문 명조 글꼴 선택 매크로: 플랫폼별 후보를 순서대로 검사합니다.
+% Main serif font helper: Test platform-specific candidates in order.
+\newcommand{\SetMainKoreanSerif}{%
+	\ifwindows
+		\IfFontExistsTF{NanumMyeongjo}{%
+			\setmainfont{NanumMyeongjo}[Script=Hangul,Language=Korean]
+		}{%
+			\IfFontExistsTF{Noto Serif KR}{%
+				\setmainfont{Noto Serif KR}[Script=Hangul,Language=Korean]
+			}{%
+				\IfFontExistsTF{Noto Serif CJK KR}{%
+					\setmainfont{Noto Serif CJK KR}[Script=Hangul,Language=Korean]
+				}{%
+					\IfFontExistsTF{Source Han Serif K}{%
+						\setmainfont{Source Han Serif K}[Script=Hangul,Language=Korean]
+					}{%
+						\IfFontExistsTF{Noto Serif}{%
+							\setmainfont{Noto Serif}[Language=Default]
+						}{%
+							\IfFontExistsTF{TeX Gyre Termes}{%
+								\setmainfont{TeX Gyre Termes}
+							}{%
+								\setmainfont{Latin Modern Roman}
+							}%
+						}%
+					}%
+				}%
+			}%
+		}%
+	\else
+		\IfFontExistsTF{Noto Serif KR}{%
+			\setmainfont{Noto Serif KR}[Script=Hangul,Language=Korean]
+		}{%
+			\IfFontExistsTF{Noto Serif CJK KR}{%
+				\setmainfont{Noto Serif CJK KR}[Script=Hangul,Language=Korean]
+			}{%
+				\IfFontExistsTF{Source Han Serif K}{%
+					\setmainfont{Source Han Serif K}[Script=Hangul,Language=Korean]
+				}{%
+					% Final fallback chain to always-available TeX fonts
+					\IfFontExistsTF{Noto Serif}{%
+						\setmainfont{Noto Serif}[Language=Default]
+					}{%
+						\IfFontExistsTF{TeX Gyre Termes}{%
+							\setmainfont{TeX Gyre Termes}
+						}{%
+							\setmainfont{Latin Modern Roman}
+						}%
+					}%
+				}%
+			}%
+		}%
+	\fi
+}
+
+% 산세리프/고정폭 글꼴 선택 매크로: 그림, 코드, 표에 필요한 보조 글꼴을 설정합니다.
+% Sans/mono font helper: Configure support fonts for figures, code, and tables.
+\newcommand{\SetSansMono}{%
+	\ifwindows
+		\IfFontExistsTF{NanumGothic}{%
+			\setsansfont{NanumGothic}[Script=Hangul,Language=Korean]
+		}{%
+			\IfFontExistsTF{Noto Sans KR}{%
+				\setsansfont{Noto Sans KR}[Script=Hangul,Language=Korean]
+			}{%
+				\IfFontExistsTF{Noto Sans CJK KR}{%
+					\setsansfont{Noto Sans CJK KR}[Script=Hangul,Language=Korean]
+				}{%
+					\IfFontExistsTF{Noto Serif KR}{%
+						\setsansfont{Noto Serif KR}[Script=Hangul,Language=Korean]
+					}{%
+						\IfFontExistsTF{TeX Gyre Heros}{%
+							\setsansfont{TeX Gyre Heros}
+						}{%
+							\setsansfont{Latin Modern Sans}
+						}%
+					}%
+				}%
+			}%
+		}%
+	\else
+		\IfFontExistsTF{Noto Sans KR}{%
+			\setsansfont{Noto Sans KR}[Script=Hangul,Language=Korean]
+		}{%
+			\IfFontExistsTF{Noto Sans CJK KR}{%
+				\setsansfont{Noto Sans CJK KR}[Script=Hangul,Language=Korean]
+			}{%
+				% Safe fallback chain when Korean Sans fonts are unavailable
+				\IfFontExistsTF{Noto Serif KR}{%
+					\setsansfont{Noto Serif KR}[Script=Hangul,Language=Korean]
+				}{%
+					\IfFontExistsTF{TeX Gyre Heros}{%
+						\setsansfont{TeX Gyre Heros}
+					}{%
+						\setsansfont{Latin Modern Sans}
+					}%
+				}%
+			}%
+		}%
+	\fi
+	\IfFontExistsTF{Noto Sans Mono}{%
+		\setmonofont{Noto Sans Mono}
+	}{%
+		\IfFontExistsTF{D2Coding}{%
+			\setmonofont{D2Coding}
+		}{%
+			\IfFontExistsTF{Consolas}{%
+				\setmonofont{Consolas}
+			}{%
+				\setmonofont{Latin Modern Mono}
+			}%
+		}%
+	}%
+}
+
+% 글꼴 설정 적용: 위에서 정의한 후보 탐색 매크로를 실제 문서에 적용합니다.
+% Apply font settings: Run the helper macros to select real document fonts.
+\SetMainKoreanSerif
+\SetSansMono
+
+% 글꼴 모양 경고 완화: 선택한 한글 글꼴에 작은대문자/이탤릭이 없을 때 보통체로 대체합니다.
+% Font-shape warning guard: Substitute upright shapes when Korean fonts lack small caps or italics.
+\ifwindows
+\DeclareFontShape{TU}{NanumMyeongjo(0)}{m}{sc}{<->ssub * NanumMyeongjo(0)/m/n}{}
+\DeclareFontShape{TU}{NanumMyeongjo(0)}{m}{it}{<->ssub * NanumMyeongjo(0)/m/n}{}
+\else
+\DeclareFontShape{TU}{NotoSerifKR(0)}{m}{sc}{<->ssub * NotoSerifKR(0)/m/n}{}
+\DeclareFontShape{TU}{NotoSerifKR(0)}{m}{it}{<->ssub * NotoSerifKR(0)/m/n}{}
+\fi
+
+% 글꼴 설치 안내: 시스템 글꼴이 없으면 Noto CJK/Noto KR 계열 설치를 권장합니다.
+% Font installation note: Install Noto CJK/Noto KR families if system fonts are missing.
+% Windows: Download from Google Fonts and install via Control Panel
+%          or run scripts/install_noto_fonts.bat (admin may be required).
+% macOS: Add fonts to ~/Library/Fonts/ or use Homebrew: brew install font-noto-cjk
+% Linux: Install via package manager (e.g., apt install fonts-noto-cjk on Ubuntu)
+%        or add fonts to ~/.local/share/fonts/
+% 줄간격 패키지: 본문 가독성을 위해 행간을 조정합니다.
+% Line-spacing package: Adjust line spacing for manuscript readability.
+\usepackage{setspace}
+
+% 기본 줄간격: 학술지 원고 검토가 쉽도록 1.5줄 간격을 사용합니다.
+% Default line spacing: Use one-and-a-half spacing for easier review.
+\onehalfspacing
+
+% 조판 경고 완화: 긴 표/영문 구절에서 발생하는 비핵심 box 경고를 줄입니다.
+% Typesetting tolerance: Reduce non-critical box warnings around long tables or English text.
+\emergencystretch=2em
+\raggedbottom
+
+% 첫 문단 들여쓰기: 절 바로 뒤 첫 문단도 일반 문단처럼 들여씁니다.
+% First-paragraph indentation: Indent the first paragraph after section headings.
+\usepackage{indentfirst} % Add this package to enable first paragraph indentation
+\setlength{\parindent}{1em}
+
+% -----------------------------------------------------------------------------
+% 기본 패키지와 전역 설정: 표, 그림, 색, 수식, TikZ, PDF 삽입 등을 위한 공통 의존성입니다.
+% Basic packages and global settings: Shared dependencies for tables, figures,
+% color, math, TikZ, and PDF inclusion.
+% -----------------------------------------------------------------------------
+\usepackage{flushend} %% balance columns on last page
+\usepackage{color}
+\usepackage{verbatim}
+\usepackage{epstopdf}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,shadows,fit,shapes}
+\usepackage{pgfpages}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\usepackage{xparse}
+\usepackage{caption}
+
+% 한글 문헌 인용 별칭: 국내/한글 문헌은 \ktextcite와 \kparencite로 구분해 사용합니다.
+% Korean-source citation aliases: Use \ktextcite and \kparencite for Korean sources.
+\let\ktextcite\textcite
+\let\kparencite\parencite
+\usepackage{subcaption}
+\renewcommand{\figurename}{Fig.}
+\renewcommand{\tablename}{Table}
+\usepackage{pdfpages}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{threeparttable}
+
+% Table style helpers: keep journal tables at fixed 1.0\textwidth or 0.5\textwidth
+% without graphic scaling, so font size remains consistent across tables.
+\newcommand{\ManuscriptTableFont}{\small}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+
+\tikzset{
+	sep code badge/.style={
+		rounded corners=1.4pt,
+		draw=black!75,
+		fill=black!4,
+		line width=0.35pt,
+		inner xsep=0.9pt,
+		inner ysep=0.25pt,
+		outer sep=0pt
+	}
+}
+\DeclareRobustCommand{\SEPCode}[1]{%
+	\tikz[baseline=(sep.base)]{\node[sep code badge] (sep) {\sffamily\bfseries\fontsize{6.8}{7.2}\selectfont #1};}%
+}
+
+\usepackage{newunicodechar}
+\newunicodechar{₂}{$_2$}
+\usepackage{etoolbox}
+\usepackage[unicode,hidelinks]{hyperref}
+\urlstyle{same}
+
+% TikZ 흑백 출력: 인쇄용 투고본에서 색상 의존성을 줄이기 위해 주요 색을 검정으로 치환합니다.
+% TikZ grayscale output: Map common colors to black for print-friendly manuscripts.
+\AtBeginEnvironment{tikzpicture}{%
+	\colorlet{blue}{black}%
+	\colorlet{red}{black}%
+	\colorlet{orange}{black}%
+	\colorlet{violet}{black}%
+	\colorlet{green}{black}%
+	\colorlet{yellow}{black}%
+	\colorlet{cyan}{black}%
+	\colorlet{magenta}{black}%
+	\colorlet{purple}{black}%
+	\colorlet{teal}{black}%
+	\colorlet{brown}{black}%
+}
+
+% 그림 경로: \includegraphics가 images 폴더를 기본 검색 위치로 사용합니다.
+% Graphics path: Let \includegraphics search the images folder by default.
+\graphicspath{{images/}}
+
+% 이온 표기 명령: 천문/지구과학에서 C IV 같은 이온 표기를 간단히 입력합니다.
+% Ion notation helper: Typeset ions such as C IV in a compact form.
+\newcommand\ion[2]{{#1}\,{\sc #2}} % ions: \ion{C}{iv} = C IV
+
+% 절 번호 체계: 학술지 양식에 맞춰 section/subsection/subsubsection 번호를 조정합니다.
+% Section numbering: Match section levels to the journal-style numbering scheme.
+\setcounter{secnumdepth}{3}
+\renewcommand\thesection{\Roman{section}.}
+\renewcommand\thesubsection{\arabic{subsection}.}
+\renewcommand\thesubsubsection{\arabic{subsubsection})}
+
+% 참고문헌 번호 숨김: APA 형식에서는 숫자 라벨을 표시하지 않습니다.
+% Biblatex label suppression: Hide numeric labels for APA-style references.
+\DeclareFieldFormat{labelnumber}{} % Suppress label numbers in bibliography
+\AtEveryBibitem{\clearfield{labelnumber}}
+
+% 이전 인용 명령 호환 메모: 필요하면 \cite/\citet 재정의를 이 블록에서 관리합니다.
+% Legacy citation compatibility note: Manage \cite/\citet redefinitions here if needed.
+% 괄호형: \cite -> \parencite, 서술형: \citet -> \textcite
+% \let\origcite\cite
+% \renewcommand{\cite}{\parencite}
+% \newcommand{\citet}{\textcite}
+
+% 표 글자 크기: 모든 table 환경 안에서는 작은 글씨를 사용하고 종료 시 원래 크기로 복구합니다.
+% Table font size: Use scriptsize inside table environments and restore normal size afterward.
+\AtBeginEnvironment{table}{\scriptsize}
+\AtEndEnvironment{table}{\normalsize}
+
+% 표 주석 양식: 표 아래에 작고 왼쪽 정렬된 주석을 붙이는 공통 명령입니다.
+% Table-note style: Add a small, left-aligned note below a table body.
+\newcommand{\TableNote}[1]{%
+	\par\smallskip
+	\begin{minipage}{\linewidth}
+	\raggedright\footnotesize *#1
+	\end{minipage}%
+}
+
+% -----------------------------------------------------------------------------
+% 초록/주제어 안내: abstract와 keyword 변수는 메인 .tex 파일에서 정의합니다.
+% Abstract/keyword note: Abstract and keyword variables are defined in the main .tex file.
+% -----------------------------------------------------------------------------
+
+% -----------------------------------------------------------------------------
+% 인용 출력 조정: APA6 출력에서 "et al."을 이탤릭으로 표시합니다.
+% Citation tweak: Italicize "et al." in APA6 output.
+% -----------------------------------------------------------------------------
+% 서술형(\textcite)과 괄호형(\parencite) 모두에 적용됩니다.
+% Applies to both narrative (\textcite) and parenthetical (\parencite) forms.
+\DefineBibliographyStrings{english}{andothers = {\emph{et\addabbrvspace al\adddot}}}
+\DefineBibliographyStrings{american}{andothers = {\emph{et\addabbrvspace al\adddot}}}
+
+% KESS 투고규정 제12조: 괄호 인용에서 "&" 대신 "and" 사용
+% KESS Article 12 preference: Use "and" instead of "&" in name delimiters.
+\renewcommand*{\finalnamedelim}{\addspace and\addspace}
+\renewcommand*{\multinamedelim}{\addcomma\addspace}
+
+% Enforce APA-style italic journal titles in bibliography entries.
+\DeclareFieldFormat[article]{journaltitle}{\mkbibemph{#1}}
