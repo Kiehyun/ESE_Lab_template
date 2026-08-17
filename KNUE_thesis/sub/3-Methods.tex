@@ -109,11 +109,6 @@
 표~\ref{tab:method-design-example}은 연구 문제와 연구 방법을 연결하여 제시하는 방식의 예시이다.
 실제 논문에서는 자신의 연구 문제에 맞게 자료의 종류, 수집 절차, 분석 방법을 구체적으로 수정한다.
 
-표 전체 너비를 본문 폭에 맞추려면 \verb|tabular*|의 너비를 \verb|\linewidth|로 지정한다.
-\verb|p{0.27\linewidth}|는 현재 본문 폭을 기준으로 열 비율을 정하는 방법이다.
-긴 문장이 들어가는 열은 넓게 잡고, 짧은 용어나 숫자가 들어가는 열은 좁게 잡는다.
-열 너비의 합은 보통 \verb|\linewidth|보다 조금 작게 두고, \verb|@{\extracolsep{\fill}}|를 사용하여 남는 공간이 열 사이에 자연스럽게 배분되도록 한다.
-
 \subsection{연구 대상}
 
 % 연구 참여자, 분석 자료, 문헌, 수업 사례 등의 선정 기준과 특성을 씁니다.
@@ -140,7 +135,35 @@
 각 단계에서는 무엇을 했는지뿐 아니라 그 단계가 다음 단계와 어떻게 연결되는지도 밝혀야 한다.
 
 예를 들어 검사 도구를 개발한 연구라면 먼저 선행 연구를 바탕으로 문항을 구성하고, 전문가 검토를 통해 문항의 적절성을 확인한 뒤, 예비 조사를 거쳐 본 조사에 사용했다는 흐름을 제시한다.
-연구 절차가 복잡한 경우에는 절차표나 흐름도를 함께 제시하면 좋다.
+연구 절차가 복잡한 경우에는 그림~\ref{fig:tikz-process-example}처럼 절차도나 흐름도를 함께 제시하면 좋다.
+
+\begin{figure}[htbp]
+    \centering
+    \footnotesize
+    \begin{tikzpicture}[
+        process/.style={
+            draw,
+            rounded corners,
+            minimum width=2.5cm,
+            minimum height=0.9cm,
+            align=center
+        },
+        arrow/.style={->, thick}
+    ]
+        \node[process] (review) {문헌 검토};
+        \node[process, right=0.55cm of review] (design) {연구 설계};
+        \node[process, right=0.55cm of design] (analysis) {자료 분석};
+        \node[process, right=0.55cm of analysis] (conclusion) {결론 도출};
+
+        \draw[arrow] (review) -- (design);
+        \draw[arrow] (design) -- (analysis);
+        \draw[arrow] (analysis) -- (conclusion);
+    \end{tikzpicture}
+    \caption{연구 절차도 예시}
+    \label{fig:tikz-process-example}
+\end{figure}
+
+그림~\ref{fig:tikz-process-example}과 같은 절차도는 TikZ로 직접 그릴 수 있다. 작성 방법은 \href{../manual/7-KNUE_THESIS_TEMPLATE_USAGE.md}{manual/7 문서}의 "수식과 TikZ" 절을 참고한다.
 
 \subsection{자료 수집}
 

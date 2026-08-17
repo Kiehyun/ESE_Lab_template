@@ -217,6 +217,55 @@ Overleaf의 요금제·제한은 바뀔 수 있으므로 제출 전 공식 문�
 
 기본은 `[htbp]`가 안정적입니다. 완전 고정용 `[H]`는 `float` 패키지가 필요하고 남용하면 여백·흐름이 어색해지므로 제한적으로 씁니다.
 
+### 여러 쪽에 걸치는 표(longtable)
+
+행이 많아 한 쪽에 안 들어가는 표는 `table`이 아니라 `longtable` 환경을 씁니다. `longtable`은 떠다니는 float이 아니므로 본문 위치에 직접 작성하고, 첫 쪽·이어지는 쪽의 머리글을 따로 지정할 수 있습니다.
+
+```tex
+{\ThesisTableStyle
+\begin{longtable}{@{}p{0.17\linewidth}p{0.28\linewidth}p{0.37\linewidth}@{}}
+    \caption{긴 표 예시}
+    \label{tab:longtable-example}\\
+    \toprule
+    단계 & 자료 유형 & 분석 내용 \\
+    \midrule
+    \endfirsthead
+    \caption[]{긴 표 예시(계속)}\\
+    \toprule
+    단계 & 자료 유형 & 분석 내용 \\
+    \midrule
+    \endhead
+    \midrule
+    \multicolumn{3}{r}{다음 쪽에 계속} \\
+    \endfoot
+    \bottomrule
+    \endlastfoot
+    사전 검사 & 개념 이해 검사 & 문항별 정답률과 오개념 응답 유형을 확인한다. \\
+\end{longtable}
+}
+```
+
+### 표 아래에 주 달기
+
+약어, 점수 범위, 통계 기호처럼 표를 읽는 데 필요한 보충 설명은 표 안 `tabular*`/`tabularx` 다음에 `\TableNote{}`로 답니다. 한국어 논문에서는 "주.", 영어 논문에서는 "Note."가 자동으로 붙습니다.
+
+```tex
+\begin{table}[htbp]
+    \centering
+    \caption{표 하단 주석이 있는 표 예시}
+    \label{tab:table-note-example}
+    \ThesisTableStyle
+    \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lrr@{}}
+        \toprule
+        집단 & 사전 평균 & 사후 평균 \\
+        \midrule
+        실험 집단 & 68.40 & 82.15 \\
+        \bottomrule
+    \end{tabular*}
+    \TableNote{점수 범위는 0--100점이다.}
+\end{table}
+```
+
 ### 그림 파일 형식
 
 | 형식 | 권장 용도 |
@@ -233,7 +282,20 @@ Overleaf의 요금제·제한은 바뀔 수 있으므로 제출 전 공식 문�
 
 ### 그림 컬러본과 흑백본
 
-`\figf`(또는 프로젝트에서 정의한 동등 매크로)로 컬러/흑백 두 버전을 준비해 두면, `bw` 빌드 모드에서 자동으로 흑백 파일을 선택합니다. 컬러/흑백 관리 원칙은 아래 "빌드 모드" 표를 참고하세요.
+학위논문은 흑백으로 인쇄하는 경우가 많지만 화면용 PDF·발표 자료에는 컬러 그림이 필요할 수 있습니다. 같은 그림을 컬러본·흑백본으로 각각 저장해 두면 빌드할 때 한쪽을 자동으로 고를 수 있습니다.
+
+1. 그림을 컬러본·흑백본으로 각각 만들어 `images/`에 저장합니다. 같은 이름 뒤에 `_color`/`_bw`를 붙입니다. 예: `images/fig1_color.pdf`, `images/fig1_bw.pdf`.
+2. 본문에서 파일명 자리에 `\figf{fig1}`을 씁니다. 빌드 모드에 따라 `fig1_color` 또는 `fig1_bw`가 자동 선택됩니다.
+
+```tex
+\includegraphics[width=0.8\linewidth]{images/\figf{fig1}}
+```
+
+컬러/흑백은 세 가지로 고를 수 있고 우선순위는 **빌드 명령 > `main.tex` 설정 > 기본값(흑백)** 순입니다.
+
+- **빌드 명령**: `KNUE_thesis_main_build.cmd bw`(또는 `color`) — 각각 `..._bw.pdf`/`..._color.pdf` 사본이 함께 생성됩니다.
+- **`main.tex` 설정**: 위쪽 `\def\figmode{color}` 줄 앞의 `%`를 지우면 컬러로 빌드됩니다.
+- **흑백 모드**에서는 문서 전체가 회색조로 변환되어 `\figf`를 안 쓴 그림·표·글자 색도 명암으로만 구분됩니다. `\figf`는 선택 기능이므로, 컬러/흑백 구분이 필요 없는 그림은 예전처럼 `\includegraphics{images/그림.png}`로 그냥 넣어도 됩니다.
 
 ---
 
@@ -248,7 +310,7 @@ Overleaf의 요금제·제한은 바뀔 수 있으므로 제출 전 공식 문�
 식~\ref{eq:mean-example}은 ...
 ```
 
-TikZ 그림도 일반 그림처럼 `figure` 환경 안에 넣고 `\caption{}`/`\label{}`로 참조합니다. 예시는 `sub/4-Results.tex`에 있습니다.
+TikZ 그림도 일반 그림처럼 `figure` 환경 안에 넣고 `\caption{}`/`\label{}`로 참조합니다. 예시는 `sub/3-Methods.tex`의 "연구 절차" 절에 있습니다.
 
 ---
 

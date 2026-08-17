@@ -50,78 +50,13 @@
 연구 결과 장은 과학교육 연구 문제에 대한 답을 자료와 분석 결과로 제시하는 곳이다.
 각 절은 연구 문제의 순서와 대응되게 구성하고, 표나 그림을 제시한 뒤에는 학습자의 개념 변화, 탐구 수행 양상, 응답 범주, 집단 간 차이, 수업 장면의 특징처럼 독자가 주목해야 할 패턴과 의미를 본문에서 설명한다.
 결과 장에서는 새로운 주장이나 과도한 일반화보다 검사, 설문, 면담, 관찰, 산출물 분석에서 확인된 사실을 객관적으로 정리하는 데 초점을 둔다.
-
-이 템플릿에서는 연구 결과를 \verb|sub/4-Results.tex|에 작성한다.
-표, 그림, 수식은 번호를 직접 입력하지 않고 \verb|\caption{}|, \verb|\label{}|, \verb|\ref{}|로 관리한다.
-표는 \verb|table|과 \verb|tabular*| 또는 \verb|tabularx| 환경을 사용하고, 그림은 \verb|figure| 환경과 \verb|\includegraphics{}| 또는 TikZ를 사용한다.
+표·그림·수식을 LaTeX으로 작성하는 구체적인 방법(캡션·라벨·참조 명령, 표 서식, 컬러/흑백 관리, TikZ 등)은 \href{../manual/7-KNUE_THESIS_TEMPLATE_USAGE.md}{manual/7 문서}에 정리되어 있으므로 여기서는 반복하지 않는다.
 
 \subsection{연구 문제 1의 결과}
 
 % 이 절에는 첫 번째 연구 문제에 대한 결과를 씁니다.
 % 예: 기술통계, 빈도 분석, 사전-사후 검사 결과, 문항별 응답 분포 등
 % 연구 문제와 직접 관련된 결과를 먼저 제시합니다.
-
-\subsubsection{표 작성과 표 번호 참조 방법}
-
-% LaTeX에서는 표 번호를 직접 "표 IV-1"처럼 입력하지 않습니다.
-% table 환경 안에 \caption{...}을 쓰면 장 번호와 표 순서에 따라 표 번호가 자동으로 생성됩니다.
-% 이 템플릿에서는 표 번호가 "표 IV-1"과 같이 장 번호-표 번호 형식으로 표시됩니다.
-%
-% 표를 나중에 본문에서 참조하려면 \caption 바로 아래에 \label{tab:...}을 둡니다.
-% label 이름은 사용자가 정하는 식별자이며, 보통 표는 tab:으로 시작하게 만듭니다.
-% 예: \label{tab:result-example}
-%
-% 본문에서는 표~\ref{tab:result-example}처럼 씁니다.
-% 물결표(~)는 "표"와 번호 사이에서 줄이 바뀌지 않도록 붙여 주는 역할을 합니다.
-% 따라서 PDF에서는 "표 IV-1"처럼 자동 생성된 표 번호가 나타납니다.
-
-표를 작성할 때는 먼저 본문에서 표가 필요한 이유를 설명하고, 그다음 표를 제시한다.
-숫자 자료는 비교하기 쉽도록 소수점 자릿수를 맞추고, 단위가 있는 경우 열 제목이나 표 주석에 단위를 표시한다.
-표가 너무 넓으면 숫자 열을 줄이고 설명 열을 넓히거나, 핵심 열만 본문에 남기고 자세한 표는 부록으로 옮긴다.
-
-표 제목은 \verb|\caption{}|에 넣으며, 표 번호는 \LaTeX이 자동으로 붙인다.
-표를 본문에서 다시 언급하려면 \verb|\label{}|과 \verb|\ref{}|를 함께 사용한다.
-예를 들어 표 안에 \verb|\label{tab:result-example}|을 넣어 두면, 본문에서는 \verb|표~\ref{tab:result-example}|이라고 써서 해당 표 번호를 불러올 수 있다.
-이렇게 작성하면 앞쪽에 새로운 표가 추가되더라도 표 번호와 본문 참조 번호가 자동으로 함께 바뀐다.
-
-\verb|\ThesisTableStyle|은 이 템플릿에서 표의 글자 크기와 간격을 맞추기 위해 미리 정의한 명령이다.
-표 안에 이 명령을 넣으면 표 글자가 본문보다 조금 작아지고, 열 사이 간격과 행 높이가 논문 표에 맞게 조정된다.
-보통 \verb|\caption{}|과 \verb|\label{}| 다음, \verb|\begin{tabular*}| 바로 앞에 넣어 사용한다.
-새 표를 만들 때도 아래 예시처럼 \verb|\ThesisTableStyle|을 함께 넣으면 표 서식을 일관되게 유지할 수 있다.
-
-표의 기본 구조는 다음과 같다.
-
-\begin{verbatim}
-\begin{table}[htbp]
-    \centering
-    \caption{표 제목}
-    \label{tab:label-name}
-    \ThesisTableStyle
-    \begin{tabular*}{\linewidth}{%
-        @{\extracolsep{\fill}}lrr@{}}
-        \toprule
-        구분 & 평균 & 표준편차 \\
-        \midrule
-        집단 A & 82.15 & 8.42 \\
-        집단 B & 73.20 & 9.10 \\
-        \bottomrule
-    \end{tabular*}
-\end{table}
-\end{verbatim}
-
-\paragraph{표와 그림의 위치 옵션}
-\LaTeX에서 \verb|table|과 \verb|figure|는 본문 사이를 떠다니며 배치되는 float 환경이다.
-따라서 \verb|\begin{table}[htbp]|나 \verb|\begin{figure}[htbp]|의 대괄호 안 옵션은 표와 그림을 정확히 고정하는 명령이 아니라, 배치할 수 있는 후보 위치를 알려 주는 역할을 한다.
-\verb|h|는 가능한 한 현재 위치에 배치하라는 뜻이고, \verb|t|는 페이지 위쪽, \verb|b|는 페이지 아래쪽, \verb|p|는 표와 그림만 모아 두는 별도 페이지를 허용한다는 뜻이다.
-이 템플릿에서 자주 쓰는 \verb|[htbp]|는 현재 위치를 먼저 고려하되, 필요하면 페이지 위쪽, 아래쪽, 별도 float 페이지까지 허용하는 유연한 설정이다.
-현재 문단 가까이에 더 강하게 배치하고 싶을 때는 \verb|[h!]|처럼 느낌표를 붙일 수 있지만, 페이지 여백과 조판 규칙에 따라 여전히 위치가 조정될 수 있다.
-정말 고정 배치가 필요한 경우에는 \verb|float| 패키지를 추가한 뒤 \verb|[H]| 옵션을 사용할 수 있으나, 너무 자주 쓰면 페이지 아래가 비거나 본문 흐름이 어색해질 수 있으므로 제한적으로 사용하는 것이 좋다.
-
-\verb|tabular*|의 첫 번째 인수인 \verb|{\linewidth}|는 표 전체 너비를 현재 본문 폭에 맞추라는 뜻이다.
-\verb|@{\extracolsep{\fill}}|는 열 너비를 지정하고 남은 공간을 열 사이에 고르게 배분한다.
-\verb|p{0.35\linewidth}|는 해당 열의 폭을 현재 본문 폭의 35\%로 정하고, 열 안의 긴 문장을 자동으로 줄바꿈한다.
-\verb|r|은 오른쪽 정렬을 뜻하므로 평균, 표준편차, 빈도처럼 숫자를 제시할 때 사용하면 좋다.
-\verb|l|은 왼쪽 정렬, \verb|c|는 가운데 정렬, \verb|r|은 오른쪽 정렬이다.
 
 표~\ref{tab:result-example}은 집단별 사전 검사와 사후 검사 평균 점수를 정리한 예시이다.
 실제 논문을 작성할 때는 아래 표의 집단명, 평균, 표준편차, 사례 수를 연구 자료에 맞게 수정한다.
@@ -141,76 +76,9 @@
     \end{tabular*}
 \end{table}
 
-% 표를 제시한 뒤에는 표를 읽는 문장을 반드시 씁니다.
-% 예: 실험 집단의 평균 변화는 비교 집단보다 크게 나타났다.
-% 다만 통계적으로 유의한 차이인지 판단하려면 t 검정, ANOVA 등 분석 결과를 함께 제시해야 합니다.
-
 표~\ref{tab:result-example}에서 실험 집단은 사전 평균 68.40점에서 사후 평균 82.15점으로 증가하였다.
 비교 집단도 점수가 증가하였으나, 평균 변화 폭은 실험 집단에서 더 크게 나타났다.
-
-\paragraph{여러 쪽에 걸치는 긴 표 예시}
-여러 쪽에 걸치는 표에는 \verb|longtable| 환경을 사용한다.
-\verb|longtable|은 \verb|table| 환경처럼 떠다니는 표가 아니다.
-따라서 \verb|table| 환경 안에 넣지 않고 본문 위치에 직접 작성한다.
-첫 쪽과 이어지는 쪽의 머리글을 각각 지정할 수 있어, 긴 부록 표나 코딩 범주표처럼 행이 많은 자료를 정리할 때 적합하다.
-
-표~\ref{tab:longtable-example}에는 \verb|longtable|을 사용한 긴 표 작성 예시를 제시하였다.
-실제 표가 여러 쪽으로 넘어가면 둘째 쪽부터는 ``계속'' 머리글이 자동으로 출력된다.
-
-{\ThesisTableStyle
-\begin{longtable}{@{}p{0.17\linewidth}p{0.28\linewidth}p{0.37\linewidth}@{}}
-    \caption{여러 쪽에 걸치는 긴 표 예시}
-    \label{tab:longtable-example}\\
-    \toprule
-    단계 & 자료 유형 & 분석 내용 \\
-    \midrule
-    \endfirsthead
-
-    \caption[]{여러 쪽에 걸치는 긴 표 예시(계속)}\\
-    \toprule
-    단계 & 자료 유형 & 분석 내용 \\
-    \midrule
-    \endhead
-
-    \midrule
-    \multicolumn{3}{r}{다음 쪽에 계속} \\
-    \endfoot
-
-    \bottomrule
-    \endlastfoot
-
-    사전 검사 & 개념 이해 검사 & 문항별 정답률과 오개념 응답 유형을 확인한다. \\
-    활동 1 & 탐구 활동지 & 문제 인식과 가설 설정 과정에서 나타난 과학적 추론을 분석한다. \\
-    활동 2 & 모둠 토의 전사 자료 & 증거를 선택하고 주장과 연결하는 발화 양상을 범주화한다. \\
-    활동 3 & 관찰 기록지 & 실험 설계와 변인 통제 과정에서 나타난 수행 특징을 정리한다. \\
-    산출물 & 발표 자료 & 자료 해석 결과와 결론 도출의 타당성을 검토한다. \\
-    면담 & 반구조화 면담 & 수업 경험에 대한 인식과 어려움을 주제별로 정리한다. \\
-    사후 검사 & 개념 이해 검사 & 사전 검사와 비교하여 개념 변화와 성취 수준을 확인한다. \\
-    성찰문 & 개별 성찰 기록 & 학습자가 인식한 탐구 과정의 의미와 향후 개선점을 분석한다. \\
-\end{longtable}
-}
-
-\paragraph{표 아래에 주를 다는 예시}
-표 안의 약어, 점수 범위, 통계 기호, 산출 방식처럼 표를 읽는 데 필요한 보충 설명은 표 아래에 ``주.''로 제시한다.
-이 템플릿에서는 \verb|\TableNote{}| 명령을 사용하면 한국어 논문에서는 ``주.'', 영어 논문에서는 ``Note.''가 자동으로 표시된다.
-
-표~\ref{tab:table-note-example}에는 표 아래에 주를 단 예시를 제시하였다.
-
-\begin{table}[htbp]
-    \centering
-    \caption{표 하단 주석이 있는 표 예시}
-    \label{tab:table-note-example}
-    \ThesisTableStyle
-    \begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}p{0.23\linewidth}rrp{0.27\linewidth}@{}}
-        \toprule
-        집단 & 사전 평균 & 사후 평균 & 평균 변화 해석 \\
-        \midrule
-        실험 집단 & 68.40 & 82.15 & 큰 폭의 향상 \\
-        비교 집단 & 67.85 & 73.20 & 완만한 향상 \\
-        \bottomrule
-    \end{tabular*}
-    \TableNote{점수 범위는 0--100점이며, 평균 변화는 사후 평균에서 사전 평균을 뺀 값이다.}
-\end{table}
+다만 이 차이가 통계적으로 유의한지 판단하려면 $t$ 검정이나 분산분석 같은 추리통계 결과를 함께 제시해야 한다.
 
 \subsection{연구 문제 2의 결과}
 
@@ -254,199 +122,14 @@
 그림~\ref{fig:graph-example}에서 두 집단 모두 사후 점수가 상승하였지만,
 실험 집단의 상승 폭이 비교 집단보다 크게 나타나는 경향을 보였다.
 
-\subsubsection{래스터 이미지와 벡터 이미지}
-
-논문에 넣는 그림 파일은 크게 래스터 이미지와 벡터 이미지로 나눌 수 있다.
-래스터 이미지는 작은 점, 즉 픽셀의 배열로 이루어진 이미지이다.
-사진, 현미경 사진, 위성 영상, 스캔 이미지, 화면 캡처처럼 실제 장면이나 복잡한 색상 변화를 담는 자료에 적합하다.
-대표적인 파일 형식은 \verb|.jpg|, \verb|.png|, \verb|.tif|이다.
-다만 \verb|.jpg|는 손실 압축 형식이므로 저장할 때마다 세부 정보가 일부 사라질 수 있고, 글자나 선 주변에 압축 흔적이 생길 수 있다.
-따라서 사진처럼 자연스러운 색 변화가 중요한 경우에는 \verb|.jpg|를 사용할 수 있지만, 화면 캡처, 표 이미지, 그래프, 도식처럼 글자와 선이 선명해야 하는 그림에는 적합하지 않다.
-이런 경우에는 \verb|.png|가 더 좋다.
-\verb|.png|는 무손실 압축 형식이므로 글자, 선, 색상 경계가 비교적 선명하게 유지된다.
-래스터 이미지는 크게 확대하면 픽셀이 보이거나 흐려질 수 있으므로, 논문에 넣을 때는 충분한 해상도의 원본 파일을 사용하는 것이 좋다.
-
-벡터 이미지는 점, 선, 면, 글자, 수식처럼 수학적 좌표와 도형 정보로 이루어진 이미지이다.
-그래프, 도식, 흐름도, 개념도, 로고, 통계 프로그램에서 내보낸 선 그래프처럼 선과 글자가 중요한 그림에 적합하다.
-대표적인 파일 형식은 \verb|.pdf|, \verb|.eps|, \verb|.svg|이다.
-벡터 이미지는 확대해도 선과 글자가 깨지지 않기 때문에, 학위논문에 넣는 그림 형식으로 가장 좋다.
-특히 그래프, 도식, 흐름도, 개념도처럼 선과 글자가 중요한 그림은 가능하면 벡터 형식으로 저장하는 것을 권장한다.
-벡터로 만들 수 없는 사진이나 화면 캡처만 래스터 이미지로 사용하고, 그래프와 도식은 \verb|.pdf|와 같은 벡터 파일로 넣는 것이 인쇄 품질과 가독성 면에서 가장 안정적이다.
-
-\LaTeX에서 그림 파일을 넣을 때는 보통 \verb|\includegraphics{}| 명령을 사용한다.
-예를 들어 \verb|figures| 폴더에 저장한 그림을 본문 폭의 80\% 크기로 넣으려면 다음과 같이 작성할 수 있다.
-
-\begin{verbatim}
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[
-        width=0.8\linewidth
-    ]{figures/example.pdf}
-    \caption{그림 제목}
-    \label{fig:example-image}
-\end{figure}
-\end{verbatim}
-
-그림 파일의 바깥 여백이 너무 넓으면 \verb|\includegraphics|의 \verb|trim|과 \verb|clip| 옵션으로 그림을 잘라 넣을 수 있다.
-\verb|trim|에 들어가는 네 값의 순서는 왼쪽, 아래쪽, 오른쪽, 위쪽이다.
-단위는 보통 \verb|cm|, \verb|mm|, \verb|pt| 등을 사용할 수 있다.
-\verb|clip|을 함께 써야 지정한 영역 밖이 실제로 잘려서 출력된다.
-
-\begin{verbatim}
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[
-        width=0.8\linewidth,
-        trim=1cm 0.5cm 1cm 0.5cm,
-        clip
-    ]{figures/example.pdf}
-    \caption{여백을 잘라 넣은 그림 예시}
-    \label{fig:trim-example}
-\end{figure}
-\end{verbatim}
-
-위 예시는 그림의 왼쪽을 1cm, 아래쪽을 0.5cm, 오른쪽을 1cm, 위쪽을 0.5cm 잘라서 넣는다는 뜻이다.
-PDF 그래프뿐 아니라 \verb|.png|, \verb|.jpg| 같은 다른 그림 파일도 같은 방식으로 자를 수 있다.
-다만 원본 그림 자체를 수정하는 것은 아니며, LaTeX 문서 안에서 출력되는 영역만 잘라 보이게 하는 방법이다.
-여백을 조금씩 조절해야 할 때는 먼저 큰 단위로 값을 바꿔 보고, 마지막에 \verb|0.1cm| 단위로 미세 조정하면 편하다.
-
-사진은 고해상도 \verb|.jpg|를 사용할 수 있지만, 화면 캡처와 글자가 포함된 이미지는 가능하면 \verb|.png|로 저장하는 것이 좋다.
-그래프와 도식은 래스터 이미지보다 \verb|.pdf|처럼 벡터 형식으로 저장하는 것이 가장 좋다.
-
-그림 번호도 표와 마찬가지로 직접 입력하지 않고 캡션과 라벨 명령을 사용한다.
-본문에서는 자동 참조 명령으로 그림 번호를 출력한다.
-
-\subsubsection{그림 컬러본과 흑백본 함께 관리하기 (컬러/흑백 빌드 전환)}
-
-학위논문은 흑백으로 인쇄하는 경우가 많지만, 화면용 PDF나 발표 자료에는 컬러 그림이 필요할 수 있다.
-이 템플릿에서는 같은 그림을 \textbf{컬러본과 흑백본으로 각각 저장}해 두고, 빌드할 때 한쪽을 자동으로
-선택할 수 있다. 절차는 다음과 같다.
-
-\begin{enumerate}
-  \item 그림을 컬러본과 흑백본으로 각각 만들어 \verb|images/| 폴더에 저장한다. 같은 이름 뒤에
-        \verb|_color|와 \verb|_bw|를 붙인다. 예: \verb|images/fig1_color.pdf|와
-        \verb|images/fig1_bw.pdf|.
-  \item 본문에서 그림을 넣을 때 파일명 자리에 \verb|\figf{fig1}|을 쓴다. 그러면 빌드 모드에 따라
-        \verb|fig1_color| 또는 \verb|fig1_bw|가 자동으로 선택된다.
-\end{enumerate}
-
-\begin{verbatim}
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.8\linewidth]{images/\figf{fig1}}
-    \caption{그림 제목}
-    \label{fig:example-colorbw}
-\end{figure}
-\end{verbatim}
-
-빌드할 때 컬러/흑백을 고르는 방법은 세 가지이며, 우선순위는 빌드 명령 > \verb|main.tex| 설정 >
-기본값(흑백)이다.
-
-\begin{itemize}
-  \item \textbf{빌드 명령}으로 전환: 흑백은 \verb|KNUE_thesis_main_build.cmd bw|
-        (macOS/Linux는 \verb|./KNUE_thesis_main_build.sh bw|), 컬러는 \verb|... color|.
-        각각 \verb|KNUE_thesis_main_흑백.pdf|, \verb|KNUE_thesis_main_컬러.pdf| 사본이 생성된다.
-  \item \textbf{\texttt{main.tex} 설정}으로 전환: \verb|KNUE_thesis_main.tex| 위쪽의
-        \verb|\def\figmode{color}| 줄 앞의 \verb|%|를 지우면 컬러로 빌드된다(기본은 흑백).
-  \item \textbf{흑백 모드}에서는 문서 전체 색이 회색조로 변환되어, \verb|\figf|를 쓰지 않은 그림이나
-        표\,\textperiodcentered\,글자 색도 색상 대신 명암으로 구분된다. 컬러 모드에서는 색이 유지된다.
-\end{itemize}
-
-\verb|\figf|는 선택 기능이다. 컬러/흑백 구분이 필요 없는 그림은 예전처럼
-\verb|\includegraphics{images/그림.png}|로 그냥 넣어도 된다.
-
-\subsubsection{수식 작성과 수식 번호 참조 방법}
-
-논문에서 계산식, 통계 모형, 이론 모형을 제시할 때는 수식을 사용한다.
-수식 뒤에는 기호가 무엇을 의미하는지 반드시 설명해야 한다.
-
-문장 안에 짧게 들어가는 수식은 \verb|$...$| 또는 \verb|\(...\)| 안에 쓴다.
-예를 들어 평균은 \(\bar{x}\), 표준편차는 \(s\)처럼 본문 안에 넣을 수 있다.
-
-번호가 필요한 중요한 수식은 \verb|equation| 환경을 사용한다.
-수식 번호도 표와 그림처럼 직접 입력하지 않고 \verb|\label{}|과 \verb|\ref{}|로 참조한다.
-예를 들어 식~\ref{eq:mean-example}은 표본 평균을 계산하는 기본 식이다.
+두 집단의 평균 변화 폭 차이는 다음과 같은 평균 산출식을 바탕으로 계산하였다.
 
 \begin{equation}
     \bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i
     \label{eq:mean-example}
 \end{equation}
 
-위 식에서 \(\bar{x}\)는 표본 평균, \(n\)은 사례 수, \(x_i\)는 \(i\)번째 관측값을 의미한다.
-본문에서 수식을 언급할 때는 \verb|식~\ref{eq:mean-example}|처럼 작성하면 된다.
-앞쪽에 새로운 수식이 추가되더라도 수식 번호와 본문 참조 번호가 자동으로 함께 바뀐다.
-
-여러 줄의 수식을 등호나 부등호 기준으로 정렬해야 할 때는 \verb|align| 환경을 사용할 수 있다.
-정렬 기준이 되는 위치에는 \verb|&|를 붙이고, 줄을 바꿀 때는 \verb|\\|를 사용한다.
-
-\begin{align}
-    y_i &= \beta_0 + \beta_1 x_i + \epsilon_i \label{eq:regression-model} \\
-    \hat{y}_i &= \hat{\beta}_0 + \hat{\beta}_1 x_i \label{eq:regression-prediction}
-\end{align}
-
-식~\ref{eq:regression-model}은 단순 회귀 모형의 예시이고, 식~\ref{eq:regression-prediction}은 추정된 회귀식을 이용한 예측값의 예시이다.
-수식이 너무 길면 한 줄에 억지로 넣지 말고 \verb|align| 환경으로 나누어 쓰는 것이 읽기 좋다.
-
-\begin{verbatim}
-\begin{equation}
-    \bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i
-    \label{eq:mean-example}
-\end{equation}
-
-본문에서는 식~\ref{eq:mean-example}처럼 참조한다.
-\end{verbatim}
-
-\subsubsection{TikZ를 이용한 그림 작성 예시}
-
-TikZ는 \LaTeX 문서 안에서 선, 화살표, 도형, 글자를 직접 그릴 수 있게 해 주는 그림 작성 도구이다.
-TikZ로 그린 그림은 벡터 이미지로 출력되므로 확대해도 선과 글자가 깨지지 않는다.
-따라서 연구 절차도, 개념도, 분석 모형, 흐름도처럼 단순한 도형과 화살표로 구성된 그림은 외부 이미지 파일로 저장하기보다 TikZ로 직접 그리는 것도 좋은 방법이다.
-
-그림~\ref{fig:tikz-process-example}은 연구 절차를 간단한 흐름도로 나타낸 예시이다.
-각 단계는 \verb|node|로 만들고, 단계 사이의 화살표는 \verb|\draw[->]| 명령으로 연결한다.
-
-\begin{figure}[htbp]
-    \centering
-    \footnotesize
-    \begin{tikzpicture}[
-        process/.style={
-            draw,
-            rounded corners,
-            minimum width=2.5cm,
-            minimum height=0.9cm,
-            align=center
-        },
-        arrow/.style={->, thick}
-    ]
-        \node[process] (review) {문헌 검토};
-        \node[process, right=0.55cm of review] (design) {연구 설계};
-        \node[process, right=0.55cm of design] (analysis) {자료 분석};
-        \node[process, right=0.55cm of analysis] (conclusion) {결론 도출};
-
-        \draw[arrow] (review) -- (design);
-        \draw[arrow] (design) -- (analysis);
-        \draw[arrow] (analysis) -- (conclusion);
-    \end{tikzpicture}
-    \caption{TikZ로 작성한 연구 절차도 예시}
-    \label{fig:tikz-process-example}
-\end{figure}
-
-TikZ 그림도 일반 그림과 마찬가지로 \verb|figure| 환경 안에 넣고, \verb|\caption{}|과 \verb|\label{}|을 붙인다.
-본문에서는 자동 참조 명령으로 그림 번호를 출력한다.
-TikZ 그림은 코드로 작성되기 때문에 처음에는 낯설 수 있지만, 논문 안에서 도형의 크기, 글자, 화살표 위치를 일관되게 관리할 수 있다는 장점이 있다.
-
-\begin{verbatim}
-\begin{figure}[htbp]
-    \centering
-    \begin{tikzpicture}
-        \node[draw] (a) {문헌 검토};
-        \node[draw, right=1cm of a] (b) {연구 설계};
-        \draw[->] (a) -- (b);
-    \end{tikzpicture}
-    \caption{TikZ 그림 예시}
-    \label{fig:tikz-example}
-\end{figure}
-\end{verbatim}
+식~\ref{eq:mean-example}에서 \(\bar{x}\)는 표본 평균, \(n\)은 사례 수, \(x_i\)는 \(i\)번째 관측값을 의미한다.
 
 \subsection{추가 분석 결과}
 
